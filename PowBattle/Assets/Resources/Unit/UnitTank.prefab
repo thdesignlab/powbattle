@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 1938369445840822, guid: eefa7761c6d41b649a2f73a64af5a662, type: 2}
-  maxHP: 15000
+  maxHP: 12000
   speed: 30
   defence: 0
   moveLimit: 5

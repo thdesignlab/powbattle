@@ -82,9 +82,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 20
   reload: 5
-  moveDelay: 3
+  moveDelay: 5
   bullet: {fileID: 1231082633142808, guid: 5cab82675ba589745ac84e54dd197be1, type: 2}
   rapidCount: 1
   rapidInterval: 0
   shootDiff: 3
-  shootAngle: 75
+  shootAngle: 60
