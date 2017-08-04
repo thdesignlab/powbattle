@@ -25,20 +25,8 @@ public class TitleManager : MonoBehaviour
 
     protected void Awake()
     {
-        //ステータスバー
-        Common.Func.SetStatusbar();
-
         //フレームレート
         Application.targetFrameRate = 30;
-    }
-
-    void OnApplicationPause(bool pauseStatus)
-    {
-        if (!pauseStatus)
-        {
-            //ステータスバー
-            Common.Func.SetStatusbar();
-        }
     }
 
     IEnumerator Start()
@@ -50,8 +38,9 @@ public class TitleManager : MonoBehaviour
         //スプラッシュ終了待ち
         for (;;)
         {
-            yield return null;
+            Debug.Log("Splash >> "+UnityEngine.Rendering.SplashScreen.isFinished);
             if (!UnityEngine.Rendering.SplashScreen.isFinished) break;
+            yield return null;
         }
 #else
 #endif
@@ -59,8 +48,6 @@ public class TitleManager : MonoBehaviour
         isSplashFinished = true;
 
         //TapToStart点灯
-        GameObject message = null;
-        Image messageImage = null;
         Text messageText = null;
         for (;;)
         {

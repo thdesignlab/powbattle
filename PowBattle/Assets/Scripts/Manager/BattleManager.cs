@@ -26,6 +26,9 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         isDontDestroyOnLoad = false;
         base.Awake();
 
+        //プレイヤー準備
+        ReadyPlayer();
+
         battleGage = battleCanvas.transform.Find("Gage").GetComponent<Slider>();
 
         StartCoroutine(test());
@@ -46,28 +49,50 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         }
     }
 
+    private void ReadyPlayer()
+    {
+        GameObject playerSP = GameObject.FindGameObjectWithTag(Common.CO.TAG_SP_PLAYER);
+        Vector3 pos = (playerSP != null) ? playerSP.transform.position : new Vector3(0, 15, 0);
+        Quaternion rot = (playerSP != null) ? playerSP.transform.rotation : Quaternion.identity;
+        GameObject player = GameObject.FindGameObjectWithTag(Common.CO.TAG_PLAYER);
+        if (player == null) player = Instantiate(Resources.Load<GameObject>("Player"));
+        player.transform.position = pos;
+        player.transform.rotation = rot;
+    }
+
+    [SerializeField]
+    int unitLimit;
+    [SerializeField]
+    int enemyLimit;
+    [SerializeField]
+    int respawn;
+    [SerializeField]
+    int respawnAdd;
     IEnumerator test()
     {
-        int limit = 30;
+        int rand = 1;
         for (;;)
         {
             //自軍生成
-            if (unitCnt < limit)
+            if (unitCnt < unitLimit)
             {
                 spawnPointsMine = GameObject.FindGameObjectsWithTag(Common.CO.TAG_SP_MINE);
-                List<int> mineUnits = new List<int> { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+                rand = (UnityEngine.Random.Range(0, 100) > 95) ? 2 : 1 ;
+                List<int> mineUnits = new List<int> { 1, 1, 1, 1, 1, 1, 1, 1};
                 SpawnUnits(mineUnits, spawnPointsMine, true);
             }
 
             //敵軍生成
-            if (enemyCnt < limit)
+            if (enemyCnt < enemyLimit)
             {
                 spawnPointsEnemy = GameObject.FindGameObjectsWithTag(Common.CO.TAG_SP_ENEMY);
-                List<int> enemyUnits = new List<int> { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+                rand = (UnityEngine.Random.Range(0, 100) > 0) ? 2 : 1;
+                List<int> enemyUnits = new List<int> { 1, 1, 1, rand };
                 SpawnUnits(enemyUnits, spawnPointsEnemy, false);
             }
 
-            yield return new WaitForSeconds(4);
+            respawn += respawnAdd;
+            yield return new WaitForSeconds(respawn);
         }
     }
 
@@ -84,13 +109,23 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     private GameObject SpawnUnit(int unitNo, Transform spawnPoint, bool isMine)
     {
         GameObject unitPref = Resources.Load<GameObject>(Common.CO.RESOURCE_UNIT_DIR + Common.Unit.unitInfo[unitNo]);
-        GameObject unit = Instantiate<GameObject>(unitPref, spawnPoint.position, spawnPoint.rotation);
+        GameObject unit = Instantiate(unitPref, spawnPoint.position, spawnPoint.rotation);
         if (!isMine)
         {
             unit.tag = Common.CO.TAG_ENEMY;
-            Material[] mats = unit.transform.Find("Body").GetComponent<Renderer>().materials;
+            Common.Func.SetLayer(unit, Common.CO.LAYER_ENEMY, true);
+
+            Transform unitBody = null;
+            foreach (Transform child in unit.transform)
+            {
+                if (child.tag == Common.CO.TAG_UNIT_BODY)
+                {
+                    unitBody = child;
+                }
+            }
+            Material[] mats = unitBody.GetComponent<Renderer>().materials;
             mats[0].color = Color.red;
-            unit.transform.Find("Body").GetComponent<Renderer>().materials = mats;
+            unitBody.GetComponent<Renderer>().materials = mats;
         }
         return unit;
     }

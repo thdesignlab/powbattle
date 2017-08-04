@@ -130,6 +130,12 @@
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
+    <Reference Include="OSCsharp">
+      <HintPath>Assets\Plugins\TouchScript\Modules\TUIO\Libraries\OSCsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="TUIOsharp">
+      <HintPath>Assets\Plugins\TouchScript\Modules\TUIO\Libraries\TUIOsharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="PowBattle.csproj">
@@ -144,9 +150,46 @@
   <ItemGroup>
     <Compile Include="Assets\Plugins\Android\Editor\UnityWebViewPostprocessBuild.cs" />
     <Compile Include="Assets\Plugins\iOS\Editor\UnityWebViewPostprocessBuild.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Behaviors\Cursors\CursorManagerEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Behaviors\TransformerEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Debugging\PointerDebuggerWindow.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\EditorResources.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\EditorUI\GUIElements.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\EditorUI\GUIUtils.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\EditorUI\PagedList.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\FlickGestureEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\GestureEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\LongPressGestureEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\MetaGestureEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\PressGestureEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\ReleaseGestureEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\TapGestureEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\TransformGestures\Base\OnePointTransformGestureBaseEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\TransformGestures\Base\TransformGestureBaseEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\TransformGestures\Base\TwoPointTransformGestureBaseEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\TransformGestures\PinnedTransformGestureEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\TransformGestures\ScreenTransformGestureEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Gestures\TransformGestures\TransformGestureEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\InputSources\InputSourceEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\InputSources\StandardInputEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Layers\FullscreenLayerEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Layers\StandardLayerEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\TouchManagerEditor.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\TouchScriptSettingsWindow.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Utils\PropertyDrawers\NullToggleDrawer.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Editor\Utils\PropertyDrawers\ToggleLeftDrawer.cs" />
+    <Compile Include="Assets\Plugins\TouchScript\Modules\TUIO\Editor\InputSources\TuioInputEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\TouchScript\Examples\_misc\Shaders\BorderDiffuse.shader" />
+    <None Include="Assets\Plugins\TouchScript\Examples\_misc\Shaders\UnlitColor.shader" />
+    <None Include="Assets\Plugins\TouchScript\Shaders\Cursor.shader" />
+    <None Include="Assets\Plugins\TouchScript\Shaders\DebugDepthTest.shader" />
+    <None Include="Assets\Plugins\TouchScript\Shaders\DebugMultiplyDepthTest.shader" />
+    <None Include="Assets\Plugins\TouchScript\Shaders\DebugMultiplyNoDepthTest.shader" />
+    <None Include="Assets\Plugins\TouchScript\Shaders\DebugNoDepthTest.shader" />
+    <None Include="Assets\Plugins\TouchScript\license.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

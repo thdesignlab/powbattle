@@ -8,6 +8,14 @@ TagManager:
   - Enemy
   - SpawnPointMine
   - SpawnPointEnemy
+  - SpawnPointPlayer
+  - WeaponJoint
+  - DamageEffect
+  - Muzzle
+  - UnitBody
+  - Obstacle
+  - HQ
+  - EnemyHQ
   layers:
   - Default
   - TransparentFX
@@ -17,10 +25,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Stage
+  - Unit
+  - Enemy
+  - Obstacle
   - 
   - 
   - 

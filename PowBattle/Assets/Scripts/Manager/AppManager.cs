@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Text.RegularExpressions;
-
+using TouchScript.Gestures;
+using TouchScript.Gestures.TransformGestures;
 
 public class AppManager : SingletonMonoBehaviour<AppManager>
 {
@@ -14,6 +15,9 @@ public class AppManager : SingletonMonoBehaviour<AppManager>
     protected override void Awake()
     {
         base.Awake();
+
+        //ステータスバー
+        Common.Func.SetStatusbar();
     }
 
     void OnApplicationPause(bool pauseStatus)
@@ -24,8 +28,6 @@ public class AppManager : SingletonMonoBehaviour<AppManager>
             Common.Func.SetStatusbar();
         }
     }
-
-
 
     // ##### 各操作 #####
 

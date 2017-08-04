@@ -27,10 +27,25 @@ namespace Common
         public const string RESOURCE_UNIT_DIR = "Unit/";
 
         //タグ
+        public const string TAG_PLAYER = "Player";
         public const string TAG_UNIT = "Unit";
         public const string TAG_ENEMY = "Enemy";
+        public const string TAG_HQ = "HQ";
+        public const string TAG_ENEMY_HQ = "EnemyHQ";
+        public const string TAG_UNIT_BODY = "UnitBody";
         public const string TAG_SP_MINE = "SpawnPointMine";
         public const string TAG_SP_ENEMY = "SpawnPointEnemy";
+        public const string TAG_SP_PLAYER = "SpawnPointPlayer";
+        public const string TAG_WEAPON_JOINT = "WeaponJoint";
+        public const string TAG_DAMAGE_EFFECT = "DamageEffect";
+        public const string TAG_MUZZLE = "Muzzle";
+        public const string TAG_OBSTACLE = "Obstacle";
+        
+        //レイヤー
+        public const string LAYER_UNIT = "Unit";
+        public const string LAYER_ENEMY = "Enemy";
+        public const string LAYER_STAGE = "Stage";
+        public const string LAYER_OBSTACLE = "Obstacle";
 
         //衝突判定するタグ
         public static string[] ColliderHitTagArray = new string[]
@@ -180,6 +195,27 @@ namespace Common
             return dic.ElementAt(Random.Range(0, dic.Count)).Key;
         }
 
+        //レイヤーセット
+        public static void SetLayer(GameObject obj, string layerName, bool needSetChildrens = true)
+        {
+            int layerNo = LayerMask.NameToLayer(layerName);
+            SetLayer(obj, layerNo, needSetChildrens);
+        }
+        public static void SetLayer(GameObject obj, int layerNo, bool needSetChildrens = true)
+        {
+            if (obj == null) return;
+
+            obj.layer = layerNo;
+
+            //子に設定する必要がない場合はここで終了
+            if (!needSetChildrens) return;
+
+            //子のレイヤーにも設定する
+            foreach (Transform child in obj.transform)
+            {
+                SetLayer(child.gameObject, layerNo, needSetChildrens);
+            }
+        }
     }
 
     //### ユニット ###
@@ -189,7 +225,7 @@ namespace Common
         {
             { 0, "Unit" },
             { 1, "UnitGunner" },
-            { 2, "Unit" },
+            { 2, "UnitTank" },
         };
     }
 
