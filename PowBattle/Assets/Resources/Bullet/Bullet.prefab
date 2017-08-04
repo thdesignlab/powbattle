@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 150
+  isHitBreak: 1
   speed: 30
   isPenetrate: 0
 --- !u!135 &135341191986979202

@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4512737634204816}
-  - component: {fileID: 114703038503561596}
+  - component: {fileID: 114695983350024932}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -69,7 +69,7 @@ Transform:
   m_Father: {fileID: 4512737634204816}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114703038503561596
+--- !u!114 &114695983350024932
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -77,13 +77,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1938369445840822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5af9efbca7088f44b93d1a81776231c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 123f2fa4a79b8c84aa4da031b739df74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   range: 20
-  reload: 3
+  reload: 5
   moveDelay: 3
   bullet: {fileID: 1231082633142808, guid: 5cab82675ba589745ac84e54dd197be1, type: 2}
   rapidCount: 1
   rapidInterval: 0
-  shootDiff: 0
+  shootDiff: 3
+  shootAngle: 75

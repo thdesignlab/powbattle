@@ -104,6 +104,7 @@
     <Compile Include="Assets\Scripts\Controller\DamageController.cs" />
     <Compile Include="Assets\Scripts\Controller\ObjectController.cs" />
     <Compile Include="Assets\Scripts\Controller\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Controller\BallisticShootWeaponController.cs" />
     <Compile Include="Assets\Scripts\Controller\ShootWeaponController.cs" />
     <Compile Include="Assets\Scripts\Controller\BulletController.cs" />
     <Compile Include="Assets\Scripts\Controller\HQController.cs" />

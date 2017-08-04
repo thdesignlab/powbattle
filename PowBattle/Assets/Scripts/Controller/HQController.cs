@@ -11,7 +11,7 @@ public class HQController : UnitController
     }
     public override int Hit(int damage, Transform enemyTran)
     {
-        Debug.Log("HQ HIT");
+        //Debug.Log("HQ HIT");
         return base.Hit(damage, enemyTran);
     }
 }

@@ -70,6 +70,8 @@ public class ObjectController : MonoBehaviour {
         if (effectSpawn != null)
         {
             GameObject effectObj = Instantiate(effectSpawn, myTran.position, effectSpawn.transform.rotation);
+            DamageEffectController dmgCtrl = effectObj.GetComponent<DamageEffectController>();
+            if (dmgCtrl != null) dmgCtrl.SetOwner(ownerTran);
         }
         Destroy(gameObject);
     }

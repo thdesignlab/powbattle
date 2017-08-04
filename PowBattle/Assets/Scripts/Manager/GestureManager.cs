@@ -146,14 +146,14 @@ public class GestureManager : MonoBehaviour
             totalTwist += gesture.DeltaRotation;
             if ((pinchBorder <= Mathf.Abs(totalPinch) || isPinch) && !isTwist)
             {
-                Debug.Log("Pinch");
+                //Debug.Log("Pinch");
                 //ピンチイン・アウト
                 isPinch = true;
                 Pinch(gesture.DeltaScale - 1);
             }
             else if ((twistBorder <= Mathf.Abs(totalTwist) || isTwist) && !isPinch)
             {
-                Debug.Log("Twist");
+                //Debug.Log("Twist");
                 //回転
                 isTwist = true;
                 Twist(gesture.DeltaRotation);
@@ -176,14 +176,14 @@ public class GestureManager : MonoBehaviour
 
     protected virtual void Drag(float deltaX, float deltaY)
     {
-        MyDebug.Instance.AdminLog("drag", deltaX + " / " + deltaY);
+        //MyDebug.Instance.AdminLog("drag", deltaX + " / " + deltaY);
     }
     protected virtual void Pinch(float delta)
     {
-        MyDebug.Instance.AdminLog("pinch", delta);
+        //MyDebug.Instance.AdminLog("pinch", delta);
     }
     protected virtual void Twist(float delta)
     {
-        MyDebug.Instance.AdminLog("twist", delta);
+        //MyDebug.Instance.AdminLog("twist", delta);
     }
 }

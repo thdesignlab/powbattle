@@ -78,7 +78,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             {
                 spawnPointsMine = GameObject.FindGameObjectsWithTag(Common.CO.TAG_SP_MINE);
                 rand = (UnityEngine.Random.Range(0, 100) > 95) ? 2 : 1 ;
-                List<int> mineUnits = new List<int> { 1, 1, 1, 1, 1, 1, 1, 1};
+                List<int> mineUnits = new List<int> { 1, 1, 1, 1, 1, 1, 1, 1 };
+                //List<int> mineUnits = new List<int> { 2};
                 SpawnUnits(mineUnits, spawnPointsMine, true);
             }
 
@@ -88,6 +89,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
                 spawnPointsEnemy = GameObject.FindGameObjectsWithTag(Common.CO.TAG_SP_ENEMY);
                 rand = (UnityEngine.Random.Range(0, 100) > 0) ? 2 : 1;
                 List<int> enemyUnits = new List<int> { 1, 1, 1, rand };
+                //List<int> enemyUnits = new List<int> { 2};
                 SpawnUnits(enemyUnits, spawnPointsEnemy, false);
             }
 

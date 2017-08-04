@@ -22,6 +22,7 @@ public class BulletController : DamageEffectController
 
     protected override bool IsHitBreak(string hitTag)
     {
+        if (!base.IsHitBreak(hitTag)) return false;
         if (isPenetrate && hitTag != Common.CO.TAG_OBSTACLE) return false;
         return true;
     }

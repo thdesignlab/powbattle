@@ -33,7 +33,8 @@ public class ShootWeaponController : WeaponController
     {
         for (int i = 0; i < rapidCount; i++)
         {
-            if (target != null) LockOn(target, i);
+            int muzzleNo = i % muzzleList.Count;
+            if (target != null) LockOn(target, muzzleNo);
             Shoot();
             yield return new WaitForSeconds(rapidInterval);
         }
@@ -44,17 +45,18 @@ public class ShootWeaponController : WeaponController
         Vector3 pos = target.position;
         if (shootDiff > 0)
         {
-            pos += muzzleList[0].up * Random.Range(-shootDiff, shootDiff);
-            pos += muzzleList[0].right * Random.Range(-shootDiff, shootDiff);
-            pos += muzzleList[0].forward * Random.Range(-shootDiff, shootDiff);
+            pos += muzzleList[muzzleNo].up * Random.Range(-shootDiff, shootDiff);
+            pos += muzzleList[muzzleNo].right * Random.Range(-shootDiff, shootDiff);
+            pos += muzzleList[muzzleNo].forward * Random.Range(-shootDiff, shootDiff);
         }
-        muzzleList[0].LookAt(pos);
+        muzzleList[muzzleNo].LookAt(pos);
     }
 
-    protected virtual void Shoot(int muzzleNo = 0)
+    protected virtual GameObject Shoot(int muzzleNo = 0)
     {
         GameObject obj = Instantiate(bullet, muzzleList[muzzleNo].position, muzzleList[muzzleNo].rotation);
         SetEffectOwner(obj);
+        return obj;
     }
 
     protected void SetEffectOwner(GameObject obj)

@@ -11,14 +11,14 @@ public class PlayerController : GestureManager
     private Transform camTran;
 
     [SerializeField]
-    private float dragRate = 1.0f;
+    private float dragRate;
     [SerializeField]
-    private float pinchRate = 1.0f;
+    private float pinchRate;
     [SerializeField]
-    private float twistRate = 1.0f;
+    private float twistRate;
 
     const float MIN_HIGHT = 10.0f;
-    const float MAX_HIGHT = 40.0f;
+    const float MAX_HIGHT = 45.0f;
 
     void Awake()
     {

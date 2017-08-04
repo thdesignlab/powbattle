@@ -249,9 +249,9 @@ MonoBehaviour:
   dragBorder: 5
   pinchBorder: 0.1
   twistBorder: 1
-  dragRate: 0.1
-  pinchRate: 6
-  twistRate: 0.5
+  dragRate: 0.05
+  pinchRate: 7
+  twistRate: 0.8
 --- !u!114 &114616854238282152
 MonoBehaviour:
   m_ObjectHideFlags: 1

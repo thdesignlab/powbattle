@@ -8,7 +8,7 @@ public class DamageController : MonoBehaviour
     public bool Damage(Transform attackTran, Transform hitTran, int damage, Transform ownerTran)
     {
         bool isHit = false;
-        Debug.Log(hitTran.tag);
+        //Debug.Log(hitTran.tag);
         switch (hitTran.tag)
         {
             case Common.CO.TAG_UNIT:

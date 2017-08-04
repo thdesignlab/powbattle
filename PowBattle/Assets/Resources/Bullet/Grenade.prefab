@@ -36,10 +36,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4106996337348356}
-  - component: {fileID: 114724930761964652}
   - component: {fileID: 114396309790846530}
   - component: {fileID: 114488907791471848}
   - component: {fileID: 135642732659749678}
+  - component: {fileID: 54957798138018246}
+  - component: {fileID: 114840073521869332}
   m_Layer: 0
   m_Name: Grenade
   m_TagString: DamageEffect
@@ -113,6 +114,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1227023469760406}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54957798138018246
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1231082633142808}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &114396309790846530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,9 +140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 0}
-  activeLimitTime: 0
-  activeLimitDistance: 22
+  effectSpawn: {fileID: 1433351128113194, guid: bdac2360750d4294db09185952970c5f,
+    type: 2}
+  activeLimitTime: 5
+  activeLimitDistance: 0
   isNotAutoBreak: 0
 --- !u!114 &114488907791471848
 MonoBehaviour:
@@ -139,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5502e5949efe3874fbd391cf40906986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114724930761964652
+--- !u!114 &114840073521869332
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -147,12 +164,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1231082633142808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eab71ea54d9f944f8e5fc432c0e8d50, type: 3}
+  m_Script: {fileID: 11500000, guid: 2dbaf4c2285f23f40854003bc0c7142c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1000
-  speed: 25
-  isPenetrate: 1
+  damage: 500
+  isHitBreak: 1
 --- !u!135 &135642732659749678
 SphereCollider:
   m_ObjectHideFlags: 1

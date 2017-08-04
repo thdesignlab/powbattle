@@ -11,6 +11,8 @@ public class DamageEffectController : BaseMoveController
 
     [SerializeField]
     protected int damage;
+    [SerializeField]
+    protected bool isHitBreak;
 
     protected override void Awake()
     {
@@ -27,7 +29,7 @@ public class DamageEffectController : BaseMoveController
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(ownerTran + " >> "+ other.transform);
+        //Debug.Log(ownerTran + " >> "+ other.transform);
         if (ownerTran == null) return;
         Transform hitTran = other.transform;
         if (hitTran.tag == ownerTran.tag) return;
@@ -38,11 +40,17 @@ public class DamageEffectController : BaseMoveController
     {
         if (dmgCtrl.Damage(myTran, hitTran, damage, ownerTran))
         {
-            if (IsHitBreak(hitTran.tag)) objCtrl.DestoryObject();
+            if (IsHitBreak(hitTran.tag)) BreakProcess();
         }
     }
     protected virtual bool IsHitBreak(string hitTag)
     {
-        return true;
+        return isHitBreak;
+    }
+
+    protected virtual void BreakProcess()
+    {
+        objCtrl.SetOwner(ownerTran);
+        objCtrl.DestoryObject();
     }
 }
