@@ -16,6 +16,8 @@ TagManager:
   - Obstacle
   - HQ
   - EnemyHQ
+  - ExtraSpawnPointMine
+  - ExtraSpawnPointEnemy
   layers:
   - Default
   - TransparentFX

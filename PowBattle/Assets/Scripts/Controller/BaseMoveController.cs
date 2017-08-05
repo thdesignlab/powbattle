@@ -4,10 +4,13 @@ using System.Collections;
 public abstract class BaseMoveController : MonoBehaviour
 {
     protected Transform myTran;
-
+    protected Rigidbody myRigidbody;
+    const float FORCE_REGIST = 50;
+    
     protected virtual void Awake()
     {
         myTran = transform;
+        myRigidbody = GetComponent<Rigidbody>();
     }
 
     //移動
@@ -61,5 +64,13 @@ public abstract class BaseMoveController : MonoBehaviour
             myTran.rotation = Quaternion.Slerp(myTran.rotation, rotTarget, t);
         }
         return false;
+    }
+
+    protected void Skip(Vector3 force)
+    {
+        if (myRigidbody == null || myRigidbody.isKinematic) return;
+        force /= myRigidbody.mass;
+        if (force.magnitude <= FORCE_REGIST) return;
+        myRigidbody.AddForce(force, ForceMode.Impulse);
     }
 }

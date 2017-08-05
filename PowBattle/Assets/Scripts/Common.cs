@@ -26,29 +26,54 @@ namespace Common
         public const string RESOURCE_MESSAGE_DIR = RESOURCE_IMAGE_DIR + "Message/";
         public const string RESOURCE_UNIT_DIR = "Unit/";
 
+        //自軍・敵軍
+        public const int SIDE_UNKNOWN = -1;
+        public const int SIDE_MINE = 0;
+        public const int SIDE_ENEMY = 1;
+        public static readonly int[] sideArray = new int[] { SIDE_MINE, SIDE_ENEMY };
+
+        //優勢・劣勢
+        public const int SITUATION_DRAW = 0;
+        public const int SITUATION_WIN = 1;
+        public const int SITUATION_LOSE = -1;
+
         //タグ
         public const string TAG_PLAYER = "Player";
+        //タグ ユニット
         public const string TAG_UNIT = "Unit";
         public const string TAG_ENEMY = "Enemy";
+        //タグ HQ
         public const string TAG_HQ = "HQ";
         public const string TAG_ENEMY_HQ = "EnemyHQ";
+        //タグ ユニットパーツ
         public const string TAG_UNIT_BODY = "UnitBody";
+        public const string TAG_WEAPON_JOINT = "WeaponJoint";
+        //タグ 出現位置
         public const string TAG_SP_MINE = "SpawnPointMine";
         public const string TAG_SP_ENEMY = "SpawnPointEnemy";
+        public const string TAG_EXSP_MINE = "ExtraSpawnPointMine";
+        public const string TAG_EXSP_ENEMY = "ExtraSpawnPointEnemy";
         public const string TAG_SP_PLAYER = "SpawnPointPlayer";
-        public const string TAG_WEAPON_JOINT = "WeaponJoint";
+        //タグ その他
         public const string TAG_DAMAGE_EFFECT = "DamageEffect";
         public const string TAG_MUZZLE = "Muzzle";
         public const string TAG_OBSTACLE = "Obstacle";
-        
+
+        public static readonly string[] tagUnitArray = new string[] { TAG_UNIT, TAG_ENEMY };
+        public static readonly string[] tagHQArray = new string[] { TAG_HQ, TAG_ENEMY_HQ };
+        public static readonly string[] tagSpawnPointArray = new string[] { TAG_SP_MINE, TAG_SP_ENEMY };
+        public static readonly string[] tagExSpawnPointArray = new string[] { TAG_EXSP_MINE, TAG_EXSP_ENEMY };
+
         //レイヤー
         public const string LAYER_UNIT = "Unit";
         public const string LAYER_ENEMY = "Enemy";
         public const string LAYER_STAGE = "Stage";
         public const string LAYER_OBSTACLE = "Obstacle";
 
+        public static readonly string[] layerUnitArray = new string[] { LAYER_UNIT, LAYER_ENEMY };
+
         //衝突判定するタグ
-        public static string[] ColliderHitTagArray = new string[]
+        public static readonly string[] ColliderHitTagArray = new string[]
         {
         };
     }
@@ -190,6 +215,7 @@ namespace Common
             return drawObj;
         }
 
+        //ランダム抽選
         public static TKey RandomDic<TKey, TValue>(Dictionary<TKey, TValue> dic)
         {
             return dic.ElementAt(Random.Range(0, dic.Count)).Key;
@@ -215,6 +241,13 @@ namespace Common
             {
                 SetLayer(child.gameObject, layerNo, needSetChildrens);
             }
+        }
+
+        //パーセント取得
+        public static int GetPer(int target, int total, int def = 0)
+        {
+            if (total == 0) return def;
+            return (int)(Mathf.Ceil(target * 100 / (float)total));
         }
     }
 

@@ -14,12 +14,38 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 
     private bool isPause = false;
 
-    private GameObject[] spawnPointsMine;
-    private GameObject[] spawnPointsEnemy;
-    private int spawnIndexMine = 0;
-    private int spawnIndexEnemy = 0;
-    private int unitCnt = 0;
-    private int enemyCnt = 0;
+    private List<List<Transform>> spawnPoints = new List<List<Transform>>() { new List<Transform>() { }, new List<Transform>() { } };
+    private List<List<Transform>> exSpawnPoints = new List<List<Transform>>() { new List<Transform>() { }, new List<Transform>() { } };
+    private List<int> spawnIndex = new List<int>() { 0, 0 };
+    private List<int> unitCnt = new List<int>() { 0, 0 };
+
+    [HideInInspector]
+    public List<int> unitCntRate = new List<int>() { 50, 50 };
+    [HideInInspector]
+    public List<Transform> hqInfo = new List<Transform>() { null, null };
+    [HideInInspector]
+    public List<HQController> hqCtrl = new List<HQController>() { null, null };
+    [HideInInspector]
+    public List<int> battleSituation = new List<int>() { 50, 50 };
+
+    private List<List<int>> spawnUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
+    private List<List<int>> extraUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
+
+    //test用
+    [SerializeField]
+    int testUnitLimit;
+    [SerializeField]
+    int testRespawnInterval;
+    [SerializeField]
+    int testRespawnIntervalAdd;
+    [SerializeField]
+    List<int> testRespawnUnits;
+    [SerializeField]
+    List<int> testEnemyRespawnUnits;
+    List<int> testExtraUnits = new List<int>() { 1, 1, 1, 1, 2 };
+    [SerializeField]
+    int testExtraRate;
+
 
     protected override void Awake()
     {
@@ -29,26 +55,116 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         //プレイヤー準備
         ReadyPlayer();
 
+        //UI
         battleGage = battleCanvas.transform.Find("Gage").GetComponent<Slider>();
 
+        //HQ準備
+        SetHQ();
+
+        //ユニット準備
+        SetSpawnPoint();
+        SetSpawnUnit();
+
+        //★テスト
         StartCoroutine(test());
     }
 
     private void Update()
     {
-        unitCnt = GameObject.FindGameObjectsWithTag(Common.CO.TAG_UNIT).Length;
-        enemyCnt = GameObject.FindGameObjectsWithTag(Common.CO.TAG_ENEMY).Length;
+        //戦況チェック
+        UpdateSituation();
+    }
 
-        if (unitCnt == 0 && enemyCnt == 0)
+    //戦況更新
+    private void UpdateSituation()
+    {
+        int totalUnitCnt = 0;
+        foreach (int side in Common.CO.sideArray)
         {
-            battleGage.value = 0.5f;
+            //ユニット数
+            unitCnt[side] = GameObject.FindGameObjectsWithTag(Common.CO.tagUnitArray[side]).Length;
+            totalUnitCnt += unitCnt[side];
         }
-        else
+        //ユニット数割合
+        unitCntRate[Common.CO.SIDE_MINE] = Common.Func.GetPer(unitCnt[Common.CO.SIDE_MINE], totalUnitCnt, 50);
+        unitCntRate[Common.CO.SIDE_ENEMY] = 100 - unitCntRate[Common.CO.SIDE_MINE];
+
+        //戦況判定
+        JugdeSituation();
+
+        //戦況ゲージ
+        battleGage.value = unitCntRate[Common.CO.SIDE_MINE] / 100.0f;
+    }
+
+    //優劣判定
+    private void JugdeSituation()
+    {
+        //★ユニット数で判断
+        foreach (int side in Common.CO.sideArray)
         {
-            battleGage.value = unitCnt / (float)(unitCnt + enemyCnt);
+            battleSituation[side] = unitCntRate[side];
+        }
+
+        //★HQHPで判断
+    }
+
+    //HQ準備
+    private void SetHQ()
+    {
+        //情報取得
+        foreach (int side in Common.CO.sideArray)
+        {
+            GameObject hqObj = GameObject.FindGameObjectWithTag(Common.CO.tagHQArray[side]);
+            if (hqObj == null) hqObj = SpawnHQ(side);
+            hqInfo[side] = hqObj.transform;
+            hqCtrl[side] = hqObj.GetComponent<HQController>();
         }
     }
 
+    //HP生成
+    private GameObject SpawnHQ(int side)
+    {
+        return null;
+    }
+
+    //ユニット出現位置取得
+    private void SetSpawnPoint()
+    {
+        foreach (int side in Common.CO.sideArray)
+        {
+            //通常
+            GameObject[] spObjs = GameObject.FindGameObjectsWithTag(Common.CO.tagSpawnPointArray[side]);
+            foreach (GameObject spObj in spObjs)
+            {
+                spawnPoints[side].Add(spObj.transform);
+            }
+            //援軍
+            GameObject[] exSpObjs = GameObject.FindGameObjectsWithTag(Common.CO.tagExSpawnPointArray[side]);
+            foreach (GameObject exSpObj in exSpObjs)
+            {
+                exSpawnPoints[side].Add(exSpObj.transform);
+            }
+        }
+    }
+
+    //★ユニット情報取得
+    private void SetSpawnUnit()
+    {
+        foreach (int side in Common.CO.sideArray)
+        {
+            if (side == Common.CO.SIDE_MINE)
+            {
+                spawnUnits[side] = testRespawnUnits;
+            }
+            else
+            {
+                spawnUnits[side] = testEnemyRespawnUnits;
+            }
+            extraUnits[side] = testExtraUnits;
+        }
+    }
+
+    //プレイヤー準備
     private void ReadyPlayer()
     {
         GameObject playerSP = GameObject.FindGameObjectWithTag(Common.CO.TAG_SP_PLAYER);
@@ -60,75 +176,84 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         player.transform.rotation = rot;
     }
 
-    [SerializeField]
-    int unitLimit;
-    [SerializeField]
-    int enemyLimit;
-    [SerializeField]
-    int respawn;
-    [SerializeField]
-    int respawnAdd;
-    IEnumerator test()
+    //出現位置選択
+    private Transform SelectSpawnPoint(int side, bool isExtra = false, bool isRandom = false)
     {
-        int rand = 1;
-        for (;;)
+        Transform sp = null;
+        if (!isExtra || exSpawnPoints[side].Count == 0)
         {
-            //自軍生成
-            if (unitCnt < unitLimit)
+            //通常
+            if (isRandom)
             {
-                spawnPointsMine = GameObject.FindGameObjectsWithTag(Common.CO.TAG_SP_MINE);
-                rand = (UnityEngine.Random.Range(0, 100) > 50) ? 2 : 1 ;
-                List<int> mineUnits = new List<int> { 1, 1, 1, 1, 1, rand };
-                //List<int> mineUnits = new List<int> { 2};
-                SpawnUnits(mineUnits, spawnPointsMine, true);
+                //ランダム
+                int index = UnityEngine.Random.Range(0, spawnPoints[side].Count);
+                sp = spawnPoints[side][index];
             }
-
-            //敵軍生成
-            if (enemyCnt < enemyLimit)
+            else
             {
-                spawnPointsEnemy = GameObject.FindGameObjectsWithTag(Common.CO.TAG_SP_ENEMY);
-                rand = (UnityEngine.Random.Range(0, 100) > 50) ? 2 : 1;
-                List<int> enemyUnits = new List<int> { 1, 1, 1, 1, 1, rand };
-                //List<int> enemyUnits = new List<int> { 2};
-                SpawnUnits(enemyUnits, spawnPointsEnemy, false);
+                //順番
+                sp = spawnPoints[side][spawnIndex[side]];
+                spawnIndex[side] = (spawnIndex[side] + 1) % spawnPoints[side].Count;
             }
-
-            respawn += respawnAdd;
-            yield return new WaitForSeconds(respawn);
         }
+        else
+        {
+            //援軍
+            int exIndex = UnityEngine.Random.Range(0, exSpawnPoints[side].Count);
+            sp = exSpawnPoints[side][exIndex];
+        }
+        return sp;
     }
 
-    private void SpawnUnits(List<int> unitNoList, GameObject[] spawnPoints, bool isMine)
+    //ユニット生成
+    private void SpawnUnits(int side, bool isExtra = false)
     {
-        int index = isMine ? spawnIndexMine : spawnIndexEnemy;
-        foreach (int unitNo in unitNoList)
+        //出現位置取得
+        Transform sp = SelectSpawnPoint(side, isExtra);
+        List<int> units = (isExtra) ? extraUnits[side] : spawnUnits[side];
+        foreach (int unit in units)
         {
-            index = UnityEngine.Random.Range(0, spawnPoints.Length);
-            Transform spawnPoint = spawnPoints[index].transform;
-            SpawnUnit(unitNo, spawnPoint, isMine);
+            SpawnUnit(unit, sp, side);
         }
+
     }
-    private GameObject SpawnUnit(int unitNo, Transform spawnPoint, bool isMine)
+    //ユニット生成(ランダムポイント)
+    private void SpawnUnitsRandom(int side, bool isExtra = false)
     {
+        //出現位置取得
+        List<int> units = (isExtra) ? extraUnits[side] : spawnUnits[side];
+        foreach (int unit in units)
+        {
+            Transform sp = SelectSpawnPoint(side, isExtra, true);
+            SpawnUnit(unit, sp, side);
+        }
+
+    }
+
+    //ユニット生成処理
+    private GameObject SpawnUnit(int unitNo, Transform spawnPoint, int side)
+    {
+        //生成
         GameObject unitPref = Resources.Load<GameObject>(Common.CO.RESOURCE_UNIT_DIR + Common.Unit.unitInfo[unitNo]);
         GameObject unit = Instantiate(unitPref, spawnPoint.position, spawnPoint.rotation);
-        if (!isMine)
-        {
-            unit.tag = Common.CO.TAG_ENEMY;
-            Common.Func.SetLayer(unit, Common.CO.LAYER_ENEMY, true);
 
-            Transform unitBody = null;
-            foreach (Transform child in unit.transform)
+        //情報変更
+        unit.tag = Common.CO.tagUnitArray[side];
+        Common.Func.SetLayer(unit, Common.CO.layerUnitArray[side], true);
+        //★色変え
+        Transform unitBody = null;
+        Color[] bodyColors = new Color[] { Color.white, Color.red };
+        foreach (Transform child in unit.transform)
+        {
+            if (child.tag == Common.CO.TAG_UNIT_BODY)
             {
-                if (child.tag == Common.CO.TAG_UNIT_BODY)
-                {
-                    unitBody = child;
-                }
+                unitBody = child;
+                break;
             }
-            Material[] mats = unitBody.GetComponent<Renderer>().materials;
-            mats[0].color = Color.red;
-            unitBody.GetComponent<Renderer>().materials = mats;
         }
+        Material[] mats = unitBody.GetComponent<Renderer>().materials;
+        mats[0].color = bodyColors[side];
+        unitBody.GetComponent<Renderer>().materials = mats;
         return unit;
     }
 
@@ -145,5 +270,29 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         Time.timeScale = 1;
     }
 
+
+    //★テスト用
+    IEnumerator test()
+    {
+        for (;;)
+        {
+            //ユニット生成
+            foreach (int side in Common.CO.sideArray)
+            {
+                if (unitCnt[side] < testUnitLimit)
+                {
+                    SpawnUnitsRandom(side, false);
+                    if (battleSituation[side] < testExtraRate)
+                    {
+                        yield return null;
+                        SpawnUnits(side, true);
+                    }
+                }
+            }
+
+            testRespawnInterval += testRespawnIntervalAdd;
+            yield return new WaitForSeconds(testRespawnInterval);
+        }
+    }
 
 }

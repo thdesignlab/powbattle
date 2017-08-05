@@ -17,8 +17,14 @@ public class PlayerController : GestureManager
     [SerializeField]
     private float twistRate;
 
-    const float MIN_HIGHT = 10.0f;
-    const float MAX_HIGHT = 45.0f;
+    [SerializeField]
+    private float xLimit;
+    [SerializeField]
+    private float zLimit;
+    [SerializeField]
+    private float yLimitMin;
+    [SerializeField]
+    private float yLimitMax;
 
     void Awake()
     {
@@ -48,14 +54,18 @@ public class PlayerController : GestureManager
 
     private bool isEnabledMove(Vector3 deltaMove = default(Vector3))
     {
-        //高さ制限
-        float h = myTran.position.y + deltaMove.y;
-        if (h < MIN_HIGHT || MAX_HIGHT < h) return false;
-        //マップ内制限
-        int layerMask = LayerMask.GetMask(new string[] { Common.CO.LAYER_STAGE });
-        Ray ray = new Ray(myTran.position + deltaMove, Vector3.down);
-        RaycastHit hit;
-        if (!Physics.Raycast(ray, out hit, MAX_HIGHT, layerMask)) return false;
+        Vector3 expectPos = myTran.position + deltaMove;
+        //x方向制限
+        if (expectPos.x < -xLimit || xLimit < expectPos.x) return false;
+        //z方向制限
+        if (expectPos.z < -zLimit || zLimit < expectPos.z) return false;
+        //y方向制限
+        if (expectPos.y < yLimitMin || yLimitMax < expectPos.y) return false;
+        ////マップ内制限
+        //int layerMask = LayerMask.GetMask(new string[] { Common.CO.LAYER_STAGE });
+        //Ray ray = new Ray(myTran.position + deltaMove, Vector3.down);
+        //RaycastHit hit;
+        //if (!Physics.Raycast(ray, out hit, yLimitMax, layerMask)) return false;
         return true;
     }
 }

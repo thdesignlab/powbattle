@@ -195,15 +195,24 @@ public class UnitController : BaseMoveController
     //被ダメージ
     public virtual int Hit(int damage, Transform enemyTran)
     {
+        return Hit(damage, Vector3.zero, enemyTran);
+    }
+    public virtual int Hit(int damage, Vector3 impact, Transform enemyTran)
+    {
         if (!isLockOn || targetTran == HQTran)
         {
             targetTran = enemyTran;
         }
 
+        //ダメージ
         nowHP -= damage;
         if (nowHP <= 0)
         {
             Dead();
+        }
+        else if (impact != Vector3.zero)
+        {
+            Skip(impact);
         }
 
         return damage;
@@ -214,5 +223,11 @@ public class UnitController : BaseMoveController
     {
         ObjectController objCon = GetComponent<ObjectController>();
         objCon.DestoryObject();
+    }
+
+    //HP割合取得
+    public int GetHpRate()
+    {
+        return Common.Func.GetPer(nowHP, maxHP);
     }
 }

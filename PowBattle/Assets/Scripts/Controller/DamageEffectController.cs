@@ -6,11 +6,14 @@ using UnityEngine.AI;
 public class DamageEffectController : BaseMoveController
 {
     protected Transform ownerTran;
+    protected string ownerTag;
     protected DamageController dmgCtrl;
     protected ObjectController objCtrl;
 
     [SerializeField]
     protected int damage;
+    [SerializeField]
+    protected float impact;
     [SerializeField]
     protected bool isHitBreak;
 
@@ -25,20 +28,20 @@ public class DamageEffectController : BaseMoveController
     public void SetOwner(Transform t)
     {
         ownerTran = t;
+        if (ownerTran != null) ownerTag = ownerTran.tag;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(ownerTran + " >> "+ other.transform);
-        if (ownerTran == null) return;
         Transform hitTran = other.transform;
-        if (hitTran.tag == ownerTran.tag) return;
+        if (hitTran.tag == ownerTag) return;
         Hit(hitTran);
     }
 
     protected virtual void Hit(Transform hitTran)
     {
-        if (dmgCtrl.Damage(myTran, hitTran, damage, ownerTran))
+        if (dmgCtrl.Damage(damage, impact, myTran, hitTran, ownerTran))
         {
             if (IsHitBreak(hitTran.tag)) BreakProcess();
         }
