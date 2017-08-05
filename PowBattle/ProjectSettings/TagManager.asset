@@ -18,6 +18,7 @@ TagManager:
   - EnemyHQ
   - ExtraSpawnPointMine
   - ExtraSpawnPointEnemy
+  - Effect
   layers:
   - Default
   - TransparentFX

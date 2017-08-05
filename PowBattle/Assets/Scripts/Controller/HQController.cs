@@ -8,10 +8,7 @@ public class HQController : UnitController
 
     protected override void Update()
     {
+        return;
     }
-    public override int Hit(int damage, Transform enemyTran)
-    {
-        //Debug.Log("HQ HIT");
-        return base.Hit(damage, enemyTran);
-    }
+
 }

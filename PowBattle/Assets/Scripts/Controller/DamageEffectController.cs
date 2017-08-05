@@ -16,6 +16,8 @@ public class DamageEffectController : BaseMoveController
     protected float impact;
     [SerializeField]
     protected bool isHitBreak;
+    [SerializeField]
+    protected bool isShootDown;
 
     protected override void Awake()
     {
@@ -31,14 +33,23 @@ public class DamageEffectController : BaseMoveController
         if (ownerTran != null) ownerTag = ownerTran.tag;
     }
 
+    //衝突イベント
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(ownerTran + " >> "+ other.transform);
         Transform hitTran = other.transform;
+        //撃墜判定
+        if (hitTran.tag == Common.CO.TAG_DAMAGE_EFFECT)
+        {
+            ShootDown(hitTran);
+            return;
+        }
+        //ダメージ判定
         if (hitTran.tag == ownerTag) return;
         Hit(hitTran);
     }
 
+    //ダメージ判定
     protected virtual void Hit(Transform hitTran)
     {
         if (dmgCtrl.Damage(damage, impact, myTran, hitTran, ownerTran))
@@ -46,11 +57,21 @@ public class DamageEffectController : BaseMoveController
             if (IsHitBreak(hitTran.tag)) BreakProcess();
         }
     }
+
+    //撃墜判定
+    protected virtual void ShootDown(Transform hitTran)
+    {
+        if (!isShootDown) return;
+        hitTran.GetComponent<ObjectController>().DestoryObject();
+    }
+
+    //衝突判定
     protected virtual bool IsHitBreak(string hitTag)
     {
         return isHitBreak;
     }
 
+    //自壊
     protected virtual void BreakProcess()
     {
         objCtrl.SetOwner(ownerTran);

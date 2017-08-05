@@ -13,14 +13,13 @@ public class UnitController : BaseMoveController
 
     protected Transform HQTran;
     protected Transform targetTran;
+    protected float targetDistance;
 
     [SerializeField]
     protected GameObject weapon;
     [SerializeField]
     protected int maxHP;
     protected int nowHP;
-    [SerializeField]
-    protected int speed;
     [SerializeField]
     protected int defence;
     [SerializeField]
@@ -61,17 +60,17 @@ public class UnitController : BaseMoveController
         leftMoveDelay -= Time.deltaTime;
         if (leftMoveDelay <= 0 && agent.isStopped) agent.isStopped = false;
 
+        isAttackRange = false;
+        isLockOn = false;
+        targetDistance = 0;
+
         //索敵
-        if (!Search())
-        {
-            targetTran = HQTran;
-        }
+        if (!Search()) targetTran = HQTran;
         if (targetTran == null) return;
 
         //敵との距離
-        isAttackRange = false;
-        isLockOn = false;
-        if (Vector3.Distance(myTran.position, targetTran.position) <= attackRange)
+        targetDistance = Vector3.Distance(myTran.position, targetTran.position);
+        if (targetDistance <= attackRange)
         {
             isAttackRange = true;
             LockOn();
@@ -186,7 +185,8 @@ public class UnitController : BaseMoveController
         //if (Physics.Raycast(ray, out hit, attackRange, targetLayer))
         {
             //Debug.Log(name +" >> "+hit.transform.name);
-            if (hit.transform.tag == targetTag || hit.transform.tag == targetHQTag) isTargetSight = true;
+            string hitTag = hit.transform.tag;
+            if (hitTag == targetTag || hitTag == targetHQTag) isTargetSight = true;
         } 
         agent.stoppingDistance = (isTargetSight) ? attackRange * 0.8f : 1;        
         isLockOn = isTargetSight;
@@ -199,10 +199,8 @@ public class UnitController : BaseMoveController
     }
     public virtual int Hit(int damage, Vector3 impact, Transform enemyTran)
     {
-        if (!isLockOn || targetTran == HQTran)
-        {
-            targetTran = enemyTran;
-        }
+        //ターゲット切り替え判定
+        JugdeChangeTarget(enemyTran);
 
         //ダメージ
         nowHP -= damage;
@@ -216,6 +214,20 @@ public class UnitController : BaseMoveController
         }
 
         return damage;
+    }
+
+    //ターゲット切り替え判定
+    protected virtual void JugdeChangeTarget(Transform t)
+    {
+        if (targetTran == null || targetTran == HQTran)
+        {
+            targetTran = t;
+        }
+        else
+        {
+            float enemyDistance = Vector3.Distance(myTran.position, targetTran.position);
+            if (targetDistance > enemyDistance) targetTran = t;
+        }
     }
 
     //死亡

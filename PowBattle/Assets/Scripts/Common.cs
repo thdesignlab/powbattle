@@ -55,6 +55,7 @@ namespace Common
         public const string TAG_EXSP_ENEMY = "ExtraSpawnPointEnemy";
         public const string TAG_SP_PLAYER = "SpawnPointPlayer";
         //タグ その他
+        public const string TAG_EFFECT = "Effect";
         public const string TAG_DAMAGE_EFFECT = "DamageEffect";
         public const string TAG_MUZZLE = "Muzzle";
         public const string TAG_OBSTACLE = "Obstacle";
@@ -256,7 +257,7 @@ namespace Common
     {
         public static Dictionary<int, string> unitInfo = new Dictionary<int, string>()
         {
-            { 0, "Unit" },
+            { 0, "UnitKnight" },
             { 1, "UnitGunner" },
             { 2, "UnitTank" },
         };

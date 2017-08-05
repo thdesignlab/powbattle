@@ -42,7 +42,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     List<int> testRespawnUnits;
     [SerializeField]
     List<int> testEnemyRespawnUnits;
-    List<int> testExtraUnits = new List<int>() { 1, 1, 1, 1, 2 };
+    List<int> testExtraUnits = new List<int>() { 0, 0, 1, 1, 2 };
     [SerializeField]
     int testExtraRate;
 

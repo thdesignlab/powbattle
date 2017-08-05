@@ -398,10 +398,10 @@ MonoBehaviour:
   - {fileID: 0}
   battleSituation: 3200000032000000
   testUnitLimit: 30
-  testRespawnInterval: 10
+  testRespawnInterval: 15
   testRespawnIntervalAdd: 0
-  testRespawnUnits: 01000000010000000100000001000000010000000100000001000000010000000100000001000000
-  testEnemyRespawnUnits: 01000000010000000100000001000000010000000100000001000000010000000100000001000000
+  testRespawnUnits: 00000000000000000000000001000000010000000100000001000000010000000100000001000000
+  testEnemyRespawnUnits: 00000000000000000000000001000000010000000100000001000000010000000100000001000000
   testExtraRate: 30
 --- !u!4 &419198005
 Transform:
@@ -887,7 +887,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 30000
-  speed: 0
   defence: 0
   moveLimit: 5
 --- !u!114 &946834772
@@ -1509,7 +1508,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 30000
-  speed: 0
   defence: 0
   moveLimit: 5
 --- !u!114 &2118351138
