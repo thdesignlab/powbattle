@@ -19,6 +19,7 @@ TagManager:
   - ExtraSpawnPointMine
   - ExtraSpawnPointEnemy
   - Effect
+  - BreakableObstacle
   layers:
   - Default
   - TransparentFX
@@ -32,7 +33,7 @@ TagManager:
   - Unit
   - Enemy
   - Obstacle
-  - 
+  - BreakableObstacle
   - 
   - 
   - 

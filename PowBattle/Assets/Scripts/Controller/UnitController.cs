@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class UnitController : BaseMoveController
 {
-    protected bool isMine;
+    protected int mySide;
+    protected int enemySide;
     protected NavMeshAgent agent;
     protected string targetTag;
     protected string targetHQTag;
@@ -23,7 +24,9 @@ public class UnitController : BaseMoveController
     [SerializeField]
     protected int defence;
     [SerializeField]
-    protected int moveLimit = 5;
+    protected int moveLimit;
+    [SerializeField]
+    protected int hqDamage;
 
     protected WeaponController weaponCtrl;
     protected float attackRange;
@@ -38,19 +41,22 @@ public class UnitController : BaseMoveController
     protected virtual void Start()
     {
         nowHP = maxHP;
-        isMine = (tag == Common.CO.TAG_UNIT) ? true : false;
-        targetTag = (isMine) ? Common.CO.TAG_ENEMY : Common.CO.TAG_UNIT;
-        targetHQTag = (isMine) ? Common.CO.TAG_ENEMY_HQ : Common.CO.TAG_HQ;
-        string layer = ((isMine) ? Common.CO.LAYER_ENEMY : Common.CO.LAYER_UNIT);
-        targetLayer = LayerMask.GetMask(new string[] { layer, Common.CO.LAYER_OBSTACLE });
-
-        agent = GetComponent<NavMeshAgent>();
+        mySide = Common.Func.GetMySide(myTran.tag);
+        if (mySide != Common.CO.SIDE_UNKNOWN)
+        {
+            enemySide = (mySide + 1) % 2;
+            targetTag = Common.CO.tagUnitArray[enemySide];
+            targetHQTag = Common.CO.tagHQArray[enemySide];
+            targetLayer = Common.Func.GetSightLayerMask(enemySide);
+            agent = GetComponent<NavMeshAgent>();
+            SearchHQ();
+        }
+        else
+        {
+            enemySide = Common.CO.SIDE_UNKNOWN;
+        }
 
         EquipWeapon();
-        SearchHQ();
-        //targetTran = HQTran;
-        //if (HQTran == null) Search();
-        Search();
     }
 
     protected virtual void Update()
@@ -64,9 +70,11 @@ public class UnitController : BaseMoveController
         isLockOn = false;
         targetDistance = 0;
 
-        //索敵
-        if (!Search()) targetTran = HQTran;
-        if (targetTran == null) return;
+        if (targetTran == null)
+        {
+            Search();
+            return;
+        }
 
         //敵との距離
         targetDistance = Vector3.Distance(myTran.position, targetTran.position);
@@ -117,11 +125,9 @@ public class UnitController : BaseMoveController
     }
 
     //ターゲットHQサーチ
-    protected virtual void SearchHQ()
+    protected void SearchHQ()
     {
-        GameObject target = GameObject.FindGameObjectWithTag(targetHQTag);
-        if (target == null) return;
-        HQTran = target.transform;
+        HQTran = BattleManager.Instance.hqInfo[enemySide];
     }
 
     //ターゲットサーチ
@@ -134,7 +140,14 @@ public class UnitController : BaseMoveController
 
         //敵を探す
         GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
-        if (targets.Length == 0) return false;
+        if (targets.Length == 0)
+        {
+            targetTran = HQTran;
+            return false;
+        }
+
+        //敵HQまでの距離
+        float hqDistance = GetHQDistance();
 
         //一番近い敵を決定
         int index = 0;
@@ -148,10 +161,38 @@ public class UnitController : BaseMoveController
                 index = i;
             }
         }
-        targetTran = targets[index].transform;
+        //敵とHQ近いほうをターゲット
+        if (hqDistance < distance)
+        {
+            targetTran = HQTran;
+            distance = hqDistance;
+        }
+        else
+        {
+            targetTran = targets[index].transform;
+        }
+
+        //破壊可能オブジェクト
+        if (distance > attackRange)
+        {
+            if (Random.Range(0, 100) >= 95)
+            {
+                foreach (Transform obj in BattleManager.Instance.breakableObstacles)
+                {
+                    if (obj == null) continue;
+                    float d = Vector3.Distance(myTran.position, obj.position);
+                    if (d < distance)
+                    {
+                        targetTran = obj;
+                        break;
+                    }
+
+                }
+            }
+        }
         return true;
     }
-
+        
     //移動
     protected void Move()
     {
@@ -186,8 +227,10 @@ public class UnitController : BaseMoveController
         {
             //Debug.Log(name +" >> "+hit.transform.name);
             string hitTag = hit.transform.tag;
-            if (hitTag == targetTag || hitTag == targetHQTag) isTargetSight = true;
-        } 
+            //if (hitTag == targetTag || hitTag == targetHQTag) isTargetSight = true;
+            if (hitTag == targetTran.tag) isTargetSight = true;
+            //if (!isTargetSight) Debug.Log(name + " >> "+ hitTag +" / "+ targetTran.tag);
+        }
         agent.stoppingDistance = (isTargetSight) ? attackRange * 0.8f : 1;        
         isLockOn = isTargetSight;
     }
@@ -219,7 +262,7 @@ public class UnitController : BaseMoveController
     //ターゲット切り替え判定
     protected virtual void JugdeChangeTarget(Transform t)
     {
-        if (targetTran == null || targetTran == HQTran)
+        if (targetTran == null || targetTran == HQTran || targetTran.tag == Common.CO.TAG_BREAK_OBSTACLE)
         {
             targetTran = t;
         }
@@ -233,13 +276,34 @@ public class UnitController : BaseMoveController
     //死亡
     protected void Dead()
     {
+        DeadDamage();
         ObjectController objCon = GetComponent<ObjectController>();
         objCon.DestoryObject();
+    }
+
+    //死亡ダメージ
+    protected void DeadDamage()
+    {
+        if (hqDamage <= 0) return;
+        if (BattleManager.Instance.hqCtrl[mySide] == null) return;
+
+        //HQにダメージを与える
+        float rate = 1.0f;
+        if (BattleManager.Instance.battleSituation[mySide] < 50) rate /= 2;
+        BattleManager.Instance.hqCtrl[mySide].Hit((int)(hqDamage * rate), null);
     }
 
     //HP割合取得
     public int GetHpRate()
     {
         return Common.Func.GetPer(nowHP, maxHP);
+    }
+
+    //HQまでの距離取得
+    protected float GetHQDistance()
+    {
+        if (HQTran == null) return 99999;
+        return Vector3.Distance(myTran.position, HQTran.position);
+
     }
 }

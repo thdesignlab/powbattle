@@ -59,6 +59,8 @@ namespace Common
         public const string TAG_DAMAGE_EFFECT = "DamageEffect";
         public const string TAG_MUZZLE = "Muzzle";
         public const string TAG_OBSTACLE = "Obstacle";
+        public const string TAG_BREAK_OBSTACLE = "BreakableObstacle";
+        
 
         public static readonly string[] tagUnitArray = new string[] { TAG_UNIT, TAG_ENEMY };
         public static readonly string[] tagHQArray = new string[] { TAG_HQ, TAG_ENEMY_HQ };
@@ -68,15 +70,11 @@ namespace Common
         //レイヤー
         public const string LAYER_UNIT = "Unit";
         public const string LAYER_ENEMY = "Enemy";
-        public const string LAYER_STAGE = "Stage";
         public const string LAYER_OBSTACLE = "Obstacle";
+        public const string LAYER_BREAK_OBSTACLE = "BreakableObstacle";
 
         public static readonly string[] layerUnitArray = new string[] { LAYER_UNIT, LAYER_ENEMY };
 
-        //衝突判定するタグ
-        public static readonly string[] ColliderHitTagArray = new string[]
-        {
-        };
     }
 
     //### 端末保持情報 ###
@@ -173,12 +171,6 @@ namespace Common
             return flg;
         }
 
-        //衝突判定タグ
-        public static bool IsColliderHitTag(string tag)
-        {
-            return InArrayString(CO.ColliderHitTagArray, tag);
-        }
-
         //三角関数
         public static float GetSin(float time, float anglePerSec = 360, float startAngle = 0)
         {
@@ -250,6 +242,33 @@ namespace Common
             if (total == 0) return def;
             return (int)(Mathf.Ceil(target * 100 / (float)total));
         }
+
+        //視線判定するレイヤーマスクを取得する
+        public static int GetSightLayerMask(int side)
+        {
+            string targetLayer = CO.layerUnitArray[side];
+            return LayerMask.GetMask(new string[] { targetLayer, CO.LAYER_OBSTACLE, CO.LAYER_BREAK_OBSTACLE });
+        }
+
+        //自陣判定
+        public static int GetMySide(string tag)
+        {
+            int side = CO.SIDE_UNKNOWN;
+            switch (tag)
+            {
+                case CO.TAG_UNIT:
+                case CO.TAG_HQ:
+                    side = CO.SIDE_MINE;
+                    break;
+
+                case CO.TAG_ENEMY:
+                case CO.TAG_ENEMY_HQ:
+                    side = CO.SIDE_ENEMY;
+                    break;
+            }
+            return side;
+        }
+
     }
 
     //### ユニット ###

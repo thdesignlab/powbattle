@@ -173,6 +173,7 @@ MonoBehaviour:
   maxHP: 1000
   defence: 0
   moveLimit: 5
+  hqDamage: 100
 --- !u!114 &114575059781768106
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -10,7 +10,10 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 {
     [SerializeField]
     private Canvas battleCanvas;
+    [SerializeField]
     private Slider battleGage;
+    [SerializeField]
+    private List<Slider> hqGages;
 
     private bool isPause = false;
 
@@ -31,6 +34,10 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     private List<List<int>> spawnUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
     private List<List<int>> extraUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
 
+    [HideInInspector]
+    public List<Transform> breakableObstacles = new List<Transform>();
+
+
     //test用
     [SerializeField]
     int testUnitLimit;
@@ -42,7 +49,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     List<int> testRespawnUnits;
     [SerializeField]
     List<int> testEnemyRespawnUnits;
-    List<int> testExtraUnits = new List<int>() { 0, 0, 1, 1, 2 };
+    List<int> testExtraUnits = new List<int>() { 2 };
     [SerializeField]
     int testExtraRate;
 
@@ -55,11 +62,14 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         //プレイヤー準備
         ReadyPlayer();
 
-        //UI
-        battleGage = battleCanvas.transform.Find("Gage").GetComponent<Slider>();
+        ////UI
+        //battleGage = battleCanvas.transform.Find("Gage").GetComponent<Slider>();
 
         //HQ準備
         SetHQ();
+
+        //マップオブジェクト
+        SetMapObstacle();
 
         //ユニット準備
         SetSpawnPoint();
@@ -84,6 +94,9 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             //ユニット数
             unitCnt[side] = GameObject.FindGameObjectsWithTag(Common.CO.tagUnitArray[side]).Length;
             totalUnitCnt += unitCnt[side];
+
+            //HQゲージ
+            hqGages[side].value = hqCtrl[side].GetHpRate();
         }
         //ユニット数割合
         unitCntRate[Common.CO.SIDE_MINE] = Common.Func.GetPer(unitCnt[Common.CO.SIDE_MINE], totalUnitCnt, 50);
@@ -99,13 +112,13 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     //優劣判定
     private void JugdeSituation()
     {
-        //★ユニット数で判断
         foreach (int side in Common.CO.sideArray)
         {
-            battleSituation[side] = unitCntRate[side];
+            //★ユニット数で判断
+            //battleSituation[side] = unitCntRate[side];
+            //★HQHPで判断           
+            battleSituation[side] = (hqCtrl[side] != null) ? hqCtrl[side].GetHpRate() : 0;
         }
-
-        //★HQHPで判断
     }
 
     //HQ準備
@@ -121,10 +134,20 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         }
     }
 
-    //HP生成
+    //HQ生成
     private GameObject SpawnHQ(int side)
     {
         return null;
+    }
+
+    //マップオブジェクト取得
+    private void SetMapObstacle()
+    {
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag(Common.CO.TAG_BREAK_OBSTACLE);
+        foreach (GameObject obstacle in obstacles)
+        {
+            breakableObstacles.Add(obstacle.transform);
+        }
     }
 
     //ユニット出現位置取得
@@ -282,7 +305,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
                 if (unitCnt[side] < testUnitLimit)
                 {
                     SpawnUnitsRandom(side, false);
-                    if (battleSituation[side] < testExtraRate)
+                    if (unitCntRate[side] < testExtraRate)
                     {
                         yield return null;
                         SpawnUnits(side, true);

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4114587973732430}
   - component: {fileID: 33408306627813446}
   - component: {fileID: 23645059037910826}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Plane003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,9 +36,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4373923810542000}
-  m_Layer: 0
+  - component: {fileID: 208951687962660512}
+  - component: {fileID: 136834667258855540}
+  m_Layer: 11
   m_Name: Rock1_pre
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,7 +55,7 @@ GameObject:
   - component: {fileID: 4899243111948998}
   - component: {fileID: 33118880349330470}
   - component: {fileID: 23373725468737480}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Box012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,9 +81,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1683024797137350}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1.5, z: 2}
   m_Children:
   - {fileID: 4899243111948998}
   - {fileID: 4114587973732430}
@@ -179,3 +181,31 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1268524345000748}
   m_Mesh: {fileID: 4300002, guid: 12d31c9e8244cf74e962933721900005, type: 3}
+--- !u!136 &136834667258855540
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683024797137350}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.8
+  m_Height: 5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &208951687962660512
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1683024797137350}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 2.1, y: 2.5, z: 2.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
