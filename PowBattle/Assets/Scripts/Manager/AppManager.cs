@@ -12,12 +12,18 @@ public class AppManager : SingletonMonoBehaviour<AppManager>
 {
     public static int gameMode = 0;
 
+    [SerializeField]
+    private GameObject touchCousor;
+
     protected override void Awake()
     {
         base.Awake();
 
         //ステータスバー
         Common.Func.SetStatusbar();
+
+        //タッチ可視化
+        if (touchCousor != null) DontDestroyOnLoad(touchCousor);
     }
 
     void OnApplicationPause(bool pauseStatus)

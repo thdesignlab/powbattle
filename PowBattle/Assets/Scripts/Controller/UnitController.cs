@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class UnitController : BaseMoveController
 {
@@ -16,6 +17,8 @@ public class UnitController : BaseMoveController
     protected Transform targetTran;
     protected float targetDistance;
 
+    [SerializeField]
+    protected Slider hpGage;
     [SerializeField]
     protected GameObject weapon;
     [SerializeField]
@@ -42,9 +45,9 @@ public class UnitController : BaseMoveController
     {
         nowHP = maxHP;
         mySide = Common.Func.GetMySide(myTran.tag);
+        enemySide = BattleManager.Instance.GetEnemySide(mySide);
         if (mySide != Common.CO.SIDE_UNKNOWN)
         {
-            enemySide = (mySide + 1) % 2;
             targetTag = Common.CO.tagUnitArray[enemySide];
             targetHQTag = Common.CO.tagHQArray[enemySide];
             targetLayer = Common.Func.GetSightLayerMask(enemySide);
@@ -62,6 +65,7 @@ public class UnitController : BaseMoveController
     protected virtual void Update()
     {
         if (nowHP <= 0) return;
+        UpdateHpGage();
 
         leftMoveDelay -= Time.deltaTime;
         if (leftMoveDelay <= 0 && agent.isStopped) agent.isStopped = false;
@@ -99,6 +103,14 @@ public class UnitController : BaseMoveController
         //移動
         Move();
         moveTime += Time.deltaTime;
+    }
+
+    protected void UpdateHpGage()
+    {
+        if (hpGage != null)
+        {
+            hpGage.value = GetHpRate();
+        }
     }
 
     //武器装備
@@ -276,6 +288,7 @@ public class UnitController : BaseMoveController
     //死亡
     protected void Dead()
     {
+        UpdateHpGage();
         DeadDamage();
         ObjectController objCon = GetComponent<ObjectController>();
         objCon.DestoryObject();
@@ -289,7 +302,7 @@ public class UnitController : BaseMoveController
 
         //HQにダメージを与える
         float rate = 1.0f;
-        if (BattleManager.Instance.battleSituation[mySide] < 50) rate /= 2;
+        if (!BattleManager.Instance.JugdeBattleSituation(mySide)) rate /= 2;
         BattleManager.Instance.hqCtrl[mySide].Hit((int)(hqDamage * rate), null);
     }
 
@@ -305,5 +318,14 @@ public class UnitController : BaseMoveController
         if (HQTran == null) return 99999;
         return Vector3.Distance(myTran.position, HQTran.position);
 
+    }
+
+    //HPゲージ色設定
+    public void SetHpGageColor(Color color)
+    {
+        if (hpGage == null) return;
+        Transform fill = hpGage.transform.Find("Fill Area/Fill");
+        if (fill == null) return;
+        fill.GetComponent<Image>().color = color;
     }
 }

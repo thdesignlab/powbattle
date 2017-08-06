@@ -14,6 +14,9 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     private Slider battleGage;
     [SerializeField]
     private List<Slider> hqGages;
+    [SerializeField]
+    private List<int> extraRateList;
+    private int callExtraDiff = 3;
 
     private bool isPause = false;
 
@@ -28,8 +31,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     public List<Transform> hqInfo = new List<Transform>() { null, null };
     [HideInInspector]
     public List<HQController> hqCtrl = new List<HQController>() { null, null };
-    [HideInInspector]
-    public List<int> battleSituation = new List<int>() { 50, 50 };
+    //[HideInInspector]
+    //public List<int> battleSituation = new List<int>() { 50, 50 };
 
     private List<List<int>> spawnUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
     private List<List<int>> extraUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
@@ -42,6 +45,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     [SerializeField]
     int testUnitLimit;
     [SerializeField]
+    int testRespawnCount;
+    [SerializeField]
     int testRespawnInterval;
     [SerializeField]
     int testRespawnIntervalAdd;
@@ -49,9 +54,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     List<int> testRespawnUnits;
     [SerializeField]
     List<int> testEnemyRespawnUnits;
-    List<int> testExtraUnits = new List<int>() { 2 };
-    [SerializeField]
-    int testExtraRate;
+    List<int> testExtraUnits = new List<int>() { 0, 0, 0, 1, 1, 1, 1, 1, 2, 2 };
 
 
     protected override void Awake()
@@ -62,9 +65,6 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         //プレイヤー準備
         ReadyPlayer();
 
-        ////UI
-        //battleGage = battleCanvas.transform.Find("Gage").GetComponent<Slider>();
-
         //HQ準備
         SetHQ();
 
@@ -74,6 +74,13 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         //ユニット準備
         SetSpawnPoint();
         SetSpawnUnit();
+        UpdateSituation();
+    }
+
+    private void Start()
+    {
+        //援軍チェックルーチン
+        StartCoroutine(CheckExtra());
 
         //★テスト
         StartCoroutine(test());
@@ -102,23 +109,35 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         unitCntRate[Common.CO.SIDE_MINE] = Common.Func.GetPer(unitCnt[Common.CO.SIDE_MINE], totalUnitCnt, 50);
         unitCntRate[Common.CO.SIDE_ENEMY] = 100 - unitCntRate[Common.CO.SIDE_MINE];
 
-        //戦況判定
-        JugdeSituation();
-
         //戦況ゲージ
         battleGage.value = unitCntRate[Common.CO.SIDE_MINE] / 100.0f;
     }
 
-    //優劣判定
-    private void JugdeSituation()
+    //敵陣営No取得
+    public int GetEnemySide(int mySide)
     {
-        foreach (int side in Common.CO.sideArray)
+        int enemySide = Common.CO.SIDE_UNKNOWN;
+        if (mySide != Common.CO.SIDE_UNKNOWN)
         {
-            //★ユニット数で判断
-            //battleSituation[side] = unitCntRate[side];
-            //★HQHPで判断           
-            battleSituation[side] = (hqCtrl[side] != null) ? hqCtrl[side].GetHpRate() : 0;
+            enemySide = (mySide + 1) % 2;
         }
+        return enemySide;
+    }
+
+    //優勢判定(HQHP)
+    public bool JugdeBattleSituation(int mySide)
+    {
+        int enemySide = GetEnemySide(mySide);
+        if (hqCtrl[mySide] == null) return false;
+        if (hqCtrl[enemySide] == null) return true;
+        return (hqCtrl[mySide].GetHpRate() > hqCtrl[enemySide].GetHpRate());
+    }
+
+    //優勢判定(ユニット数)
+    public bool JugdeUnitSituation(int mySide)
+    {
+        int enemySide = GetEnemySide(mySide);
+        return (unitCnt[mySide] > unitCnt[enemySide]);
     }
 
     //HQ準備
@@ -177,11 +196,23 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         {
             if (side == Common.CO.SIDE_MINE)
             {
-                spawnUnits[side] = testRespawnUnits;
+                for (int i = 0; i <testRespawnUnits.Count; i++)
+                {
+                    for (int j = 0; j < testRespawnUnits[i]; j++)
+                    {
+                        spawnUnits[side].Add(i);
+                    }
+                }
             }
             else
             {
-                spawnUnits[side] = testEnemyRespawnUnits;
+                for (int i = 0; i < testEnemyRespawnUnits.Count; i++)
+                {
+                    for (int j = 0; j < testRespawnUnits[i]; j++)
+                    {
+                        spawnUnits[side].Add(i);
+                    }
+                }
             }
             extraUnits[side] = testExtraUnits;
         }
@@ -262,8 +293,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 
         //情報変更
         unit.tag = Common.CO.tagUnitArray[side];
-        Common.Func.SetLayer(unit, Common.CO.layerUnitArray[side], true);
-        //★色変え
+        Common.Func.SetLayer(unit, Common.CO.layerUnitArray[side], false);
+        //★ボディ色変え
         Transform unitBody = null;
         Color[] bodyColors = new Color[] { Color.white, Color.red };
         foreach (Transform child in unit.transform)
@@ -277,7 +308,48 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         Material[] mats = unitBody.GetComponent<Renderer>().materials;
         mats[0].color = bodyColors[side];
         unitBody.GetComponent<Renderer>().materials = mats;
+        //★HPGage色変え
+        Color[] gageColors = new Color[] { Color.cyan, Color.yellow };
+        unit.GetComponent<UnitController>().SetHpGageColor(gageColors[side]);
         return unit;
+    }
+
+
+    //援軍チェックルーチン
+    IEnumerator CheckExtra()
+    {
+        for (;;)
+        {
+            yield return new WaitForSeconds(5.0f);
+            CallExtraUnits();
+        }
+    }
+
+    //援軍生成
+    private void CallExtraUnits()
+    {
+        if (extraRateList.Count == 0) return;
+
+        int mine = (int)hqGages[Common.CO.SIDE_MINE].value;
+        int enemy = (int)hqGages[Common.CO.SIDE_ENEMY].value;
+        List<int> callExtraSides = new List<int>();
+
+        if (mine <= extraRateList[0])
+        {
+            callExtraSides.Add(Common.CO.SIDE_MINE);
+            if (enemy - mine <= callExtraDiff) callExtraSides.Add(Common.CO.SIDE_ENEMY);
+        }
+        else if (enemy <= extraRateList[0])
+        {
+            callExtraSides.Add(Common.CO.SIDE_ENEMY);
+            if (mine - enemy <= callExtraDiff) callExtraSides.Add(Common.CO.SIDE_MINE);
+        }
+
+        foreach (int side in callExtraSides)
+        {
+            SpawnUnitsRandom(side, true);
+        }
+        if (callExtraSides.Count > 0) extraRateList.RemoveAt(0);
     }
 
     public void Pause()
@@ -297,7 +369,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     //★テスト用
     IEnumerator test()
     {
-        for (;;)
+        for (int i = 0; i < testRespawnCount; i++)
         {
             //ユニット生成
             foreach (int side in Common.CO.sideArray)
@@ -305,11 +377,6 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
                 if (unitCnt[side] < testUnitLimit)
                 {
                     SpawnUnitsRandom(side, false);
-                    if (unitCntRate[side] < testExtraRate)
-                    {
-                        yield return null;
-                        SpawnUnits(side, true);
-                    }
                 }
             }
 

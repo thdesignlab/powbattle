@@ -156,13 +156,13 @@ namespace Common
             ApplicationChrome.navigationBarState = ApplicationChrome.States.Hidden;
         }
 
-        //配列チェック
-        private static bool InArrayString(string[] tags, string tagName)
+        //配列内存在チェック
+        public static bool InArrayString(string[] array, string target)
         {
             bool flg = false;
-            foreach (string tag in tags)
+            foreach (string a in array)
             {
-                if (tagName == tag)
+                if (target == a)
                 {
                     flg = true;
                     break;

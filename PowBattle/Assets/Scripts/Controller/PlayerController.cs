@@ -48,7 +48,9 @@ public class PlayerController : GestureManager
     }
     protected override void Twist(float delta)
     {
-        myTran.Rotate(0, delta * twistRate, 0);
+        delta *= twistRate;
+        if (delta > 30) delta = 30;
+        myTran.Rotate(0, delta, 0);
     }
 
 
