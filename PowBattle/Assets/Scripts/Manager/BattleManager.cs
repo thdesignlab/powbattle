@@ -210,7 +210,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             {
                 for (int i = 0; i < testEnemyRespawnUnits.Count; i++)
                 {
-                    for (int j = 0; j < testRespawnUnits[i]; j++)
+                    for (int j = 0; j < testEnemyRespawnUnits[i]; j++)
                     {
                         spawnUnits[side].Add(i);
                     }

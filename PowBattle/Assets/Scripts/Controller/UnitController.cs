@@ -62,7 +62,7 @@ public class UnitController : BaseMoveController
     //初期処理
     protected virtual void Init()
     {
-        OpenShield(1.0f);
+        OpenShield(3.0f);
         EquipWeapon();
         StartCoroutine(ActionRoutine());
     }

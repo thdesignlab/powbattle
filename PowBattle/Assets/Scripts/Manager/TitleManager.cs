@@ -44,6 +44,8 @@ public class TitleManager : MonoBehaviour
         }
 #else
 #endif
+        yield return new WaitForSeconds(1.0f);
+        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
 
         isSplashFinished = true;
 
