@@ -429,9 +429,10 @@ MonoBehaviour:
   hpGage: {fileID: 114012022648935520}
   weapon: {fileID: 1927420743177176, guid: 1e39eedb3aadb89428f7fe51c7d92910, type: 2}
   maxHP: 2000
+  researchLimit: 5
+  hqDamage: 200
+  attack: 0
   defence: 0
-  moveLimit: 5
-  hqDamage: 150
 --- !u!114 &114791288765294472
 MonoBehaviour:
   m_ObjectHideFlags: 1

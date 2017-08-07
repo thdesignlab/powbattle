@@ -5,10 +5,9 @@ using UnityEngine.AI;
 
 public class ObstacleController : UnitController
 {
-
-    protected override void Update()
+    //初期処理
+    protected override void Init()
     {
         return;
     }
-
 }

@@ -33,6 +33,7 @@ public class ShootWeaponController : WeaponController
     {
         for (int i = 0; i < rapidCount; i++)
         {
+            if (muzzleList.Count == 0) yield break;
             int muzzleNo = i % muzzleList.Count;
             if (target != null) LockOn(target, muzzleNo);
             Shoot();

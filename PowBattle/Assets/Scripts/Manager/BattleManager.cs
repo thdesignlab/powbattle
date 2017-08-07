@@ -39,6 +39,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 
     [HideInInspector]
     public List<Transform> breakableObstacles = new List<Transform>();
+    [HideInInspector]
+    public List<List<Transform>> unitList = new List<List<Transform>> { new List<Transform>() { }, new List<Transform>() { } };
 
 
     //test用
@@ -290,21 +292,14 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         //生成
         GameObject unitPref = Resources.Load<GameObject>(Common.CO.RESOURCE_UNIT_DIR + Common.Unit.unitInfo[unitNo]);
         GameObject unit = Instantiate(unitPref, spawnPoint.position, spawnPoint.rotation);
+        unitList[side].Add(unit.transform);
 
         //情報変更
         unit.tag = Common.CO.tagUnitArray[side];
         Common.Func.SetLayer(unit, Common.CO.layerUnitArray[side], false);
         //★ボディ色変え
-        Transform unitBody = null;
         Color[] bodyColors = new Color[] { Color.white, Color.red };
-        foreach (Transform child in unit.transform)
-        {
-            if (child.tag == Common.CO.TAG_UNIT_BODY)
-            {
-                unitBody = child;
-                break;
-            }
-        }
+        Transform unitBody = Common.Func.SearchChildTag(unit.transform, Common.CO.TAG_UNIT_BODY);
         Material[] mats = unitBody.GetComponent<Renderer>().materials;
         mats[0].color = bodyColors[side];
         unitBody.GetComponent<Renderer>().materials = mats;
@@ -314,6 +309,16 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         return unit;
     }
 
+    //ユニット削除
+    public void RemoveUnit(int side, Transform tran)
+    {
+        if (tran == null || side == Common.CO.SIDE_UNKNOWN)
+        {
+            Debug.Log(side +" >> "+tran);
+            return;
+        }
+        unitList[side].Remove(tran);
+    }
 
     //援軍チェックルーチン
     IEnumerator CheckExtra()
@@ -350,6 +355,22 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             SpawnUnitsRandom(side, true);
         }
         if (callExtraSides.Count > 0) extraRateList.RemoveAt(0);
+    }
+
+    //ユニットリスト取得
+    public List<Transform> GetUnitList(int side)
+    {
+        List<Transform> list = new List<Transform>();
+        if (side == Common.CO.SIDE_UNKNOWN)
+        {
+            list = unitList[Common.CO.SIDE_MINE];
+            list.AddRange(unitList[Common.CO.SIDE_ENEMY]);
+        }
+        else
+        {
+            list = unitList[side];
+        }
+        return list;
     }
 
     public void Pause()

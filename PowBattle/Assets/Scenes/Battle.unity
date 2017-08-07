@@ -424,11 +424,11 @@ MonoBehaviour:
   - {fileID: 0}
   breakableObstacles: []
   testUnitLimit: 50
-  testRespawnCount: 15
-  testRespawnInterval: 15
-  testRespawnIntervalAdd: 1
-  testRespawnUnits: 040000000f00000001000000
-  testEnemyRespawnUnits: 040000000f00000001000000
+  testRespawnCount: 10
+  testRespawnInterval: 10
+  testRespawnIntervalAdd: 2
+  testRespawnUnits: 050000000a00000001000000
+  testEnemyRespawnUnits: 050000000a00000001000000
 --- !u!4 &419198005
 Transform:
   m_ObjectHideFlags: 0
@@ -1188,9 +1188,10 @@ MonoBehaviour:
   hpGage: {fileID: 0}
   weapon: {fileID: 0}
   maxHP: 30000
-  defence: 0
-  moveLimit: 5
-  hqDamage: 0
+  researchLimit: 0
+  aleartDistance: 50
+  aleartNum: 5
+  aleartInterval: 5
 --- !u!114 &946834772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1973,9 +1974,7 @@ MonoBehaviour:
   hpGage: {fileID: 0}
   weapon: {fileID: 0}
   maxHP: 30000
-  defence: 0
-  moveLimit: 5
-  hqDamage: 0
+  researchLimit: 0
 --- !u!1 &1942402540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,9 +2437,10 @@ MonoBehaviour:
   hpGage: {fileID: 0}
   weapon: {fileID: 0}
   maxHP: 30000
-  defence: 0
-  moveLimit: 5
-  hqDamage: 0
+  researchLimit: 0
+  aleartDistance: 50
+  aleartNum: 5
+  aleartInterval: 5
 --- !u!114 &2118351138
 MonoBehaviour:
   m_ObjectHideFlags: 0

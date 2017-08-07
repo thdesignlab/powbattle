@@ -333,9 +333,10 @@ MonoBehaviour:
   hpGage: {fileID: 114746162754355066}
   weapon: {fileID: 1938369445840822, guid: eefa7761c6d41b649a2f73a64af5a662, type: 2}
   maxHP: 8000
-  defence: 0
-  moveLimit: 5
+  researchLimit: 5
   hqDamage: 300
+  attack: 0
+  defence: 0
 --- !u!114 &114534043168916506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -493,7 +494,7 @@ NavMeshAgent:
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295

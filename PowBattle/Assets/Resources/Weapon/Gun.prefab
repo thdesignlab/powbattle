@@ -86,4 +86,4 @@ MonoBehaviour:
   bullet: {fileID: 1861109683996740, guid: 701935560259e3842acd3f8bd665ce02, type: 2}
   rapidCount: 3
   rapidInterval: 0.2
-  shootDiff: 0.5
+  shootDiff: 0.3

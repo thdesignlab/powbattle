@@ -74,7 +74,6 @@ namespace Common
         public const string LAYER_BREAK_OBSTACLE = "BreakableObstacle";
 
         public static readonly string[] layerUnitArray = new string[] { LAYER_UNIT, LAYER_ENEMY };
-
     }
 
     //### 端末保持情報 ###
@@ -208,10 +207,17 @@ namespace Common
             return drawObj;
         }
 
-        //ランダム抽選
+        //ランダム抽選(Dictionary)
         public static TKey RandomDic<TKey, TValue>(Dictionary<TKey, TValue> dic)
         {
             return dic.ElementAt(Random.Range(0, dic.Count)).Key;
+        }
+
+        //ランダム抽選(List)
+        public static T RandomList<T>(List<T> list)
+        {
+            int index = Random.Range(0, list.Count);
+            return list[index];
         }
 
         //レイヤーセット
@@ -267,6 +273,21 @@ namespace Common
                     break;
             }
             return side;
+        }
+
+        //子供からタグ検索
+        public static Transform SearchChildTag(Transform parent, string tag)
+        {
+            Transform child = null;
+            foreach (Transform t in parent.transform)
+            {
+                if (t.tag == tag)
+                {
+                    child = t;
+                    break;
+                }
+            }
+            return child;
         }
 
     }

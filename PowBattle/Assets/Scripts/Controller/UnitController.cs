@@ -8,7 +8,6 @@ public class UnitController : BaseMoveController
 {
     protected int mySide;
     protected int enemySide;
-    protected NavMeshAgent agent;
     protected string targetTag;
     protected string targetHQTag;
     protected int targetLayer;
@@ -16,6 +15,8 @@ public class UnitController : BaseMoveController
     protected Transform HQTran;
     protected Transform targetTran;
     protected float targetDistance;
+    protected bool isAttackRange;
+    protected bool isLockOn;
 
     [SerializeField]
     protected Slider hpGage;
@@ -25,21 +26,14 @@ public class UnitController : BaseMoveController
     protected int maxHP;
     protected int nowHP;
     [SerializeField]
-    protected int defence;
-    [SerializeField]
-    protected int moveLimit;
-    [SerializeField]
-    protected int hqDamage;
+    protected float researchLimit;
+    protected float researchTime;
+    protected float leftForceTargetTime;
 
     protected WeaponController weaponCtrl;
     protected float attackRange;
-    protected float leftMoveDelay = 0;
 
-    protected bool isAttackRange;
-    protected bool isLockOn;
-    protected float moveTime = 0;
-
-    protected Dictionary<Transform, float> hateDic = new Dictionary<Transform, float>();
+    protected const int MAX_DEFENCE = 90;
 
     protected virtual void Start()
     {
@@ -51,60 +45,67 @@ public class UnitController : BaseMoveController
             targetTag = Common.CO.tagUnitArray[enemySide];
             targetHQTag = Common.CO.tagHQArray[enemySide];
             targetLayer = Common.Func.GetSightLayerMask(enemySide);
-            agent = GetComponent<NavMeshAgent>();
-            SearchHQ();
         }
         else
         {
             enemySide = Common.CO.SIDE_UNKNOWN;
         }
+        isAttackRange = false;
+        isLockOn = false;
+        targetDistance = 0;
+        researchTime = 0;
+        leftForceTargetTime = 0;
 
+        Init();
+    }
+
+    //初期処理
+    protected virtual void Init()
+    {
+        OpenShield(1.0f);
         EquipWeapon();
+        StartCoroutine(ActionRoutine());
     }
 
     protected virtual void Update()
     {
         if (nowHP <= 0) return;
         UpdateHpGage();
-
-        leftMoveDelay -= Time.deltaTime;
-        if (leftMoveDelay <= 0 && agent.isStopped) agent.isStopped = false;
-
-        isAttackRange = false;
-        isLockOn = false;
-        targetDistance = 0;
-
-        if (targetTran == null)
-        {
-            Search();
-            return;
-        }
-
-        //敵との距離
-        targetDistance = Vector3.Distance(myTran.position, targetTran.position);
-        if (targetDistance <= attackRange)
-        {
-            isAttackRange = true;
-            LockOn();
-
-            if (isLockOn)
-            {
-                //敵の方を向く
-                LookTarget(targetTran, agent.angularSpeed, new Vector3(1, 0, 1));
-
-                //攻撃
-                if (Attack()) {
-                    moveTime = 0;
-                    return;
-                }
-            }
-        }
-
-        //移動
-        Move();
-        moveTime += Time.deltaTime;
+        researchTime += Time.deltaTime;
+        if (leftForceTargetTime > 0) leftForceTargetTime -= Time.deltaTime;
     }
 
+    //行動ルーチン
+    IEnumerator ActionRoutine()
+    {
+        if (weapon == null) yield break;
+
+        float wait = 0.5f;
+        for (;;)
+        {
+            Action();
+            yield return new WaitForSeconds(wait);
+        }
+    }
+
+    //行動
+    protected virtual void Action()
+    {
+        //索敵
+        Search();
+
+        //攻撃判定
+        JudgeAttack();
+    }
+
+    //ターゲットまでの距離取得
+    protected float GetTargetDistance()
+    {
+        if (targetTran == null) return 99999;
+        return Vector3.Distance(myTran.position, targetTran.position);
+    }
+
+    //HPゲージ更新
     protected void UpdateHpGage()
     {
         if (hpGage != null)
@@ -134,117 +135,72 @@ public class UnitController : BaseMoveController
         weaponCtrl = w.GetComponent<WeaponController>();
         weaponCtrl.SetOwner(myTran);
         attackRange = weaponCtrl.GetRange();
-    }
-
-    //ターゲットHQサーチ
-    protected void SearchHQ()
-    {
-        HQTran = BattleManager.Instance.hqInfo[enemySide];
+        researchLimit = weaponCtrl.GetReload() * 1.5f;
     }
 
     //ターゲットサーチ
-    protected virtual bool Search()
+    protected virtual void Search()
     {
-        if (targetTran != null)
-        {
-            if (moveTime <= moveLimit) return true;
-        }
+        //再索敵チェック
+        if (targetTran != null && researchTime < researchLimit) return;
 
         //敵を探す
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
-        if (targets.Length == 0)
-        {
-            targetTran = HQTran;
-            return false;
-        }
+        List<Transform> targets = BattleManager.Instance.GetUnitList(enemySide);
 
-        //敵HQまでの距離
-        float hqDistance = GetHQDistance();
+        if (targets.Count == 0) return;
 
         //一番近い敵を決定
         int index = 0;
         float distance = 0;
-        for (int i = 0; i < targets.Length; i++)
+        for (int i = 0; i < targets.Count; i++)
         {
-            float tmpDistance = Vector3.Distance(myTran.position, targets[i].transform.position);
+            if (targets[i] == null) continue;
+            float tmpDistance = Vector3.Distance(myTran.position, targets[i].position);
             if (i == 0 || tmpDistance < distance)
             {
                 distance = tmpDistance;
                 index = i;
             }
         }
-        //敵とHQ近いほうをターゲット
-        if (hqDistance < distance)
-        {
-            targetTran = HQTran;
-            distance = hqDistance;
-        }
-        else
-        {
-            targetTran = targets[index].transform;
-        }
-
-        //破壊可能オブジェクト
-        if (distance > attackRange)
-        {
-            if (Random.Range(0, 100) >= 95)
-            {
-                foreach (Transform obj in BattleManager.Instance.breakableObstacles)
-                {
-                    if (obj == null) continue;
-                    float d = Vector3.Distance(myTran.position, obj.position);
-                    if (d < distance)
-                    {
-                        targetTran = obj;
-                        break;
-                    }
-
-                }
-            }
-        }
-        return true;
+        targetTran = targets[index];
     }
-        
-    //移動
-    protected void Move()
+
+    //攻撃判定
+    protected virtual bool JudgeAttack()
     {
-        if (leftMoveDelay > 0) return;
-        agent.destination = targetTran.position;
+        //目視チェック
+        if (!LockOn()) return false;
+        bool atk = Attack();
+        if (atk) researchTime = 0;
+        return atk;
     }
 
     //攻撃
     protected bool Attack()
     {
-        //目視チェック
-        if (!isLockOn) return false;
-
-        //攻撃
-        if (weaponCtrl.Attack(targetTran))
-        {
-            leftMoveDelay = weaponCtrl.GetMoveDelay();
-            agent.isStopped = true;
-            return true;
-        }
-        return false;
+        return weaponCtrl.Attack(targetTran);
     }
 
     //目視チェック
-    protected void LockOn()
+    protected bool LockOn()
     {
+        //敵との距離
+        targetDistance = GetTargetDistance();
+        isAttackRange = (targetDistance <= attackRange);
+
         bool isTargetSight = false;
-        Ray ray = new Ray(myTran.position, targetTran.position - myTran.position);
-        RaycastHit hit;
-        if (Physics.SphereCast(ray, 0.3f, out hit, attackRange, targetLayer))
-        //if (Physics.Raycast(ray, out hit, attackRange, targetLayer))
+        if (isAttackRange)
         {
-            //Debug.Log(name +" >> "+hit.transform.name);
-            string hitTag = hit.transform.tag;
-            //if (hitTag == targetTag || hitTag == targetHQTag) isTargetSight = true;
-            if (hitTag == targetTran.tag) isTargetSight = true;
-            //if (!isTargetSight) Debug.Log(name + " >> "+ hitTag +" / "+ targetTran.tag);
+            Ray ray = new Ray(myTran.position, targetTran.position - myTran.position);
+            RaycastHit hit;
+            if (Physics.SphereCast(ray, 0.3f, out hit, attackRange, targetLayer))
+            {
+                string hitTag = hit.transform.tag;
+                if (hitTag == targetTran.tag) isTargetSight = true;
+            }
         }
-        agent.stoppingDistance = (isTargetSight) ? attackRange * 0.8f : 1;        
         isLockOn = isTargetSight;
+        return isLockOn;
     }
 
     //被ダメージ
@@ -257,67 +213,71 @@ public class UnitController : BaseMoveController
         //ターゲット切り替え判定
         JugdeChangeTarget(enemyTran);
 
+        //シールドチェック
+        if (shieldTime > 0) return damage;
+
         //ダメージ
-        nowHP -= damage;
+        int d = Damage(damage, impact);
+
+        return d;
+    }
+
+    //ダメージ処理
+    public virtual int Damage(int damage, Vector3 impact)
+    {
+        int d = CalcDamage(damage);
+
+        //ダメージ
+        nowHP -= d;
         if (nowHP <= 0)
         {
             Dead();
         }
-        else if (impact != Vector3.zero)
-        {
-            Skip(impact);
-        }
 
+        return d;
+    }
+
+    //ダメージ計算
+    protected virtual int CalcDamage(int damage)
+    {
         return damage;
     }
 
     //ターゲット切り替え判定
     protected virtual void JugdeChangeTarget(Transform t)
     {
-        if (targetTran == null || targetTran == HQTran || targetTran.tag == Common.CO.TAG_BREAK_OBSTACLE)
-        {
+        if (t == null || leftForceTargetTime > 0) return;
+        if (targetTran == null
+            || targetTran == HQTran 
+            || targetTran.tag == Common.CO.TAG_BREAK_OBSTACLE
+        ) {
             targetTran = t;
         }
         else
         {
-            float enemyDistance = Vector3.Distance(myTran.position, targetTran.position);
+            float enemyDistance = Vector3.Distance(myTran.position, t.position);
             if (targetDistance > enemyDistance) targetTran = t;
         }
     }
 
-    //死亡
-    protected void Dead()
+    //強制ターゲット
+    public void SetForceTarget(Transform tran, float time)
     {
-        UpdateHpGage();
-        DeadDamage();
-        ObjectController objCon = GetComponent<ObjectController>();
-        objCon.DestoryObject();
+        targetTran = tran;
+        leftForceTargetTime = time;
     }
 
-    //死亡ダメージ
-    protected void DeadDamage()
+    //死亡
+    protected virtual void Dead()
     {
-        if (hqDamage <= 0) return;
-        if (BattleManager.Instance.hqCtrl[mySide] == null) return;
-
-        //HQにダメージを与える
-        float rate = 1.0f;
-        if (!BattleManager.Instance.JugdeBattleSituation(mySide)) rate /= 2;
-        BattleManager.Instance.hqCtrl[mySide].Hit((int)(hqDamage * rate), null);
+        UpdateHpGage();
+        GetComponent<ObjectController>().DestoryObject();
     }
 
     //HP割合取得
     public int GetHpRate()
     {
         return Common.Func.GetPer(nowHP, maxHP);
-    }
-
-    //HQまでの距離取得
-    protected float GetHQDistance()
-    {
-        if (HQTran == null) return 99999;
-        return Vector3.Distance(myTran.position, HQTran.position);
-
     }
 
     //HPゲージ色設定
@@ -328,4 +288,32 @@ public class UnitController : BaseMoveController
         if (fill == null) return;
         fill.GetComponent<Image>().color = color;
     }
+
+
+    //シールド展開
+    protected float shieldTime = 0;
+    Coroutine shieldCoroutine;
+    protected void OpenShield(float time)
+    {
+        if (shieldCoroutine != null)
+        {
+            shieldTime += time;
+        }
+        else
+        {
+            shieldTime = time;
+            shieldCoroutine = StartCoroutine(ShieldCoroutine());
+        }
+    }
+    IEnumerator ShieldCoroutine()
+    {
+        float wait = 0.5f;
+        for (;;)
+        {
+            shieldTime -= wait;
+            if (shieldTime <= 0) yield break;
+            yield return new WaitForSeconds(wait);
+        }
+    }
+
 }
