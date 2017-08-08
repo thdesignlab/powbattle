@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using UnityEngine.AI;
 
 public class BattleManager : SingletonMonoBehaviour<BattleManager>
 {
@@ -17,6 +18,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     [SerializeField]
     private List<int> extraRateList;
     private int callExtraDiff = 3;
+    private GameObject player;
 
     private bool isPause = false;
 
@@ -56,7 +58,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     List<int> testRespawnUnits;
     [SerializeField]
     List<int> testEnemyRespawnUnits;
-    List<int> testExtraUnits = new List<int>() { 0, 0, 0, 1, 1, 1, 1, 1, 2, 2 };
+    List<int> testExtraUnits = new List<int>() { 0, 0,  1, 1, 1, 1, 1, 2 };
 
 
     protected override void Awake()
@@ -226,7 +228,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         GameObject playerSP = GameObject.FindGameObjectWithTag(Common.CO.TAG_SP_PLAYER);
         Vector3 pos = (playerSP != null) ? playerSP.transform.position : new Vector3(0, 15, 0);
         Quaternion rot = (playerSP != null) ? playerSP.transform.rotation : Quaternion.identity;
-        GameObject player = GameObject.FindGameObjectWithTag(Common.CO.TAG_PLAYER);
+        player = GameObject.FindGameObjectWithTag(Common.CO.TAG_PLAYER);
         if (player == null) player = Instantiate(Resources.Load<GameObject>("Player"));
         player.transform.position = pos;
         player.transform.rotation = rot;
@@ -281,7 +283,14 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         foreach (int unit in units)
         {
             Transform sp = SelectSpawnPoint(side, isExtra, true);
-            SpawnUnit(unit, sp, side);
+            GameObject unitObj = SpawnUnit(unit, sp, side);
+            if (isExtra)
+            {
+                //援軍バフ
+                UnitController unitCtrl = unitObj.GetComponent<UnitController>();
+                unitCtrl.AttackEffect(50, 15);
+                unitCtrl.DefenceEffect(75, 30);
+            }
         }
 
     }
@@ -291,7 +300,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
         //生成
         GameObject unitPref = Resources.Load<GameObject>(Common.CO.RESOURCE_UNIT_DIR + Common.Unit.unitInfo[unitNo]);
-        GameObject unit = Instantiate(unitPref, spawnPoint.position, spawnPoint.rotation);
+        GameObject unit = Instantiate(unitPref, PickAroundPosition(spawnPoint.position), spawnPoint.rotation);
         unitList[side].Add(unit.transform);
 
         //情報変更
@@ -308,6 +317,22 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         unit.GetComponent<UnitController>().SetHpGageColor(gageColors[side]);
         return unit;
     }
+
+    //周辺ポイント決定
+    private Vector3 PickAroundPosition(Vector3 basePos, float range = 1.0f)
+    {
+        Vector3 pos = basePos;
+        NavMeshHit hit;
+        Vector3 randomPoint = basePos + UnityEngine.Random.insideUnitSphere * range;
+        //Debug.Log(basePos + " >> " + randomPoint);
+        if (NavMesh.SamplePosition(randomPoint, out hit, range, NavMesh.AllAreas))
+        {
+            pos = hit.position;
+        }
+        pos.y = basePos.y;
+        return pos;
+    }
+
 
     //ユニット削除
     public void RemoveUnit(int side, Transform tran)
@@ -373,6 +398,16 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         return list;
     }
 
+    public GameObject GetBattleCanvas()
+    {
+        return battleCanvas.gameObject;
+    }
+
+    public GameObject GetPlayer()
+    {
+        return player;
+    }
+
     public void Pause()
     {
         isPause = true;
@@ -405,5 +440,4 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             yield return new WaitForSeconds(testRespawnInterval);
         }
     }
-
 }

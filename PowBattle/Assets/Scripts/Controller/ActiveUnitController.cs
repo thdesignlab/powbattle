@@ -10,13 +10,6 @@ public class ActiveUnitController : UnitController
 
     [SerializeField]
     protected int hqDamage;
-    [SerializeField]
-    protected int attack;
-    [SerializeField]
-    protected int defence;
-
-    protected int defaultAttack;
-    protected int defaultDefence;
     protected float defaultSpeed;
 
     protected float coolTime = 0;
@@ -25,7 +18,13 @@ public class ActiveUnitController : UnitController
     {
         agent = GetComponent<NavMeshAgent>();
         base.Start();
+    }
+
+    protected override void Init()
+    {
         SearchHQ();
+        base.Init();
+        SaveDefault();
     }
 
     protected override void Update()
@@ -43,6 +42,17 @@ public class ActiveUnitController : UnitController
     {
         base.Action();
 
+        if (mySide == 0)
+        {
+            //Debug.Log("---target >>" + targetTran);
+            //Debug.Log("---defence >>" + GetDefence());
+            //foreach (int rate in statusEffectCoroutine[Common.CO.STATUS_DEFENCE].Keys)
+            //{
+            //    Debug.Log("***rate >>" + rate);
+            //}
+        }
+
+
         //移動
         Move();
     }
@@ -50,8 +60,6 @@ public class ActiveUnitController : UnitController
     //デフォルトステータス保管
     protected void SaveDefault()
     {
-        defaultAttack = attack;
-        defaultDefence = defence;
         defaultSpeed = agent.speed;
     }
 
@@ -72,10 +80,12 @@ public class ActiveUnitController : UnitController
         float hqDistance = GetHQDistance();
 
         //敵とHQ近いほうをターゲット
-        if (hqDistance < targetDistance)
+        if (targetTran == null || hqDistance < targetDistance)
         {
-            targetTran = HQTran;
-            targetDistance = hqDistance;
+            SetTarget(HQTran);
+            //targetTran = HQTran;
+            //targetDistance = hqDistance;
+            //if (mySide == 0) Debug.Log("###target HQ >>"+ targetTran);
         }
 
         //破壊可能オブジェクト
@@ -90,8 +100,10 @@ public class ActiveUnitController : UnitController
                     float d = Vector3.Distance(myTran.position, objTran.position);
                     if (d < targetDistance)
                     {
-                        targetTran = objTran;
-                        targetDistance = d;
+                        SetTarget(objTran);
+                        //targetTran = objTran;
+                        //targetDistance = d;
+                        //if (mySide == 0) Debug.Log("###target OBSTACLE >> "+ targetTran);
                     }
                 }
             }
@@ -104,7 +116,6 @@ public class ActiveUnitController : UnitController
         if (coolTime > 0 || targetTran == null) return;
         agent.isStopped = false;
         agent.destination = targetTran.position;
-        //Debug.Log(mySide + " >> " + targetTran.position + " >> " + agent.destination);
     }
 
     //攻撃判定
@@ -154,7 +165,7 @@ public class ActiveUnitController : UnitController
 
         //HQにダメージを与える
         float rate = 1.0f;
-        if (!BattleManager.Instance.JugdeBattleSituation(mySide)) rate /= 2;
+        if (!BattleManager.Instance.JugdeBattleSituation(mySide)) rate *= 0.75f;
         BattleManager.Instance.hqCtrl[mySide].Hit((int)(hqDamage * rate), null);
     }
     
@@ -166,28 +177,11 @@ public class ActiveUnitController : UnitController
 
     }
 
-    //防御増減
-    protected Dictionary<int, Coroutine> difenceEffectCoroutine;
-    protected void DefenceEffect(int rate, float time)
+    //ステータス取得
+    protected float GetSpeed()
     {
-        if (rate > 0)
-        {
-
-        }
-        if (rate < 0)
-        {
-
-        }
+        int rate = GetStatusEffect(Common.CO.STATUS_SPEED);
+        if (rate < MIN_SPEED_EFFECT) rate = MIN_SPEED_EFFECT;
+        return  agent.speed * (100 + rate) / 100.0f;
     }
-    IEnumerator DefenceEffectCoroutine(int rate, float time)
-    {
-        float wait = 0.5f;
-        for (;;)
-        {
-            shieldTime -= wait;
-            if (time <= 0) yield break;
-            yield return new WaitForSeconds(wait);
-        }
-    }
-
 }

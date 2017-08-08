@@ -24,14 +24,14 @@ public class HQController : UnitController
     {
         int d = base.Hit(damage, impact, enemyTran);
 
-        if (enemyTran != null) Aleart(enemyTran);
+        Aleart(enemyTran);
 
         return d;
     }
 
     protected void Aleart(Transform enemyTran)
     {
-        if (leftAleartInterval > 0) return;
+        if (leftAleartInterval > 0 || enemyTran == null) return;
 
         int leftAleartNum = aleartNum;
         List<Transform> targets = BattleManager.Instance.GetUnitList(mySide);
@@ -49,7 +49,7 @@ public class HQController : UnitController
         int cnt = 0;
         foreach (var v in sortList)
         {
-            targets[v.Key].GetComponent<UnitController>().SetForceTarget(enemyTran, 10.0f);
+            targets[v.Key].GetComponent<UnitController>().SetTarget(enemyTran, 10.0f);
             if (++cnt >= aleartNum) break;
         }
         leftAleartInterval = aleartInterval;

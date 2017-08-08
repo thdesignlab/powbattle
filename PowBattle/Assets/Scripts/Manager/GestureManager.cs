@@ -33,6 +33,7 @@ public class GestureManager : MonoBehaviour
     protected float totalPinch = 0;
     protected float totalTwist = 0;
 
+
     void OnEnable()
     {
         GetComponent<PressGesture>().Pressed += PressHandle;
@@ -110,6 +111,8 @@ public class GestureManager : MonoBehaviour
     protected virtual void TapHandle(object sender, System.EventArgs e)
     {
         //MyDebug.Instance.AdminLog("TapHandle");
+        TapGesture gesture = sender as TapGesture;
+        Tap(gesture.ScreenPosition);
     }
 
     //フリック
@@ -174,6 +177,8 @@ public class GestureManager : MonoBehaviour
         //MyDebug.Instance.AdminLog("CancelledHandle");
     }
 
+
+
     protected virtual void Drag(float deltaX, float deltaY)
     {
         //MyDebug.Instance.AdminLog("drag", deltaX + " / " + deltaY);
@@ -185,5 +190,9 @@ public class GestureManager : MonoBehaviour
     protected virtual void Twist(float delta)
     {
         //MyDebug.Instance.AdminLog("twist", delta);
+    }
+    protected virtual void Tap(Vector2 screenPoint)
+    {
+        //MyDebug.Instance.AdminLog("Tap", screenPoint);
     }
 }

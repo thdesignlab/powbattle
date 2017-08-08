@@ -74,6 +74,18 @@ namespace Common
         public const string LAYER_BREAK_OBSTACLE = "BreakableObstacle";
 
         public static readonly string[] layerUnitArray = new string[] { LAYER_UNIT, LAYER_ENEMY };
+
+        //ステータスタイプ
+        public const int STATUS_ATTACK = 0;
+        public const int STATUS_DEFENCE = 1;
+        public const int STATUS_SPEED = 2;
+
+        //カメラモード
+        public const int CAM_MODE_FREE = 0;
+        public const int CAM_MODE_FIRST = 1;
+        public const int CAM_MODE_THIRD = 2;
+        public const int CAM_MODE_VR = 3;
+
     }
 
     //### 端末保持情報 ###
@@ -256,7 +268,7 @@ namespace Common
             return LayerMask.GetMask(new string[] { targetLayer, CO.LAYER_OBSTACLE, CO.LAYER_BREAK_OBSTACLE });
         }
 
-        //自陣判定
+        //陣判定
         public static int GetMySide(string tag)
         {
             int side = CO.SIDE_UNKNOWN;
@@ -273,6 +285,18 @@ namespace Common
                     break;
             }
             return side;
+        }
+
+        //自陣判定
+        public static bool IsMySide(string myTag, string targetTag)
+        {
+            if (myTag == targetTag) return true;
+
+            int mySide = GetMySide(myTag);
+            int targetSide = GetMySide(targetTag);
+            if (mySide == CO.SIDE_UNKNOWN || targetSide == CO.SIDE_UNKNOWN) return false;
+
+            return (mySide == targetSide);
         }
 
         //子供からタグ検索

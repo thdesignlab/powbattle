@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class DamageController : MonoBehaviour
 {
-    const float FORWARD_RATE = 1.0f;
+    const float FORWARD_RATE = 0.8f;
     const float SIDE_RATE = 1.2f;
     const float BACK_RATE = 1.5f;
 

@@ -23,8 +23,18 @@ public class UnitController : BaseMoveController
     [SerializeField]
     protected GameObject weapon;
     [SerializeField]
+    protected GameObject bufEffect;
+    [SerializeField]
+    protected GameObject debufEffect;
+    [SerializeField]
     protected int maxHP;
     protected int nowHP;
+    [SerializeField]
+    protected int attack;
+    [SerializeField]
+    protected int defence;
+    [SerializeField]
+    protected float searchRange;
     [SerializeField]
     protected float researchLimit;
     protected float researchTime;
@@ -34,6 +44,7 @@ public class UnitController : BaseMoveController
     protected float attackRange;
 
     protected const int MAX_DEFENCE = 90;
+    protected const int MIN_SPEED_EFFECT = -100;
 
     protected virtual void Start()
     {
@@ -98,13 +109,6 @@ public class UnitController : BaseMoveController
         JudgeAttack();
     }
 
-    //ターゲットまでの距離取得
-    protected float GetTargetDistance()
-    {
-        if (targetTran == null) return 99999;
-        return Vector3.Distance(myTran.position, targetTran.position);
-    }
-
     //HPゲージ更新
     protected void UpdateHpGage()
     {
@@ -136,13 +140,15 @@ public class UnitController : BaseMoveController
         weaponCtrl.SetOwner(myTran);
         attackRange = weaponCtrl.GetRange();
         researchLimit = weaponCtrl.GetReload() * 1.5f;
+        if (searchRange <= 0) searchRange = weaponCtrl.GetReload() * 1.5f;
     }
 
     //ターゲットサーチ
     protected virtual void Search()
     {
         //再索敵チェック
-        if (targetTran != null && researchTime < researchLimit) return;
+        if (leftForceTargetTime > 0) return;
+        if (targetTran != null && targetTran.tag == targetTag && researchTime < researchLimit) return;
 
         //敵を探す
         List<Transform> targets = BattleManager.Instance.GetUnitList(enemySide);
@@ -162,7 +168,12 @@ public class UnitController : BaseMoveController
                 index = i;
             }
         }
-        targetTran = targets[index];
+        //索敵範囲内判定
+        Transform t = targetTran = (distance <= searchRange) ? targets[index] : null;
+        SetTarget(t);
+
+        //if (mySide == 0 && myTran.tag == "Unit") Debug.Log("***TargetEnemy >>" + targetTran);
+
     }
 
     //攻撃判定
@@ -185,11 +196,11 @@ public class UnitController : BaseMoveController
     protected bool LockOn()
     {
         //敵との距離
-        targetDistance = GetTargetDistance();
+        //targetDistance = GetTargetDistance();
         isAttackRange = (targetDistance <= attackRange);
 
         bool isTargetSight = false;
-        if (isAttackRange)
+        if (isAttackRange && targetTran != null)
         {
             Ray ray = new Ray(myTran.position, targetTran.position - myTran.position);
             RaycastHit hit;
@@ -240,31 +251,39 @@ public class UnitController : BaseMoveController
     //ダメージ計算
     protected virtual int CalcDamage(int damage)
     {
-        return damage;
+        int def = GetDefence();
+        if (def == 0) return damage;
+        if (def > MAX_DEFENCE) def = MAX_DEFENCE;
+        int d = (int)(damage * (100 - def) / 100.0f);
+        return d;
     }
 
     //ターゲット切り替え判定
     protected virtual void JugdeChangeTarget(Transform t)
     {
-        if (t == null || leftForceTargetTime > 0) return;
+        if (t == null) return;
         if (targetTran == null
             || targetTran == HQTran 
             || targetTran.tag == Common.CO.TAG_BREAK_OBSTACLE
         ) {
-            targetTran = t;
+            SetTarget(t);
         }
         else
         {
             float enemyDistance = Vector3.Distance(myTran.position, t.position);
-            if (targetDistance > enemyDistance) targetTran = t;
+            if (targetDistance > enemyDistance)
+            {
+                SetTarget(t);
+            }
         }
     }
 
-    //強制ターゲット
-    public void SetForceTarget(Transform tran, float time)
+    //ターゲット設定
+    public void SetTarget(Transform tran, float forceTime = 0.0f)
     {
         targetTran = tran;
-        leftForceTargetTime = time;
+        targetDistance = (targetTran != null) ? Vector3.Distance(myTran.position, targetTran.position) : 99999;
+        leftForceTargetTime = forceTime;
     }
 
     //死亡
@@ -289,8 +308,7 @@ public class UnitController : BaseMoveController
         fill.GetComponent<Image>().color = color;
     }
 
-
-    //シールド展開
+    //###シールド展開###
     protected float shieldTime = 0;
     Coroutine shieldCoroutine;
     protected void OpenShield(float time)
@@ -316,4 +334,123 @@ public class UnitController : BaseMoveController
         }
     }
 
+    //###ステータス効果###
+    protected Dictionary<int, Dictionary<int, Coroutine>> statusEffectCoroutine = new Dictionary<int, Dictionary<int, Coroutine>>()
+    {
+        { Common.CO.STATUS_ATTACK, new Dictionary<int, Coroutine>() },
+        { Common.CO.STATUS_DEFENCE, new Dictionary<int, Coroutine>() },
+        { Common.CO.STATUS_SPEED, new Dictionary<int, Coroutine>() },
+    };
+
+    //ステータス効果付与
+    public void AttackEffect(int rate, float time)
+    {
+        StatusEffect(Common.CO.STATUS_ATTACK, rate, time);
+    }
+    public void DefenceEffect(int rate, float time)
+    {
+        StatusEffect(Common.CO.STATUS_DEFENCE, rate, time);
+    }
+    public void SpeedEffect(int rate, float time)
+    {
+        StatusEffect(Common.CO.STATUS_SPEED, rate, time);
+    }
+    public void StatusEffect(int type, int rate, float time)
+    {
+        if (rate == 0 || time <= 0 || !statusEffectCoroutine.ContainsKey(type)) return;
+
+        Dictionary<int, Coroutine> statusEffectCoroutineClone = new Dictionary<int, Coroutine>(statusEffectCoroutine[type]);
+        bool isSet = true;
+        foreach (int nowRate in statusEffectCoroutineClone.Keys)
+        {
+            if (statusEffectCoroutine[type][nowRate] == null)
+            {
+                statusEffectCoroutine[type].Remove(nowRate);
+                continue;
+            }
+
+            if ((nowRate > 0 && rate > 0)
+                || (nowRate < 0 && rate < 0))
+            {
+                if (Mathf.Abs(rate) >= Mathf.Abs(nowRate))
+                {
+                    //既存効果リセット
+                    ResetStatusEffect(type, nowRate);
+                }
+                else
+                {
+                    //無効
+                    isSet = false;
+                }
+                break;
+            }
+        }
+
+        //効果付与
+        if (isSet) SetStatusEffect(type, rate, time);
+    }
+
+    //ステータス効果セット
+    protected void SetStatusEffect(int type, int rate, float time)
+    {
+        Coroutine cor = StartCoroutine(EffectCoroutine(type, rate, time));
+        statusEffectCoroutine[type].Add(rate, cor);
+        StartCoroutine(StatusEffect(type, rate, (rate > 0) ? bufEffect : debufEffect));
+    }
+
+    //ステータス効果リセット
+    protected void ResetStatusEffect(int type, int rate)
+    {
+        if (!statusEffectCoroutine[type].ContainsKey(rate)) return;
+        StopCoroutine(statusEffectCoroutine[type][rate]);
+        statusEffectCoroutine[type].Remove(rate);
+    }
+    IEnumerator EffectCoroutine(int type, int rate, float time)
+    {
+        float wait = 0.5f;
+        for (;;)
+        {
+            yield return new WaitForSeconds(wait);
+            time -= wait;
+            if (time <= 0) break;
+        }
+        ResetStatusEffect(type, rate);
+    }
+
+    //ステータス効果取得
+    protected int GetStatusEffect(int type)
+    {
+        int rate = 0;
+        if (!statusEffectCoroutine.ContainsKey(type)) return rate;
+        foreach (int r in statusEffectCoroutine[type].Keys)
+        {
+            rate += r;
+        }
+        return rate;
+    }
+
+    //ステータス取得
+    protected int GetAttack()
+    {
+        return GetStatusEffect(Common.CO.STATUS_ATTACK) + attack;
+    }
+    protected int GetDefence()
+    {
+        return GetStatusEffect(Common.CO.STATUS_DEFENCE) + defence;
+    }
+
+    //ステータスエフェクト
+    IEnumerator StatusEffect(int type, int rate, GameObject effect)
+    {
+        if (effect == null) yield break;
+        GameObject effectObj = Instantiate(effect, myTran.position + Vector3.up * 1.5f, myTran.rotation);
+        effectObj.transform.SetParent(myTran, true);
+        float wait = 0.5f;
+        for (;;)
+        {
+            if (!statusEffectCoroutine[type].ContainsKey(rate)) break;
+            yield return new WaitForSeconds(wait);
+        }
+        Destroy(effectObj);
+    }
 }

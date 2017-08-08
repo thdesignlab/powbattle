@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Common.cs" />
+    <Compile Include="Assets\Scripts\Controller\FollowUnitController.cs" />
     <Compile Include="Assets\Scripts\Controller\BallisticShootWeaponController.cs" />
     <Compile Include="Assets\Scripts\Controller\BaseMoveController.cs" />
     <Compile Include="Assets\Scripts\Controller\BulletController.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Assets\Scripts\Controller\DamageEffectController.cs" />
     <Compile Include="Assets\Scripts\Controller\HQController.cs" />
     <Compile Include="Assets\Scripts\Controller\LookingCameraController.cs" />
+    <Compile Include="Assets\Scripts\Controller\MenuController.cs" />
     <Compile Include="Assets\Scripts\Controller\ObjectController.cs" />
     <Compile Include="Assets\Scripts\Controller\ObstacleController.cs" />
     <Compile Include="Assets\Scripts\Controller\PlayerController.cs" />

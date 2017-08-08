@@ -45,7 +45,7 @@ public class DamageEffectController : BaseMoveController
             return;
         }
         //ダメージ判定
-        if (hitTran.tag == ownerTag) return;
+        if (Common.Func.IsMySide(ownerTag, hitTran.tag)) return;
         Hit(hitTran);
     }
 
