@@ -91,12 +91,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Common.cs" />
+    <Compile Include="Assets\Scripts\Controller\ActiveUnitController.cs" />
+    <Compile Include="Assets\Scripts\Controller\BallisticShootWeaponController.cs" />
     <Compile Include="Assets\Scripts\Controller\BaseMoveController.cs" />
     <Compile Include="Assets\Scripts\Controller\BulletController.cs" />
     <Compile Include="Assets\Scripts\Controller\DamageController.cs" />
     <Compile Include="Assets\Scripts\Controller\DamageEffectController.cs" />
     <Compile Include="Assets\Scripts\Controller\HQController.cs" />
+    <Compile Include="Assets\Scripts\Controller\LookingCameraController.cs" />
     <Compile Include="Assets\Scripts\Controller\ObjectController.cs" />
+    <Compile Include="Assets\Scripts\Controller\ObstacleController.cs" />
     <Compile Include="Assets\Scripts\Controller\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Controller\ShootWeaponController.cs" />
     <Compile Include="Assets\Scripts\Controller\UnitController.cs" />
