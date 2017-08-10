@@ -8,11 +8,14 @@ public class WeaponController : MonoBehaviour
     protected Transform myTran;
     protected Transform ownerTran;
     protected Transform targetTran;
+    protected UnitMotionController motionCtrl;
 
     [SerializeField]
     protected float range;
     [SerializeField]
     protected float reload;
+    [SerializeField]
+    protected float attackWait;
     [SerializeField]
     protected float moveDelay;
 
@@ -41,6 +44,12 @@ public class WeaponController : MonoBehaviour
         return true;
     }
 
+    protected virtual void AttackMotion(int count)
+    {
+        if (motionCtrl == null) return;
+        motionCtrl.Attack(count);
+    }
+
     protected virtual void AttackProcess(Transform target)
     {
         return;
@@ -60,6 +69,11 @@ public class WeaponController : MonoBehaviour
     public void SetOwner(Transform t)
     {
         ownerTran = t;
+    }
+
+    public void SetMotionCtrl(UnitMotionController ctrl)
+    {
+        motionCtrl = ctrl;
     }
 
     public float GetReload()

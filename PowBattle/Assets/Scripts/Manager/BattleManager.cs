@@ -309,11 +309,15 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         //★ボディ色変え
         Color[] bodyColors = new Color[] { Color.white, Color.red };
         Transform unitBody = Common.Func.SearchChildTag(unit.transform, Common.CO.TAG_UNIT_BODY);
-        Material[] mats = unitBody.GetComponent<Renderer>().materials;
-        mats[0].color = bodyColors[side];
-        unitBody.GetComponent<Renderer>().materials = mats;
+        Renderer unitRenderer = unitBody.GetComponent<Renderer>();
+        if (unitRenderer != null)
+        {
+            Material[] mats = unitBody.GetComponent<Renderer>().materials;
+            mats[0].color = bodyColors[side];
+            unitBody.GetComponent<Renderer>().materials = mats;
+        }
         //★HPGage色変え
-        Color[] gageColors = new Color[] { Color.cyan, Color.yellow };
+        Color[] gageColors = new Color[] { Color.cyan, Color.red };
         unit.GetComponent<UnitController>().SetHpGageColor(gageColors[side]);
         return unit;
     }

@@ -40,6 +40,16 @@ public class UnitController : BaseMoveController
     protected float researchTime;
     protected float leftForceTargetTime;
 
+    protected ObjectController _objCtrl;
+    protected ObjectController objCtrl
+    {
+        get { return (_objCtrl) ? _objCtrl : _objCtrl = GetComponent<ObjectController>(); }
+    }
+    protected UnitMotionController _motionCtrl;
+    protected UnitMotionController motionCtrl
+    {
+        get { return (_motionCtrl) ? _motionCtrl : _motionCtrl = GetComponent<UnitMotionController>(); }
+    }
     protected WeaponController weaponCtrl;
     protected float attackRange;
 
@@ -141,6 +151,7 @@ public class UnitController : BaseMoveController
         attackRange = weaponCtrl.GetRange();
         researchLimit = weaponCtrl.GetReload() * 1.5f;
         if (searchRange <= 0) searchRange = weaponCtrl.GetReload() * 1.5f;
+        weaponCtrl.SetMotionCtrl(motionCtrl);
     }
 
     //ターゲットサーチ
@@ -290,7 +301,25 @@ public class UnitController : BaseMoveController
     protected virtual void Dead()
     {
         UpdateHpGage();
-        GetComponent<ObjectController>().DestoryObject();
+        if (motionCtrl != null)
+        {
+            StartCoroutine(WaitDestroy());
+        }
+        else
+        {
+            objCtrl.DestroyObject();
+        }
+    }
+    IEnumerator WaitDestroy()
+    {
+        motionCtrl.Dead();
+
+        for (int i=0; i<100; i++)
+        {
+            yield return null;
+            if (motionCtrl.IsFinishedDead()) break;
+        }
+        objCtrl.DestroyObject();
     }
 
     //HP割合取得

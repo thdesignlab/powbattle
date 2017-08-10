@@ -39,7 +39,7 @@ public class ObjectController : MonoBehaviour {
             if (activeTime >= activeLimitTime) break;
             yield return null;
         }
-        DestoryObject();
+        DestroyObject();
     }
 
     IEnumerator CheckDistance()
@@ -50,7 +50,7 @@ public class ObjectController : MonoBehaviour {
             activeDistance += Mathf.Abs(Vector3.Distance(myTran.position, prePos));
             if (activeDistance >= activeLimitDistance)
             {
-                DestoryObject();
+                DestroyObject();
                 break;
             }
             prePos = myTran.position;
@@ -58,10 +58,23 @@ public class ObjectController : MonoBehaviour {
         }
     }
 
-    public void DestoryObject(bool isSendRpc = false)
+    public void DestroyObject(float delay = 0)
     {
         if (isDestroyProc) return;
         isDestroyProc = true;
+        if (delay > 0)
+        {
+            StartCoroutine(DelayDestroy(delay));
+        }
+        else
+        {
+            DestroyProccess();
+        }
+    }
+
+    IEnumerator DelayDestroy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         DestroyProccess();
     }
 

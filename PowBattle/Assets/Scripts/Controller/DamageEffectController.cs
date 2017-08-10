@@ -62,7 +62,7 @@ public class DamageEffectController : BaseMoveController
     protected virtual void ShootDown(Transform hitTran)
     {
         if (!isShootDown) return;
-        hitTran.GetComponent<ObjectController>().DestoryObject();
+        hitTran.GetComponent<ObjectController>().DestroyObject();
     }
 
     //衝突判定
@@ -75,6 +75,6 @@ public class DamageEffectController : BaseMoveController
     protected virtual void BreakProcess()
     {
         objCtrl.SetOwner(ownerTran);
-        objCtrl.DestoryObject();
+        objCtrl.DestroyObject();
     }
 }

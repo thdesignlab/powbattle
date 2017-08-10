@@ -35,6 +35,9 @@ public class ActiveUnitController : UnitController
 
         //敵の方を向く
         if (isLockOn) LookTarget(targetTran, agent.angularSpeed, new Vector3(1, 0, 1));
+
+        //移動モーション
+        MoveMotion();
     }
 
     //行動
@@ -42,19 +45,15 @@ public class ActiveUnitController : UnitController
     {
         base.Action();
 
-        if (mySide == 0)
-        {
-            //Debug.Log("---target >>" + targetTran);
-            //Debug.Log("---defence >>" + GetDefence());
-            //foreach (int rate in statusEffectCoroutine[Common.CO.STATUS_DEFENCE].Keys)
-            //{
-            //    Debug.Log("***rate >>" + rate);
-            //}
-        }
-
-
         //移動
         Move();
+    }
+
+    //移動モーション
+    protected void MoveMotion()
+    {
+        if (motionCtrl == null) return;
+        motionCtrl.Run(agent.velocity != Vector3.zero);
     }
 
     //デフォルトステータス保管
@@ -88,26 +87,26 @@ public class ActiveUnitController : UnitController
             //if (mySide == 0) Debug.Log("###target HQ >>"+ targetTran);
         }
 
-        //破壊可能オブジェクト
-        if (targetDistance > attackRange)
-        {
-            //★オブジェターゲット判定
-            if (Random.Range(0, 100) >= 95)
-            {
-                Transform objTran = Common.Func.RandomList<Transform>(BattleManager.Instance.breakableObstacles);
-                if (objTran != null)
-                {
-                    float d = Vector3.Distance(myTran.position, objTran.position);
-                    if (d < targetDistance)
-                    {
-                        SetTarget(objTran);
-                        //targetTran = objTran;
-                        //targetDistance = d;
-                        //if (mySide == 0) Debug.Log("###target OBSTACLE >> "+ targetTran);
-                    }
-                }
-            }
-        }
+        ////破壊可能オブジェクト
+        //if (targetDistance > attackRange)
+        //{
+        //    //★オブジェターゲット判定
+        //    if (Random.Range(0, 100) >= 95)
+        //    {
+        //        Transform objTran = Common.Func.RandomList<Transform>(BattleManager.Instance.breakableObstacles);
+        //        if (objTran != null)
+        //        {
+        //            float d = Vector3.Distance(myTran.position, objTran.position);
+        //            if (d < targetDistance)
+        //            {
+        //                SetTarget(objTran);
+        //                //targetTran = objTran;
+        //                //targetDistance = d;
+        //                //if (mySide == 0) Debug.Log("###target OBSTACLE >> "+ targetTran);
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     //移動

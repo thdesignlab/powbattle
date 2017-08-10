@@ -86,6 +86,20 @@ namespace Common
         public const int CAM_MODE_THIRD = 2;
         public const int CAM_MODE_VR = 3;
 
+        //ユニットモーションFLG
+        public const string MOTION_FLG_WAIT = "Wait";
+        public const string MOTION_FLG_RUN = "Run";
+        public const string MOTION_FLG_JUMP = "Jump";
+        public const string MOTION_FLG_ATTACK = "Attack";
+        public const string MOTION_FLG_DEAD = "Dead";
+
+        //ユニットモーションTAG
+        public const string MOTION_TAG_WAIT = "Wait";
+        public const string MOTION_TAG_RUN = "Run";
+        public const string MOTION_TAG_JUMP = "Jump";
+        public const string MOTION_TAG_ATTACK = "Attack";
+        public const string MOTION_TAG_DEAD = "Dead";
+
     }
 
     //### 端末保持情報 ###

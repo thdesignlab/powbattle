@@ -31,14 +31,18 @@ public class ShootWeaponController : WeaponController
 
     IEnumerator RapidShoot(Transform target)
     {
-        for (int i = 0; i < rapidCount; i++)
+        if (muzzleList.Count == 0) yield break;
+
+        for (int i = 1; i <= rapidCount; i++)
         {
-            if (muzzleList.Count == 0) yield break;
             int muzzleNo = i % muzzleList.Count;
             if (target != null) LockOn(target, muzzleNo);
+            AttackMotion(i);
+            yield return new WaitForSeconds(attackWait);
             Shoot();
             yield return new WaitForSeconds(rapidInterval);
         }
+        AttackMotion(0);
     }
 
     protected virtual void LockOn(Transform target, int muzzleNo)

@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4245309213099708}
   - component: {fileID: 114278388533395092}
   m_Layer: 0
-  m_Name: Blade
+  m_Name: DualSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,9 +81,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 3
-  reload: 1.5
-  moveDelay: 1
+  reload: 5
+  attackWait: 0.2
+  moveDelay: 4.5
   bullet: {fileID: 1808023538277036, guid: 7ed4e87abcc95514d859153e3b39e836, type: 2}
-  rapidCount: 1
-  rapidInterval: 0
+  rapidCount: 3
+  rapidInterval: 1
   shootDiff: 0

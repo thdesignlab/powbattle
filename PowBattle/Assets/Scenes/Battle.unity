@@ -783,12 +783,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   breakableObstacles: []
-  testUnitLimit: 30
+  testUnitLimit: 20
   testRespawnCount: 20
   testRespawnInterval: 30
   testRespawnIntervalAdd: 0
   testRespawnUnits: 030000000600000001000000
-  testEnemyRespawnUnits: 030000000a00000001000000
+  testEnemyRespawnUnits: 030000000600000001000000
 --- !u!4 &419198005
 Transform:
   m_ObjectHideFlags: 0
