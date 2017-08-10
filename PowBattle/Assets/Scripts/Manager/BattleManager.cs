@@ -11,10 +11,10 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 {
     [SerializeField]
     private Canvas battleCanvas;
+    //[SerializeField]
+    //private Slider battleGage;
     [SerializeField]
-    private Slider battleGage;
-    [SerializeField]
-    private List<Slider> hqGages;
+    private List<Slider> situationGages;
     [SerializeField]
     private List<int> extraRateList;
     private int callExtraDiff = 3;
@@ -107,14 +107,14 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             totalUnitCnt += unitCnt[side];
 
             //HQゲージ
-            hqGages[side].value = hqCtrl[side].GetHpRate();
+            situationGages[side].value = hqCtrl[side].GetHpRate();
         }
         //ユニット数割合
         unitCntRate[Common.CO.SIDE_MINE] = Common.Func.GetPer(unitCnt[Common.CO.SIDE_MINE], totalUnitCnt, 50);
         unitCntRate[Common.CO.SIDE_ENEMY] = 100 - unitCntRate[Common.CO.SIDE_MINE];
 
         //戦況ゲージ
-        battleGage.value = unitCntRate[Common.CO.SIDE_MINE] / 100.0f;
+        //battleGage.value = unitCntRate[Common.CO.SIDE_MINE] / 100.0f;
     }
 
     //敵陣営No取得
@@ -316,9 +316,9 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             mats[0].color = bodyColors[side];
             unitBody.GetComponent<Renderer>().materials = mats;
         }
-        //★HPGage色変え
-        Color[] gageColors = new Color[] { Color.cyan, Color.red };
-        unit.GetComponent<UnitController>().SetHpGageColor(gageColors[side]);
+        ////★HPGage色変え
+        //Color[] gageColors = new Color[] { Color.cyan, Color.red };
+        //unit.GetComponent<UnitController>().SetHpGageColor(gageColors[side]);
         return unit;
     }
 
@@ -364,8 +364,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
         if (extraRateList.Count == 0) return;
 
-        int mine = (int)hqGages[Common.CO.SIDE_MINE].value;
-        int enemy = (int)hqGages[Common.CO.SIDE_ENEMY].value;
+        int mine = (int)situationGages[Common.CO.SIDE_MINE].value;
+        int enemy = (int)situationGages[Common.CO.SIDE_ENEMY].value;
         List<int> callExtraSides = new List<int>();
 
         if (mine <= extraRateList[0])

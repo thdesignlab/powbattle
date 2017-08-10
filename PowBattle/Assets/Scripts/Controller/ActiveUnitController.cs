@@ -112,7 +112,7 @@ public class ActiveUnitController : UnitController
     //移動
     protected void Move()
     {
-        if (coolTime > 0 || targetTran == null) return;
+        if (coolTime > 0 || targetTran == null || agent == null) return;
         agent.isStopped = false;
         agent.destination = targetTran.position;
     }

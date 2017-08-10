@@ -64,7 +64,7 @@ public class PlayerController : GestureManager
             if (!isEnabledMove(deltaMove)) return;
             myTran.position += deltaMove;
         }
-        else
+        else if (camMode == Common.CO.CAM_MODE_THIRD)
         {
             lookAtVector += (myTran.up * deltaY + myTran.right * deltaX) * dragRate;
         }
@@ -141,9 +141,7 @@ public class PlayerController : GestureManager
         switch (mode)
         {
             case Common.CO.CAM_MODE_FREE:
-                myTran.position = new Vector3(myTran.position.x, yLimitMin, myTran.position.z);
-                camTran.localRotation = freeCamRotation;
-                camTargetTran = null;
+                SetFreeCamPoint();
                 MenuController.Instance.CloseCamMenu();
                 break;
 
@@ -154,11 +152,7 @@ public class PlayerController : GestureManager
                     SwitchCameraMode(Common.CO.CAM_MODE_FREE);
                     return;
                 }
-                camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_FIRST);
-                if (camPointTran == null) camPointTran = camTargetTran;
-                myTran.position = camPointTran.position;
-                myTran.rotation = camPointTran.rotation;
-                lookAtVector = camTargetTran.position;
+                SetFirstCamPoint();
                 break;
 
             case Common.CO.CAM_MODE_THIRD:
@@ -167,19 +161,44 @@ public class PlayerController : GestureManager
                     SwitchCameraMode(Common.CO.CAM_MODE_FREE);
                     return;
                 }
-                camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_THIRD);
-                if (camPointTran == null) camPointTran = camTargetTran;
-                myTran.position = camPointTran.position;
-                myTran.rotation = camPointTran.rotation;
-                lookAtVector = camTargetTran.position;
+                SetThirdCamPoint();
                 break;
         }
         camMode = mode;
     }
 
+    //カメラポジション設定
+    private void SetFreeCamPoint()
+    {
+        myTran.position = new Vector3(myTran.position.x, yLimitMin, myTran.position.z);
+        camTran.localRotation = freeCamRotation;
+        camTargetTran = null;
+    }
+    private void SetFirstCamPoint()
+    {
+            camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_FIRST);
+        if (camPointTran == null) camPointTran = camTargetTran;
+        myTran.position = camPointTran.position;
+        myTran.rotation = camPointTran.rotation;
+        camTran.rotation = myTran.rotation;
+    }
+    private void SetThirdCamPoint()
+    {
+        camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_THIRD);
+        if (camPointTran == null) camPointTran = camTargetTran;
+        myTran.position = camPointTran.position;
+        myTran.rotation = camPointTran.rotation;
+        lookAtVector = camTargetTran.position;
+    }
+
     private void LookAtForword()
     {
-        camTran.LookAt(lookAtVector + camTargetTran.forward * 10.0f);
+        switch (camMode)
+        {
+            case Common.CO.CAM_MODE_THIRD:
+                camTran.LookAt(lookAtVector + camTargetTran.forward * 10.0f);
+                break;
+        }
     }
 
     private void Update()
@@ -193,6 +212,6 @@ public class PlayerController : GestureManager
         }
         myTran.position = camPointTran.position;
         myTran.rotation = camTargetTran.rotation;
-        if (camMode == Common.CO.CAM_MODE_FIRST || camMode == Common.CO.CAM_MODE_THIRD) LookAtForword();
+        LookAtForword();
     }
 }

@@ -85,8 +85,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eab71ea54d9f944f8e5fc432c0e8d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 200
-  impact: 1000
+  damage: 150
+  impact: 750
   isHitBreak: 0
   isShootDown: 1
   speed: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectSpawn: {fileID: 0}
-  activeLimitTime: 0.3
+  activeLimitTime: 0.1
   activeLimitDistance: 0
   isNotAutoBreak: 0
 --- !u!114 &114584951477814108

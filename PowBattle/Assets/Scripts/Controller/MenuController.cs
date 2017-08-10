@@ -4,7 +4,8 @@ using UnityEngine.Events;
 
 public class MenuController : SingletonMonoBehaviour<MenuController>
 {
-    private bool isEnabledDebug = false;
+    [SerializeField]
+    private GameObject camMenu;
     private Transform _myTran;
     private Transform myTran
     {
@@ -15,6 +16,8 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
     {
         get { return _battleCanvas ? _battleCanvas : _battleCanvas = BattleManager.Instance.GetBattleCanvas(); }
     }
+
+    private bool isEnabledDebug = false;
 
     protected override void Awake()
     {
@@ -27,6 +30,8 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
         //デバッグボタンON/OFF
         if (MyDebug.Instance.isDebugMode || UserManager.isAdmin) isEnabledDebug = true;
         //if (debugButton != null) debugButton.SetActive(isEnabledDebug);
+
+        camMenu.SetActive(false);
     }
 
     //MENUボタン押下
@@ -57,8 +62,6 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
 
     //##### カメラメニュー #####
 
-    [SerializeField]
-    private GameObject camMenu;
     private GameObject _player;
     private GameObject player
     {

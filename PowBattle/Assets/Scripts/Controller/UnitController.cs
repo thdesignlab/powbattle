@@ -18,7 +18,7 @@ public class UnitController : BaseMoveController
     protected bool isAttackRange;
     protected bool isLockOn;
 
-    [SerializeField]
+    //[SerializeField]
     protected Slider hpGage;
     [SerializeField]
     protected GameObject weapon;
@@ -84,6 +84,7 @@ public class UnitController : BaseMoveController
     protected virtual void Init()
     {
         OpenShield(3.0f);
+        SetHpGage();
         EquipWeapon();
         StartCoroutine(ActionRoutine());
     }
@@ -328,13 +329,19 @@ public class UnitController : BaseMoveController
         return Common.Func.GetPer(nowHP, maxHP);
     }
 
-    //HPゲージ色設定
-    public void SetHpGageColor(Color color)
+    //HPゲージ設定
+    public void SetHpGage()
     {
-        if (hpGage == null) return;
-        Transform fill = hpGage.transform.Find("Fill Area/Fill");
-        if (fill == null) return;
-        fill.GetComponent<Image>().color = color;
+        Transform statusCanvas = myTran.Find("StatusCanvas");
+        if (statusCanvas == null) return;
+        string myGageName = (mySide == Common.CO.SIDE_MINE) ? "HP" : "EnemyHP";
+        string enemyGageName = (mySide == Common.CO.SIDE_MINE) ? "EnemyHP" : "HP";
+        hpGage = statusCanvas.Find(myGageName).GetComponent<Slider>();
+        statusCanvas.Find(enemyGageName).gameObject.SetActive(false);
+        //if (hpGage == null) return;
+        //Transform fill = hpGage.transform.Find("Fill Area/Fill");
+        //if (fill == null) return;
+        //fill.GetComponent<Image>().color = color;
     }
 
     //###シールド展開###
