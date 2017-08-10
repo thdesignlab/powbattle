@@ -586,7 +586,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e22fc55dc578bc45902c3aeebb62045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpGage: {fileID: 0}
   weapon: {fileID: 0}
   bufEffect: {fileID: 0}
   debufEffect: {fileID: 0}
@@ -595,6 +594,8 @@ MonoBehaviour:
   defence: 0
   searchRange: 0
   researchLimit: 0
+  side: 0
+  camouflageRange: 5
 --- !u!114 &253806046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -773,7 +774,7 @@ MonoBehaviour:
   situationGages:
   - {fileID: 768999851}
   - {fileID: 1177836057}
-  extraRateList: 500000003c000000280000001e000000140000000a000000
+  extraRateList: 32000000280000001e000000140000000a000000
   unitCntRate: 3200000032000000
   hqInfo:
   - {fileID: 0}
@@ -781,13 +782,13 @@ MonoBehaviour:
   hqCtrl:
   - {fileID: 0}
   - {fileID: 0}
-  breakableObstacles: []
+  obstacleCtrls: []
   testUnitLimit: 20
   testRespawnCount: 20
   testRespawnInterval: 30
   testRespawnIntervalAdd: 0
-  testRespawnUnits: 030000000600000001000000
-  testEnemyRespawnUnits: 030000000600000001000000
+  testRespawnUnits: 02000000020000000500000001000000
+  testEnemyRespawnUnits: 02000000020000000500000001000000
 --- !u!4 &419198005
 Transform:
   m_ObjectHideFlags: 0
@@ -1932,7 +1933,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0793126f3cc10499f2dcc5cdbf3dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpGage: {fileID: 0}
   weapon: {fileID: 1036260209594930, guid: 7dabc85c8b1e4304cbc810f0a03316f9, type: 2}
   bufEffect: {fileID: 0}
   debufEffect: {fileID: 0}
@@ -2508,7 +2508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e22fc55dc578bc45902c3aeebb62045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpGage: {fileID: 0}
   weapon: {fileID: 0}
   bufEffect: {fileID: 0}
   debufEffect: {fileID: 0}
@@ -2517,6 +2516,8 @@ MonoBehaviour:
   defence: 0
   searchRange: 0
   researchLimit: 0
+  side: 0
+  camouflageRange: 0
 --- !u!114 &1169514492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3758,7 +3759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e22fc55dc578bc45902c3aeebb62045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpGage: {fileID: 0}
   weapon: {fileID: 0}
   bufEffect: {fileID: 0}
   debufEffect: {fileID: 0}
@@ -3767,6 +3767,8 @@ MonoBehaviour:
   defence: 0
   searchRange: 0
   researchLimit: 0
+  side: 0
+  camouflageRange: 30
 --- !u!1001 &1922007865
 Prefab:
   m_ObjectHideFlags: 0
@@ -3962,7 +3964,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e22fc55dc578bc45902c3aeebb62045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpGage: {fileID: 0}
   weapon: {fileID: 0}
   bufEffect: {fileID: 0}
   debufEffect: {fileID: 0}
@@ -3971,6 +3972,8 @@ MonoBehaviour:
   defence: 0
   searchRange: 0
   researchLimit: 0
+  side: 0
+  camouflageRange: 0
 --- !u!114 &1941243634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4441,7 +4444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e22fc55dc578bc45902c3aeebb62045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpGage: {fileID: 0}
   weapon: {fileID: 0}
   bufEffect: {fileID: 0}
   debufEffect: {fileID: 0}
@@ -4450,6 +4452,8 @@ MonoBehaviour:
   defence: 0
   searchRange: 0
   researchLimit: 0
+  side: 0
+  camouflageRange: 0
 --- !u!1 &2084097350
 GameObject:
   m_ObjectHideFlags: 0
@@ -4797,7 +4801,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0793126f3cc10499f2dcc5cdbf3dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpGage: {fileID: 0}
   weapon: {fileID: 1036260209594930, guid: 7dabc85c8b1e4304cbc810f0a03316f9, type: 2}
   bufEffect: {fileID: 0}
   debufEffect: {fileID: 0}

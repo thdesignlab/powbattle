@@ -336,8 +336,9 @@ namespace Common
         public static Dictionary<int, string> unitInfo = new Dictionary<int, string>()
         {
             { 0, "UnitKnight" },
-            { 1, "UnitGunner" },
-            { 2, "UnitTank" },
+            { 1, "UnitKnight2" },
+            { 2, "UnitGunner" },
+            { 3, "UnitTank" },
         };
     }
 

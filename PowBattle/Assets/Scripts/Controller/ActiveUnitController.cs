@@ -71,55 +71,84 @@ public class ActiveUnitController : UnitController
     //ターゲットサーチ
     protected override void Search()
     {
-        base.Search();
-
+        //再索敵チェック
         if (leftForceTargetTime > 0) return;
+        if (targetTran != null && targetTran.tag == targetTag && researchTime < researchLimit) return;
 
-        //敵HQまでの距離
-        float hqDistance = GetHQDistance();
+        //敵を探す
+        List<Transform> targets = BattleManager.Instance.GetUnitList(enemySide);
+        if (targets.Count == 0) return;
 
-        //敵とHQ近いほうをターゲット
-        if (targetTran == null || hqDistance < targetDistance)
+        Transform tmpTarget = null;
+        float tmpDistance = 0;
+        NavMeshHit hit;
+        foreach (Transform target in targets)
         {
-            SetTarget(HQTran);
-            //targetTran = HQTran;
-            //targetDistance = hqDistance;
-            //if (mySide == 0) Debug.Log("###target HQ >>"+ targetTran);
+            if (target == null) continue;
+            float distance = Vector3.Distance(myTran.position, target.position);
+            if (distance > searchRange) continue;
+            if (agent.Raycast(target.position, out hit))
+            {
+                if (distance <= attackRange)
+                {
+                    //決定
+                    tmpTarget = target;
+                    break;
+                }
+                else if (distance <= searchRange)
+                {
+                    //仮
+                    if (tmpDistance == 0 || tmpDistance >= distance)
+                    {
+                        tmpTarget = target;
+                        tmpDistance = distance;
+                    }
+                }
+            }
         }
+        if (tmpTarget != null) SetTarget(tmpTarget);
 
-        ////破壊可能オブジェクト
-        //if (targetDistance > attackRange)
-        //{
-        //    //★オブジェターゲット判定
-        //    if (Random.Range(0, 100) >= 95)
-        //    {
-        //        Transform objTran = Common.Func.RandomList<Transform>(BattleManager.Instance.breakableObstacles);
-        //        if (objTran != null)
-        //        {
-        //            float d = Vector3.Distance(myTran.position, objTran.position);
-        //            if (d < targetDistance)
-        //            {
-        //                SetTarget(objTran);
-        //                //targetTran = objTran;
-        //                //targetDistance = d;
-        //                //if (mySide == 0) Debug.Log("###target OBSTACLE >> "+ targetTran);
-        //            }
-        //        }
-        //    }
-        //}
+        //敵以外をターゲット
+        if (targetTran == null)
+        {
+            //HQ
+            SetTarget(HQTran);
+
+            //破壊可能オブジェクト
+            if (targetDistance > attackRange) SearchObstacle();
+        }
     }
+
+    //オブジェクトサーチ
+    protected int obstacleIndex = 0;
+    protected void SearchObstacle()
+    {
+        ObstacleController obstacleCtrl = BattleManager.Instance.obstacleCtrls[obstacleIndex];
+        if (obstacleCtrl == null) return;
+        if (obstacleCtrl.IsDiscovery(myTran, mySide))
+        {
+            SetTarget(obstacleCtrl.transform);
+        }
+        obstacleIndex = (obstacleIndex + 1) % BattleManager.Instance.obstacleCtrls.Count;
+    }
+
 
     //移動
     protected void Move()
     {
         if (coolTime > 0 || targetTran == null || agent == null) return;
-        agent.isStopped = false;
-        agent.destination = targetTran.position;
+        if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            agent.isStopped = false;
+            agent.destination = targetTran.position;
+        }
     }
 
     //攻撃判定
     protected override bool JudgeAttack()
     {
+        if (agent == null) return false;
+
         bool atk = base.JudgeAttack();
         if (isLockOn)
         {

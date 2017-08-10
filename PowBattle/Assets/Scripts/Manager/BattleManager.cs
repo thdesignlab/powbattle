@@ -40,7 +40,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     private List<List<int>> extraUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
 
     [HideInInspector]
-    public List<Transform> breakableObstacles = new List<Transform>();
+    public List<ObstacleController> obstacleCtrls = new List<ObstacleController>();
+    //public List<Transform> breakableObstacles = new List<Transform>();
     [HideInInspector]
     public List<List<Transform>> unitList = new List<List<Transform>> { new List<Transform>() { }, new List<Transform>() { } };
 
@@ -169,7 +170,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag(Common.CO.TAG_BREAK_OBSTACLE);
         foreach (GameObject obstacle in obstacles)
         {
-            breakableObstacles.Add(obstacle.transform);
+            obstacleCtrls.Add(obstacle.GetComponent<ObstacleController>());
         }
     }
 

@@ -52,6 +52,11 @@ public class UnitController : BaseMoveController
     }
     protected WeaponController weaponCtrl;
     protected float attackRange;
+    protected Transform _targetSight;
+    protected Transform targetSight
+    {
+        get { return (_targetSight) ? _targetSight : _targetSight = transform.Find("TargetSight"); }
+    }
 
     protected const int MAX_DEFENCE = 90;
     protected const int MIN_SPEED_EFFECT = -100;
@@ -167,25 +172,14 @@ public class UnitController : BaseMoveController
 
         if (targets.Count == 0) return;
 
-        //一番近い敵を決定
-        int index = 0;
-        float distance = 0;
+        //射程内の敵をターゲット
         for (int i = 0; i < targets.Count; i++)
         {
             if (targets[i] == null) continue;
-            float tmpDistance = Vector3.Distance(myTran.position, targets[i].position);
-            if (i == 0 || tmpDistance < distance)
-            {
-                distance = tmpDistance;
-                index = i;
-            }
+            if (Vector3.Distance(myTran.position, targets[i].position) > attackRange) continue;
+            SetTarget(targets[i]);
+            break;
         }
-        //索敵範囲内判定
-        Transform t = targetTran = (distance <= searchRange) ? targets[index] : null;
-        SetTarget(t);
-
-        //if (mySide == 0 && myTran.tag == "Unit") Debug.Log("***TargetEnemy >>" + targetTran);
-
     }
 
     //攻撃判定
