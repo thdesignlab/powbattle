@@ -43,6 +43,8 @@ public class ActiveUnitController : UnitController
     //行動
     protected override void Action()
     {
+        if (!IsEffectiveAgent()) return;
+
         base.Action();
 
         //移動
@@ -81,28 +83,28 @@ public class ActiveUnitController : UnitController
 
         Transform tmpTarget = null;
         float tmpDistance = 0;
-        NavMeshHit hit;
         foreach (Transform target in targets)
         {
             if (target == null) continue;
+            //if (mySide == 0) Debug.Log(myTran.position + " >> " + target.position);
+
             float distance = Vector3.Distance(myTran.position, target.position);
             if (distance > searchRange) continue;
-            if (agent.Raycast(target.position, out hit))
+            if (!IsDiscoveryTarget(target, searchRange)) continue;
+
+            if (distance <= attackRange)
             {
-                if (distance <= attackRange)
+                //決定
+                tmpTarget = target;
+                break;
+            }
+            else
+            {
+                //仮
+                if (tmpDistance == 0 || tmpDistance > distance)
                 {
-                    //決定
                     tmpTarget = target;
-                    break;
-                }
-                else if (distance <= searchRange)
-                {
-                    //仮
-                    if (tmpDistance == 0 || tmpDistance >= distance)
-                    {
-                        tmpTarget = target;
-                        tmpDistance = distance;
-                    }
+                    tmpDistance = distance;
                 }
             }
         }
@@ -119,6 +121,19 @@ public class ActiveUnitController : UnitController
         }
     }
 
+    protected void SetLockOn(bool flg)
+    {
+        isLockOn = flg;
+        if (flg)
+        {
+            agent.stoppingDistance = attackRange * 0.8f;
+        }
+        else
+        {
+            agent.stoppingDistance = 1.5f;
+        }
+    }
+
     //オブジェクトサーチ
     protected int obstacleIndex = 0;
     protected void SearchObstacle()
@@ -132,32 +147,30 @@ public class ActiveUnitController : UnitController
         obstacleIndex = (obstacleIndex + 1) % BattleManager.Instance.obstacleCtrls.Count;
     }
 
+    //有効なエージェントかチェック
+    protected bool IsEffectiveAgent()
+    {
+        if (agent == null) return false;
+        if (agent.pathStatus == NavMeshPathStatus.PathInvalid) return false;
+        return true;
+    }
 
     //移動
     protected void Move()
     {
-        if (coolTime > 0 || targetTran == null || agent == null) return;
-        if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
-        {
-            agent.isStopped = false;
-            agent.destination = targetTran.position;
-        }
+        if (coolTime > 0 || targetTran == null) return;
+
+        agent.isStopped = false;
+        agent.destination = targetTran.position;
     }
 
     //攻撃判定
     protected override bool JudgeAttack()
     {
-        if (agent == null) return false;
+        SetLockOn(IsDiscoveryTarget(targetTran, attackRange));
+        if (!isLockOn) return false;
 
         bool atk = base.JudgeAttack();
-        if (isLockOn)
-        {
-            agent.stoppingDistance = attackRange * 0.8f;
-        }
-        else
-        {
-            agent.stoppingDistance = 1.0f;
-        }
         if (atk) 
         {
             coolTime = weaponCtrl.GetMoveDelay();

@@ -15,7 +15,7 @@ public class UnitController : BaseMoveController
     protected Transform HQTran;
     protected Transform targetTran;
     protected float targetDistance;
-    protected bool isAttackRange;
+    //protected bool isAttackRange;
     protected bool isLockOn;
 
     //[SerializeField]
@@ -52,11 +52,7 @@ public class UnitController : BaseMoveController
     }
     protected WeaponController weaponCtrl;
     protected float attackRange;
-    protected Transform _targetSight;
-    protected Transform targetSight
-    {
-        get { return (_targetSight) ? _targetSight : _targetSight = transform.Find("TargetSight"); }
-    }
+    protected LaserPointerController laserPointerCtrl;
 
     protected const int MAX_DEFENCE = 90;
     protected const int MIN_SPEED_EFFECT = -100;
@@ -76,7 +72,7 @@ public class UnitController : BaseMoveController
         {
             enemySide = Common.CO.SIDE_UNKNOWN;
         }
-        isAttackRange = false;
+        //isAttackRange = false;
         isLockOn = false;
         targetDistance = 0;
         researchTime = 0;
@@ -91,6 +87,7 @@ public class UnitController : BaseMoveController
         OpenShield(3.0f);
         SetHpGage();
         EquipWeapon();
+        GetLaserPointer();
         StartCoroutine(ActionRoutine());
     }
 
@@ -134,6 +131,21 @@ public class UnitController : BaseMoveController
         }
     }
 
+    //レーザーポインター取得
+    protected void GetLaserPointer()
+    {
+        Transform targetSight = transform.Find("TargetSight");
+        if (targetSight == null) return;
+        laserPointerCtrl = targetSight.GetComponent<LaserPointerController>();
+        if (laserPointerCtrl != null)
+        {
+            //laserPointerCtrl.SetMaxLength(searchRange);
+            laserPointerCtrl.SetLayerMask(LayerMask.GetMask(new string[] { Common.CO.layerUnitArray[enemySide] }));
+            Color color = (mySide == Common.CO.SIDE_MINE) ? Color.cyan : Color.red;
+            laserPointerCtrl.SetLaserColor(color);
+        }
+    }
+
     //武器装備
     protected void EquipWeapon()
     {
@@ -165,28 +177,39 @@ public class UnitController : BaseMoveController
     {
         //再索敵チェック
         if (leftForceTargetTime > 0) return;
-        if (targetTran != null && targetTran.tag == targetTag && researchTime < researchLimit) return;
-
-        //敵を探す
-        List<Transform> targets = BattleManager.Instance.GetUnitList(enemySide);
-
-        if (targets.Count == 0) return;
-
-        //射程内の敵をターゲット
-        for (int i = 0; i < targets.Count; i++)
+        if (targetTran != null)
         {
-            if (targets[i] == null) continue;
-            if (Vector3.Distance(myTran.position, targets[i].position) > attackRange) continue;
-            SetTarget(targets[i]);
-            break;
+            //isLockOn = IsDiscoveryTarget(targetTran, attackRange);
+            if (Vector3.Distance(myTran.position, targetTran.position) > attackRange)
+            {
+                SetTarget(null);
+                isLockOn = false;
+            }
+        }
+        else
+        {
+            //敵を探す
+            List<Transform> targets = BattleManager.Instance.GetUnitList(enemySide);
+
+            if (targets.Count == 0) return;
+
+            //射程内の敵をターゲット
+            for (int i = 0; i < targets.Count; i++)
+            {
+                if (targets[i] == null) continue;
+                if (Vector3.Distance(myTran.position, targets[i].position) > attackRange) continue;
+                if (!IsDiscoveryTarget(targets[i], attackRange)) continue;
+                SetTarget(targets[i]);
+                break;
+            }
+            isLockOn = (targetTran != null);
         }
     }
 
     //攻撃判定
     protected virtual bool JudgeAttack()
     {
-        //目視チェック
-        if (!LockOn()) return false;
+        if (!isLockOn) return false;
         bool atk = Attack();
         if (atk) researchTime = 0;
         return atk;
@@ -199,25 +222,19 @@ public class UnitController : BaseMoveController
     }
 
     //目視チェック
-    protected bool LockOn()
+    protected bool IsDiscoveryTarget(Transform target, float range = 0)
     {
-        //敵との距離
-        //targetDistance = GetTargetDistance();
-        isAttackRange = (targetDistance <= attackRange);
+        if (target == null) return false;
+        if (range <= 0) range = searchRange;
 
-        bool isTargetSight = false;
-        if (isAttackRange && targetTran != null)
+        bool ret = false;
+        RaycastHit hit;
+        Ray ray = new Ray(myTran.position, target.position - myTran.position);
+        if (Physics.SphereCast(ray, 0.3f, out hit, range, targetLayer))
         {
-            Ray ray = new Ray(myTran.position, targetTran.position - myTran.position);
-            RaycastHit hit;
-            if (Physics.SphereCast(ray, 0.3f, out hit, attackRange, targetLayer))
-            {
-                string hitTag = hit.transform.tag;
-                if (hitTag == targetTran.tag) isTargetSight = true;
-            }
+            if (hit.transform == target) ret = true;
         }
-        isLockOn = isTargetSight;
-        return isLockOn;
+        return ret;
     }
 
     //被ダメージ
@@ -290,6 +307,21 @@ public class UnitController : BaseMoveController
         targetTran = tran;
         targetDistance = (targetTran != null) ? Vector3.Distance(myTran.position, targetTran.position) : 99999;
         leftForceTargetTime = forceTime;
+
+        if (BattleManager.Instance.isVisibleTargetSight)
+        {
+            if (laserPointerCtrl != null)
+            {
+                if (targetTran != null)
+                {
+                    laserPointerCtrl.SetOn(targetTran);
+                }
+                else
+                {
+                    laserPointerCtrl.SetOff();
+                }
+            }
+        }
     }
 
     //死亡
@@ -332,10 +364,6 @@ public class UnitController : BaseMoveController
         string enemyGageName = (mySide == Common.CO.SIDE_MINE) ? "EnemyHP" : "HP";
         hpGage = statusCanvas.Find(myGageName).GetComponent<Slider>();
         statusCanvas.Find(enemyGageName).gameObject.SetActive(false);
-        //if (hpGage == null) return;
-        //Transform fill = hpGage.transform.Find("Fill Area/Fill");
-        //if (fill == null) return;
-        //fill.GetComponent<Image>().color = color;
     }
 
     //###シールド展開###

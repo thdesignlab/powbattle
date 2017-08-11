@@ -4,17 +4,19 @@ using System.Collections;
 public class LaserPointerController : MonoBehaviour
 {
     [SerializeField]
-    private LineRenderer pointer;
+    private LineRenderer laser;
     [SerializeField]
     private GameObject impactPoint;
     [SerializeField]
     private float pointSize = 1;
+    [SerializeField]
+    private float maxLength;
 
     private Transform myTran;
     private Transform pointTran;
+    private Transform targetTran;
     private bool isActive = false;
     private Vector3 impactScale;
-    private float maxLength = 50.0f;
     private float procTime = 0;
     private float pointScaleTime = 0.3f;
     private bool isDispPoint = false;
@@ -31,52 +33,47 @@ public class LaserPointerController : MonoBehaviour
     {
         if (isActive)
         {
+            if (maxLength <= 0) maxLength = 100.0f;
             RaycastHit hit;
-            if (GetRaycastHit(out hit))
-            {
-                SetDistance(hit);
-            }
-            else
-            {
-                SetPointerLength();
-                //SetOff();
-            }
+            //bool isHit = Physics.Raycast(myTran.position, GetDirection(), out hit, maxLength, layerMask);
+            Ray ray = new Ray(myTran.position, GetDirection());
+            bool isHit = Physics.SphereCast(ray, 0.5f, out hit, maxLength, layerMask);
+            //レーザー
+            SetLaser(isHit, hit);
+            //ポイント
+            SetImpactPoint(isHit, hit);
         }
     }
 
-    private bool GetRaycastHit(out RaycastHit hit)
+    //着弾点
+    private void SetImpactPoint(bool isHit, RaycastHit hit)
     {
-        //Ray ray = new Ray(myTran.position, myTran.forward);
-        bool isHit = Physics.Raycast(myTran.position, myTran.forward, out hit, maxLength, layerMask);
-        if (impactPoint != null)
-        {
-            //着弾点
-            if (isHit)
+        if (impactPoint == null) return;
+        if (isHit)
+        { 
+            isDispPoint = true;
+            if (pointTran != null)
             {
-                isDispPoint = true;
-                if (pointTran != null)
-                {
-                    //再表示
-                    if (pointTran.localScale == Vector3.zero) StartCoroutine(SetPointScale());
-                }
-                else
-                {
-                    //生成
-                    GameObject pointObj = (GameObject)Instantiate(impactPoint, hit.point, Quaternion.identity);
-                    pointTran = pointObj.transform;
-                    StartCoroutine(SetPointScale());
-                }
+                //再表示
+                if (pointTran.localScale == Vector3.zero) StartCoroutine(SetImpactPointScale());
+                pointTran.position = hit.point;
             }
             else
             {
-                //非表示
-                isDispPoint = false;
-                if (pointTran != null) pointTran.localScale = Vector3.zero;
+                //生成
+                pointTran = Instantiate(impactPoint, hit.point, Quaternion.identity).transform;
+                StartCoroutine(SetImpactPointScale());
             }
         }
-        return isHit;
+        else
+        {
+
+            //非表示
+            isDispPoint = false;
+            if (pointTran != null) pointTran.localScale = Vector3.zero;
+        }
     }
-    IEnumerator SetPointScale()
+    IEnumerator SetImpactPointScale()
     {
         procTime = 0;
         for (;;)
@@ -89,37 +86,64 @@ public class LaserPointerController : MonoBehaviour
         }
     }
 
-    private void SetPointerLength(float distance = 50)
+    //レーザー
+    private void SetLaser(bool isHit, RaycastHit hit)
     {
-        if (pointer != null)
-        {
-            pointer.SetPosition(1, Vector3.forward * distance);
-        }
-    }
+        if (laser == null) return;
 
-    private void SetDistance(RaycastHit hit)
-    {
-        if (pointer != null)
+        //float distance = maxLength;
+        Vector3 direction = myTran.forward * maxLength;
+        if (isHit)
         {
             float distance = Vector3.Distance(myTran.position, hit.point);
-            SetPointerLength(distance);
+            direction = myTran.InverseTransformDirection(hit.point - myTran.position).normalized * distance;
+            //Debug.Log("my >>" + myTran.position + " / hit >>" + hit.point + " / target >> " + targetTran.position + " / direction >> " + direction);
         }
-        if (pointTran != null) pointTran.position = hit.point;
+        else
+        {
+            if (targetTran != null) direction = Vector3.zero;
+        }
+        //Debug.Log("direction >> "+ direction);
+        laser.SetPosition(1, direction);
+    }
+    private Vector3 GetDirection()
+    {
+        //Debug.Log("GetDirection >> "+ targetTran.position +" - "+ myTran.position);
+        return (targetTran == null) ? myTran.forward : targetTran.position - myTran.position;
     }
 
-    public void SetOn(int mask = -1)
+    public void SetOn(Transform target = null)
     {
+        targetTran = target;
         isActive = true;
-        RaycastHit hit;
-        GetRaycastHit(out hit);
-        if (pointer != null) pointer.enabled = true;
+        if (laser != null) laser.gameObject.SetActive(true);
     }
 
     public void SetOff()
     {
         isActive = false;
-        if (pointer != null) pointer.enabled = false;
-        if (pointTran != null) Destroy(pointTran.gameObject);
+        if (laser != null) laser.gameObject.SetActive(false);
+        if (pointTran != null) Destroy(pointTran);
+    }
+
+    public void SetLayerMask(int mask)
+    {
+        layerMask = mask;
+    }
+
+    public void SetMaxLength(float len)
+    {
+        maxLength = len;
+    }
+
+    public void SetLaserColor(Color color)
+    {
+        if (laser == null) return;
+        Material[] mats = laser.materials;
+        float a = mats[0].color.a;
+        mats[0].color = new Color(color.r, color.g, color.b, a);
+        mats[0].SetColor("_EmissionColor", color);
+        laser.materials = mats;
     }
 
     void OnDestroy()

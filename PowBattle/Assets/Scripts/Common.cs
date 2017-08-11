@@ -316,6 +316,7 @@ namespace Common
         //子供からタグ検索
         public static Transform SearchChildTag(Transform parent, string tag)
         {
+            if (parent == null) return null;
             Transform child = null;
             foreach (Transform t in parent.transform)
             {

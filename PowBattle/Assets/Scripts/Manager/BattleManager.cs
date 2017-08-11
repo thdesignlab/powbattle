@@ -47,6 +47,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 
 
     //test用
+    public bool isVisibleTargetSight;
     [SerializeField]
     int testUnitLimit;
     [SerializeField]
@@ -317,9 +318,6 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             mats[0].color = bodyColors[side];
             unitBody.GetComponent<Renderer>().materials = mats;
         }
-        ////★HPGage色変え
-        //Color[] gageColors = new Color[] { Color.cyan, Color.red };
-        //unit.GetComponent<UnitController>().SetHpGageColor(gageColors[side]);
         return unit;
     }
 
