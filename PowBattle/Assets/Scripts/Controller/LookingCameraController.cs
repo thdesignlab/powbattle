@@ -14,6 +14,8 @@ public class LookingCameraController : MonoBehaviour
         if (target == null) target = transform;
         cameraTran = Camera.main.transform;
         //defaultRotation = target.rotation;
+        //Debug.Log(target.name);
+        //Debug.Log(cameraTran.name);
     }
 
     //void Update ()
@@ -34,6 +36,7 @@ public class LookingCameraController : MonoBehaviour
     //}
     void OnWillRenderObject()
     {
+        //Debug.Log("OnWillRenderObject");
         target.rotation = cameraTran.rotation;
     }
 

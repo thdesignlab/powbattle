@@ -57,7 +57,7 @@ public class VersionManager : Singleton<VersionManager>
             ForStore,
             UpdateCancel,
         };
-        DialogManager.OpenDialog(text, buttonTextList, buttonActionList);
+        //DialogManager.OpenDialog(text, buttonTextList, buttonActionList);
     }
 
     //バージョン強制アップデート
@@ -74,7 +74,7 @@ public class VersionManager : Singleton<VersionManager>
             ForStore,
             GoToTitle,
         };
-        DialogManager.OpenDialog(text, buttonTextList, buttonActionList);
+        //DialogManager.OpenDialog(text, buttonTextList, buttonActionList);
     }
 
     //ストアへ

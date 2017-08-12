@@ -147,36 +147,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114602517181949596, guid: 2b0d5a545fa2760459d2ebf6939e942c,
-        type: 2}
-      propertyPath: tap
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4104881922191106, guid: 2b0d5a545fa2760459d2ebf6939e942c, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4381531803664814, guid: 2b0d5a545fa2760459d2ebf6939e942c, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.30070576
-      objectReference: {fileID: 0}
-    - target: {fileID: 4381531803664814, guid: 2b0d5a545fa2760459d2ebf6939e942c, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.953717
-      objectReference: {fileID: 0}
-    - target: {fileID: 4381531803664814, guid: 2b0d5a545fa2760459d2ebf6939e942c, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 4104881922191106, guid: 2b0d5a545fa2760459d2ebf6939e942c, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 20715832676756572, guid: 2b0d5a545fa2760459d2ebf6939e942c,
-        type: 2}
-      propertyPath: m_ClearFlags
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2b0d5a545fa2760459d2ebf6939e942c, type: 2}
   m_IsPrefabParent: 0
@@ -186,50 +156,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 39949663}
   m_Script: {fileID: 11500000, guid: bc7fd33c57d694994b0ab9f33fcdcbea, type: 3}
---- !u!1 &39949665 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1792669404848742, guid: 2b0d5a545fa2760459d2ebf6939e942c,
-    type: 2}
-  m_PrefabInternal: {fileID: 39949663}
---- !u!114 &39949666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 39949665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a878a6ff128243dfb1d89ca0273f059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnStateChange:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: TouchScript.Gestures.Gesture+GestureEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  basicEditor: 1
-  generalProps: 0
-  limitsProps: 0
-  advancedProps: 0
-  minPointers: 0
-  maxPointers: 0
-  useSendMessage: 0
-  sendStateChangeMessages: 0
-  sendMessageTarget: {fileID: 0}
-  useUnityEvents: 0
-  sendStateChangeEvents: 0
-  requireGestureToFail: {fileID: 0}
-  friendlyGestures: []
-  OnTap:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: TouchScript.Gestures.Gesture+GestureEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  numberOfTapsRequired: 1
-  timeLimit: Infinity
-  distanceLimit: Infinity
-  combinePointers: 0
-  combinePointersInterval: 0.3
 --- !u!1 &51251118
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,7 +829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b909d56b6227ac14fbc25c108d907218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extraRateList: 32000000280000001e000000140000000a000000
+  extraRateList: 4b0000003200000023000000140000000a000000
   obstacleCtrls: []
   unitCntRate: 3200000032000000
   isBattleStart: 0
@@ -2212,6 +2138,10 @@ Prefab:
       propertyPath: layers.Array.data[0]
       value: 
       objectReference: {fileID: 39949664}
+    - target: {fileID: 100002, guid: 1c4dd8a13f501b04f84fe824120f70bb, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1c4dd8a13f501b04f84fe824120f70bb, type: 2}
   m_IsPrefabParent: 0
@@ -3598,7 +3528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0793126f3cc10499f2dcc5cdbf3dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
+  weapon: {fileID: 1938369445840822, guid: eefa7761c6d41b649a2f73a64af5a662, type: 2}
   bufEffect: {fileID: 0}
   debufEffect: {fileID: 0}
   maxHP: 10000
@@ -4844,7 +4774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0793126f3cc10499f2dcc5cdbf3dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
+  weapon: {fileID: 1938369445840822, guid: eefa7761c6d41b649a2f73a64af5a662, type: 2}
   bufEffect: {fileID: 0}
   debufEffect: {fileID: 0}
   maxHP: 10000

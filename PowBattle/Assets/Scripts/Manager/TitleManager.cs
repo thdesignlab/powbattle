@@ -45,7 +45,8 @@ public class TitleManager : MonoBehaviour
 #else
 #endif
         yield return new WaitForSeconds(1.0f);
-        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
+        //ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
+        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_STORY);
 
         isSplashFinished = true;
 
@@ -60,7 +61,7 @@ public class TitleManager : MonoBehaviour
                 if (processTime > 1.0f)
                 {
                     //一定時間ごとに点滅
-                    float alpha = Common.Func.GetSin(processTime, 270, 45);
+                    float alpha = Common.Func.GetSinCycle(processTime, 270, 45);
                     messageText.color = new Color(messageText.color.r, messageText.color.g, messageText.color.b, alpha);
                     //messageImage.color = new Color(messageImage.color.r, messageImage.color.g, messageImage.color.b, alpha);
                 }
@@ -76,7 +77,8 @@ public class TitleManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 messageText.color = new Color(messageText.color.r, messageText.color.g, messageText.color.b, 1);
-                ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
+                //ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
+                ScreenManager.Instance.SceneLoad(Common.CO.SCENE_STORY);
                 yield break;
             }
             yield return null;

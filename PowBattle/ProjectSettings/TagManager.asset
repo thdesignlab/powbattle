@@ -20,6 +20,8 @@ TagManager:
   - ExtraSpawnPointEnemy
   - Effect
   - BreakableObstacle
+  - Stage
+  - Story
   layers:
   - Default
   - TransparentFX

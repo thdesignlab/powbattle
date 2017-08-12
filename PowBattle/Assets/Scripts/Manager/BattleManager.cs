@@ -43,7 +43,9 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     private List<List<int>> extraUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
 
     //バトル状況FLG
+    [HideInInspector]
     public bool isBattleStart = false;
+    [HideInInspector]
     public bool isBattleEnd = false;
     private bool isPause = false;
 
@@ -391,7 +393,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
                 //援軍バフ
                 UnitController unitCtrl = unitObj.GetComponent<UnitController>();
                 unitCtrl.AttackEffect(50, 15);
-                unitCtrl.DefenceEffect(75, 30);
+                unitCtrl.DefenceEffect(75, 15);
             }
         }
 

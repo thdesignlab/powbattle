@@ -18,6 +18,8 @@ namespace Common
 
         //シーン名
         public const string SCENE_TITLE = "Title";
+        public const string SCENE_MAIN = "Main";
+        public const string SCENE_STORY = "Story";
         public const string SCENE_BATTLE = "Battle";
 
         //リソースフォルダ
@@ -60,7 +62,9 @@ namespace Common
         public const string TAG_MUZZLE = "Muzzle";
         public const string TAG_OBSTACLE = "Obstacle";
         public const string TAG_BREAK_OBSTACLE = "BreakableObstacle";
-        
+        public const string TAG_STORY = "Story";
+        public const string TAG_STAGE = "Stage";
+
 
         public static readonly string[] tagUnitArray = new string[] { TAG_UNIT, TAG_ENEMY };
         public static readonly string[] tagHQArray = new string[] { TAG_HQ, TAG_ENEMY_HQ };
@@ -68,10 +72,12 @@ namespace Common
         public static readonly string[] tagExSpawnPointArray = new string[] { TAG_EXSP_MINE, TAG_EXSP_ENEMY };
 
         //レイヤー
+        public const string LAYER_UI = "UI";
         public const string LAYER_UNIT = "Unit";
         public const string LAYER_ENEMY = "Enemy";
         public const string LAYER_OBSTACLE = "Obstacle";
         public const string LAYER_BREAK_OBSTACLE = "BreakableObstacle";
+        public const string LAYER_STAGE = "Stage";
 
         public static readonly string[] layerUnitArray = new string[] { LAYER_UNIT, LAYER_ENEMY };
 
@@ -198,11 +204,25 @@ namespace Common
         }
         
         //三角関数
-        public static float GetSin(float time, float anglePerSec = 360, float startAngle = 0)
+        public static float GetSinCycle(float time, float anglePerSec = 360, float startAngle = 0)
         {
             float angle = (startAngle + anglePerSec * time) % 360;
+            return Sin(angle);
+        }
+        public static float Sin(float angle)
+        {
             float radian = Mathf.PI / 180 * angle;
             return Mathf.Sin(radian);
+        }
+        public static float Cos(float angle)
+        {
+            float radian = Mathf.PI / 180 * angle;
+            return Mathf.Cos(radian);
+        }
+        public static float Tan(float angle)
+        {
+            float radian = Mathf.PI / 180 * angle;
+            return Mathf.Tan(radian);
         }
 
         //抽選
@@ -346,6 +366,11 @@ namespace Common
                 }
             }
             return nearTran;
+        }
+
+        public static bool IsPointerUI()
+        {
+            return UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
         }
     }
 

@@ -18,6 +18,7 @@ public class MyDebug : SingletonMonoBehaviour<MyDebug>
     private string preCondition = "";
     private float preLogTime = 0;
 
+
     public void AdminLog(object key, object value)
     {
         AdminLog(key + " >> " + value);

@@ -2,57 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using TouchScript.Gestures.TransformGestures;
 
 public class PlayerController : GestureManager
 {
-    private Transform myTran;
-    private Camera mainCam;
-    private Transform camTran;
-    private int tapLayerMask;
-    private Quaternion freeCamRotation;
-    private int camMode;
-    private Transform camTargetTran;
-    private Transform camPointTran;
-    private Vector3 lookAtVector;
+    protected Transform myTran;
+    protected Camera mainCam;
+    protected Transform camTran;
+    protected int tapLayerMask;
+    protected Quaternion freeCamRotation;
+    protected int camMode;
+    protected Transform camTargetTran;
+    protected Transform camPointTran;
+    protected Vector3 lookAtVector;
 
     const string CAM_POINT = "CamPoint/";
     const string CAM_POINT_FIRST = "First";
     const string CAM_POINT_THIRD = "Third";
 
     [SerializeField]
-    private float dragRate;
+    protected float dragRate;
     [SerializeField]
-    private float pinchRate;
+    protected float pinchRate;
     [SerializeField]
-    private float twistRate;
+    protected float twistRate;
 
     [SerializeField]
-    private float xLimit;
+    protected float xLimit;
     [SerializeField]
-    private float zLimit;
+    protected float zLimit;
     [SerializeField]
-    private float yLimitMin;
+    protected float yLimitMin;
     [SerializeField]
-    private float yLimitMax;
-
-    [SerializeField]
-    private Vector3 firstCamPos;
-    [SerializeField]
-    private Vector3 thirdCamPos;
-
+    protected float yLimitMax;
 
     private void Awake()
     {
         myTran = transform;
         mainCam = Camera.main;
         camTran = mainCam.transform;
+        Init();
+        SetTapLayerMask();
+        StartCoroutine(KeyboardInput());
+    }
+
+    protected virtual void Init()
+    {
         camMode = Common.CO.CAM_MODE_FREE;
         freeCamRotation = camTran.localRotation;
+    }
 
-        tapLayerMask = LayerMask.GetMask(Common.CO.LAYER_UNIT);
-
-        StartCoroutine(KeyboardInput());
+    protected virtual void SetTapLayerMask()
+    {
+        tapLayerMask = LayerMask.GetMask(new string[] { Common.CO.LAYER_UNIT});
     }
 
     protected override void Drag(float deltaX, float deltaY)
@@ -125,6 +128,7 @@ public class PlayerController : GestureManager
     protected override void Tap(Vector2 screenPoint)
     {
         if (camMode != Common.CO.CAM_MODE_FREE) return;
+        if (Common.Func.IsPointerUI()) return;
         Ray ray = mainCam.ScreenPointToRay(screenPoint);
         RaycastHit hit = new RaycastHit();
         if (Physics.Raycast(ray, out hit, myTran.position.y * 10, tapLayerMask))
@@ -191,6 +195,7 @@ public class PlayerController : GestureManager
         lookAtVector = camTargetTran.position;
     }
 
+    //カメラ方向セット
     private void LookAtForword()
     {
         switch (camMode)
@@ -201,7 +206,33 @@ public class PlayerController : GestureManager
         }
     }
 
-    private void Update()
+    //カメラの中心を対象に設定
+    const float MOVE_TIME = 0.5f;
+    Coroutine moveCenterCoroutine;
+    public void SetTargetCenter(Transform target, UnityAction callback = null, float time = MOVE_TIME)
+    {
+        float h = yLimitMin;
+        float z = h / Common.Func.Tan(camTran.localRotation.eulerAngles.x);
+        Vector3 centerTargetPos = target.position - myTran.forward * z + myTran.up * h;
+        if (moveCenterCoroutine != null) StopCoroutine(moveCenterCoroutine);
+        moveCenterCoroutine = StartCoroutine(MoveCenter(centerTargetPos, callback));
+    }
+    IEnumerator MoveCenter(Vector3 targetPos, UnityAction callback = null, float time = MOVE_TIME)
+    {
+        if (time <= 0) time = MOVE_TIME;
+        Vector3 start = myTran.position;
+        float r = 0;
+        for (;;)
+        {
+            r += Time.deltaTime / time; 
+            myTran.position = Vector3.Lerp(start, targetPos, r);
+            if (r >= 1) break;
+            yield return null;
+        }
+        if (callback != null) callback.Invoke();
+    }
+
+    protected virtual void Update()
     {
         if (camMode == Common.CO.CAM_MODE_FREE) return;
 

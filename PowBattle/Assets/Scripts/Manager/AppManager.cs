@@ -21,9 +21,12 @@ public class AppManager : SingletonMonoBehaviour<AppManager>
 
         //ステータスバー
         Common.Func.SetStatusbar();
+    }
 
+    protected void Start()
+    {
         //タッチ可視化
-        if (touchCousor != null) DontDestroyOnLoad(touchCousor);
+        if (touchCousor != null && MyDebug.Instance.isDebugMode) DontDestroyOnLoad(touchCousor);
     }
 
     void OnApplicationPause(bool pauseStatus)
