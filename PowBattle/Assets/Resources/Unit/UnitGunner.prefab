@@ -558,6 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b4223403d54514abedd13498e7cd61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsVisibleNoTarget: 0
   laser: {fileID: 120530955395191748}
   impactPoint: {fileID: 0}
   pointSize: 1
@@ -691,7 +692,7 @@ MonoBehaviour:
   bufEffect: {fileID: 1232224946950784, guid: 8ebb928bdbd4d974f8d8081d73378875, type: 2}
   debufEffect: {fileID: 1472529043545576, guid: 37501b524180c9047b936345414a28bc,
     type: 2}
-  maxHP: 2500
+  maxHP: 3000
   attack: 0
   defence: 0
   searchRange: 20
@@ -981,7 +982,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 1
 --- !u!222 &222135966093475188
 CanvasRenderer:
   m_ObjectHideFlags: 1

@@ -22,13 +22,19 @@ public class ActiveUnitController : UnitController
 
     protected override void Init()
     {
-        SearchHQ();
+        //SearchHQ();
         base.Init();
         SaveDefault();
     }
 
     protected override void Update()
     {
+        if (nowHP <= 0 || BattleManager.Instance.isBattleEnd)
+        {
+            agent.isStopped = true;
+            return;
+        }
+
         base.Update();
 
         if (coolTime > 0) coolTime -= Time.deltaTime;
@@ -38,6 +44,8 @@ public class ActiveUnitController : UnitController
 
         //移動モーション
         MoveMotion();
+
+        if (HQTran == null) SearchHQ();
     }
 
     //行動
@@ -65,9 +73,10 @@ public class ActiveUnitController : UnitController
     }
 
     //ターゲットHQサーチ
-    protected void SearchHQ()
+    protected void SearchHQ(bool isSetTarget = false)
     {
-        HQTran = BattleManager.Instance.hqInfo[enemySide];
+        if (HQTran == null) HQTran = BattleManager.Instance.SelectTargetHQTran(enemySide, myTran);
+        if (isSetTarget) SetTarget(HQTran);
     }
 
     //ターゲットサーチ
@@ -79,7 +88,6 @@ public class ActiveUnitController : UnitController
 
         //敵を探す
         List<Transform> targets = BattleManager.Instance.GetUnitList(enemySide);
-        if (targets.Count == 0) return;
 
         Transform tmpTarget = null;
         float tmpDistance = 0;
@@ -100,7 +108,7 @@ public class ActiveUnitController : UnitController
             }
             else
             {
-                //仮
+                //仮置き
                 if (tmpDistance == 0 || tmpDistance > distance)
                 {
                     tmpTarget = target;
@@ -111,10 +119,10 @@ public class ActiveUnitController : UnitController
         if (tmpTarget != null) SetTarget(tmpTarget);
 
         //敵以外をターゲット
-        if (targetTran == null)
+        if (targetTran == null || targetDistance > attackRange)
         {
             //HQ
-            SetTarget(HQTran);
+            SearchHQ(true);
 
             //破壊可能オブジェクト
             if (targetDistance > attackRange) SearchObstacle();
@@ -138,13 +146,14 @@ public class ActiveUnitController : UnitController
     protected int obstacleIndex = 0;
     protected void SearchObstacle()
     {
+        if (BattleManager.Instance.obstacleCtrls.Count == 0) return;
+        obstacleIndex = (obstacleIndex + 1) % BattleManager.Instance.obstacleCtrls.Count;
         ObstacleController obstacleCtrl = BattleManager.Instance.obstacleCtrls[obstacleIndex];
         if (obstacleCtrl == null) return;
         if (obstacleCtrl.IsDiscovery(myTran, mySide))
         {
             SetTarget(obstacleCtrl.transform);
         }
-        obstacleIndex = (obstacleIndex + 1) % BattleManager.Instance.obstacleCtrls.Count;
     }
 
     //有効なエージェントかチェック
@@ -190,6 +199,25 @@ public class ActiveUnitController : UnitController
         return d;
     }
 
+    //ターゲット切り替え判定
+    protected override void JugdeChangeTarget(Transform t)
+    {
+        if (t == null) return;
+        if (targetTran == null
+            || targetTran.tag == targetHQTag
+            || targetTran.tag == Common.CO.TAG_BREAK_OBSTACLE
+        ) {
+            SetTarget(t);
+        }
+        else
+        {
+            if (targetDistance > Vector3.Distance(myTran.position, t.position))
+            {
+                SetTarget(t);
+            }
+        }
+    }
+
     //死亡
     protected override void Dead()
     {
@@ -202,12 +230,14 @@ public class ActiveUnitController : UnitController
     protected void DeadDamage()
     {
         if (hqDamage <= 0) return;
-        if (BattleManager.Instance.hqCtrl[mySide] == null) return;
+        //if (BattleManager.Instance.hqCtrl[mySide] == null) return;
+        //if (HQCtrl == null) return;
 
         //HQにダメージを与える
-        float rate = 1.0f;
-        if (!BattleManager.Instance.JugdeBattleSituation(mySide)) rate *= 0.75f;
-        BattleManager.Instance.hqCtrl[mySide].Hit((int)(hqDamage * rate), null);
+        BattleManager.Instance.DeadDamage(mySide, hqDamage, myTran);
+        //float rate = 1.0f;
+        //if (!BattleManager.Instance.IsSuperioritySituation(mySide)) rate *= 0.75f;
+        //HQCtrl.Hit((int)(hqDamage * rate), null);
     }
     
     //HQまでの距離取得

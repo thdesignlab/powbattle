@@ -81,10 +81,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 15
-  reload: 0.5
+  reload: 5
   attackWait: 0
   moveDelay: 0
   bullet: {fileID: 1361515557678318, guid: 2286f89867d362a46a22fb60984eb0f9, type: 2}
-  rapidCount: 1
+  rapidCount: 5
   rapidInterval: 0
   shootDiff: 1.5

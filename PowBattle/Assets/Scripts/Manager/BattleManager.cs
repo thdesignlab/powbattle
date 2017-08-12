@@ -9,42 +9,43 @@ using UnityEngine.AI;
 
 public class BattleManager : SingletonMonoBehaviour<BattleManager>
 {
-    [SerializeField]
-    private Canvas battleCanvas;
-    //[SerializeField]
-    //private Slider battleGage;
-    [SerializeField]
-    private List<Slider> situationGages;
+    //UI
+    private Transform battleCanvasTran;
+    private List<Slider> situationGages = new List<Slider>() { null, null};
+    private GameObject textLine;
+    private GameObject textWin;
+    private GameObject textLose;
+
+    //援軍設定
     [SerializeField]
     private List<int> extraRateList;
     private int callExtraDiff = 3;
-    private GameObject player;
 
-    private bool isPause = false;
-
+    //ステージ情報
     private List<List<Transform>> spawnPoints = new List<List<Transform>>() { new List<Transform>() { }, new List<Transform>() { } };
     private List<List<Transform>> exSpawnPoints = new List<List<Transform>>() { new List<Transform>() { }, new List<Transform>() { } };
     private List<int> spawnIndex = new List<int>() { 0, 0 };
-    private List<int> unitCnt = new List<int>() { 0, 0 };
-
-    [HideInInspector]
-    public List<int> unitCntRate = new List<int>() { 50, 50 };
-    [HideInInspector]
-    public List<Transform> hqInfo = new List<Transform>() { null, null };
-    [HideInInspector]
-    public List<HQController> hqCtrl = new List<HQController>() { null, null };
-    //[HideInInspector]
-    //public List<int> battleSituation = new List<int>() { 50, 50 };
-
-    private List<List<int>> spawnUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
-    private List<List<int>> extraUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
-
     [HideInInspector]
     public List<ObstacleController> obstacleCtrls = new List<ObstacleController>();
-    //public List<Transform> breakableObstacles = new List<Transform>();
+
+    //バトル情報
+    private List<int> unitCnt = new List<int>() { 0, 0 };
+    [HideInInspector]
+    public List<int> unitCntRate = new List<int>() { 50, 50 };
+    private List<HQController> mainHqCtrl = new List<HQController>() { null, null };
+    private List<List<HQController>> hqCtrlList = new List<List<HQController>>() { new List<HQController>(), new List<HQController>() };
     [HideInInspector]
     public List<List<Transform>> unitList = new List<List<Transform>> { new List<Transform>() { }, new List<Transform>() { } };
 
+    //プレイヤー情報
+    private GameObject player;
+    private List<List<int>> spawnUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
+    private List<List<int>> extraUnits = new List<List<int>>() { new List<int>() { }, new List<int>() { } };
+
+    //バトル状況FLG
+    public bool isBattleStart = false;
+    public bool isBattleEnd = false;
+    private bool isPause = false;
 
     //test用
     public bool isVisibleTargetSight;
@@ -60,7 +61,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     List<int> testRespawnUnits;
     [SerializeField]
     List<int> testEnemyRespawnUnits;
-    List<int> testExtraUnits = new List<int>() { 0, 0,  1, 1, 1, 1, 1, 2 };
+    List<int> testExtraUnits = new List<int>() { 0, 0,  1, 1, 2 };
 
 
     protected override void Awake()
@@ -74,6 +75,9 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         //HQ準備
         SetHQ();
 
+        //UI準備
+        SetUI();
+
         //マップオブジェクト
         SetMapObstacle();
 
@@ -85,17 +89,32 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 
     private void Start()
     {
+        isBattleStart = true;
+
         //援軍チェックルーチン
         StartCoroutine(CheckExtra());
 
         //★テスト
         StartCoroutine(test());
+
     }
 
     private void Update()
     {
         //戦況チェック
         UpdateSituation();
+    }
+
+    private void SetUI()
+    {
+        battleCanvasTran = GameObject.Find("BattleCanvas").transform;
+        situationGages[Common.CO.SIDE_MINE] = battleCanvasTran.Find("HQGage/Mine").GetComponent<Slider>();
+        situationGages[Common.CO.SIDE_ENEMY] = battleCanvasTran.Find("HQGage/Enemy").GetComponent<Slider>();
+        textLine = battleCanvasTran.Find("TextLine").gameObject;
+        textLine.SetActive(false);
+        textWin = textLine.transform.Find("Win").gameObject;
+        textLose = textLine.transform.Find("Lose").gameObject;
+
     }
 
     //戦況更新
@@ -109,7 +128,11 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             totalUnitCnt += unitCnt[side];
 
             //HQゲージ
-            situationGages[side].value = hqCtrl[side].GetHpRate();
+            situationGages[side].value = mainHqCtrl[side].GetHpRate();
+            if (isBattleStart && situationGages[side].value <= 0)
+            {
+                BattleResult(side);
+            }
         }
         //ユニット数割合
         unitCntRate[Common.CO.SIDE_MINE] = Common.Func.GetPer(unitCnt[Common.CO.SIDE_MINE], totalUnitCnt, 50);
@@ -117,6 +140,25 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 
         //戦況ゲージ
         //battleGage.value = unitCntRate[Common.CO.SIDE_MINE] / 100.0f;
+    }
+
+    //バトル終了
+    private void BattleResult(int loseSide)
+    {
+        isBattleEnd = true;
+        if (loseSide == Common.CO.SIDE_MINE)
+        {
+            //負け
+            textWin.SetActive(false);
+            textLose.SetActive(true);
+        }
+        else
+        {
+            //勝ち
+            textWin.SetActive(true);
+            textLose.SetActive(false);
+        }
+        textLine.gameObject.SetActive(true);
     }
 
     //敵陣営No取得
@@ -131,16 +173,16 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     }
 
     //優勢判定(HQHP)
-    public bool JugdeBattleSituation(int mySide)
+    public bool IsSuperioritySituation(int mySide)
     {
         int enemySide = GetEnemySide(mySide);
-        if (hqCtrl[mySide] == null) return false;
-        if (hqCtrl[enemySide] == null) return true;
-        return (hqCtrl[mySide].GetHpRate() > hqCtrl[enemySide].GetHpRate());
+        if (mainHqCtrl[mySide] == null) return false;
+        if (mainHqCtrl[enemySide] == null) return true;
+        return (mainHqCtrl[mySide].GetHpRate() > mainHqCtrl[enemySide].GetHpRate());
     }
 
     //優勢判定(ユニット数)
-    public bool JugdeUnitSituation(int mySide)
+    public bool IsSuperiorityUnit(int mySide)
     {
         int enemySide = GetEnemySide(mySide);
         return (unitCnt[mySide] > unitCnt[enemySide]);
@@ -152,17 +194,53 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         //情報取得
         foreach (int side in Common.CO.sideArray)
         {
-            GameObject hqObj = GameObject.FindGameObjectWithTag(Common.CO.tagHQArray[side]);
-            if (hqObj == null) hqObj = SpawnHQ(side);
-            hqInfo[side] = hqObj.transform;
-            hqCtrl[side] = hqObj.GetComponent<HQController>();
+            GameObject[] hqObjs = GameObject.FindGameObjectsWithTag(Common.CO.tagHQArray[side]);
+            foreach (GameObject hqObj in hqObjs)
+            {
+                HQController ctrl = hqObj.GetComponent<HQController>();
+                if (ctrl.IsMainHQ())
+                {
+                    mainHqCtrl[side] = ctrl;
+                }
+                else
+                {
+                    hqCtrlList[side].Add(ctrl);
+                }
+            }
         }
     }
 
-    //HQ生成
-    private GameObject SpawnHQ(int side)
+    //HQ選択
+    public HQController SelectTargetHQ(int side, Transform t)
     {
-        return null;
+        HQController ctrl = mainHqCtrl[side];
+
+        float distance = 0;
+        foreach (HQController subHqCtrl in hqCtrlList[side])
+        {
+            if (subHqCtrl == null) continue;
+            float tmpDistance = Vector3.Distance(subHqCtrl.transform.position, t.position);
+            if (distance == 0 || tmpDistance < distance)
+            {
+                distance = tmpDistance;
+                ctrl = subHqCtrl;
+            }
+        }
+        return (ctrl == null) ? null : ctrl;
+    }
+    public Transform SelectTargetHQTran(int side, Transform t)
+    {
+        HQController ctrl = SelectTargetHQ(side, t);
+        return (ctrl != null) ? ctrl.transform : null;
+    }
+
+    //ユニット死亡ダメージ
+    public void DeadDamage(int side, int damage, Transform t)
+    {
+        HQController target = SelectTargetHQ(side, t);
+        if (target == null) return;
+        float rate = (IsSuperioritySituation(side)) ? 1.0f :0.75f;
+        target.Hit((int)(damage * rate), null);
     }
 
     //マップオブジェクト取得
@@ -171,7 +249,9 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag(Common.CO.TAG_BREAK_OBSTACLE);
         foreach (GameObject obstacle in obstacles)
         {
-            obstacleCtrls.Add(obstacle.GetComponent<ObstacleController>());
+            ObstacleController obstacleCtrl = obstacle.GetComponent<ObstacleController>();
+            if (obstacleCtrl.GetCamouflageRange() <= 0) continue;
+            obstacleCtrls.Add(obstacleCtrl);
         }
     }
 
@@ -193,6 +273,11 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
                 exSpawnPoints[side].Add(exSpObj.transform);
             }
         }
+    }
+    //ユニット出現位置削除
+    private void RemoveSpawnPoint()
+    {
+
     }
 
     //★ユニット情報取得
@@ -248,11 +333,21 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
                 //ランダム
                 int index = UnityEngine.Random.Range(0, spawnPoints[side].Count);
                 sp = spawnPoints[side][index];
+                if (sp == null)
+                {
+                    spawnPoints[side].RemoveAt(index);
+                    return SelectSpawnPoint(side, isExtra, isRandom);
+                }
             }
             else
             {
                 //順番
                 sp = spawnPoints[side][spawnIndex[side]];
+                if (sp == null)
+                {
+                    spawnPoints[side].RemoveAt(spawnIndex[side]);
+                    return SelectSpawnPoint(side, isExtra, isRandom);
+                }
                 spawnIndex[side] = (spawnIndex[side] + 1) % spawnPoints[side].Count;
             }
         }
@@ -261,6 +356,11 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             //援軍
             int exIndex = UnityEngine.Random.Range(0, exSpawnPoints[side].Count);
             sp = exSpawnPoints[side][exIndex];
+            if (sp == null)
+            {
+                exSpawnPoints[side].RemoveAt(exIndex);
+                return SelectSpawnPoint(side, isExtra, isRandom);
+            }
         }
         return sp;
     }
@@ -358,7 +458,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         }
     }
 
-    //援軍生成
+    //★援軍生成
     private void CallExtraUnits()
     {
         if (extraRateList.Count == 0) return;
@@ -401,11 +501,6 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         return list;
     }
 
-    public GameObject GetBattleCanvas()
-    {
-        return battleCanvas.gameObject;
-    }
-
     public GameObject GetPlayer()
     {
         return player;
@@ -414,7 +509,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     public void Pause()
     {
         isPause = true;
-        DialogManager.OpenDialog("一時停止中", "再開", () => ResetPause(), false);
+        //DialogManager.OpenDialog("一時停止中", "再開", () => ResetPause(), false);
         Time.timeScale = 0;
     }
 
@@ -430,6 +525,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
         for (int i = 0; i < testRespawnCount; i++)
         {
+            if (isBattleEnd) yield break;
+
             //ユニット生成
             foreach (int side in Common.CO.sideArray)
             {

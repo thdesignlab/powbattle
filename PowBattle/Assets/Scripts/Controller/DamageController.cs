@@ -33,7 +33,7 @@ public class DamageController : MonoBehaviour
             case Common.CO.TAG_HQ:
             case Common.CO.TAG_ENEMY_HQ:
                 //HQ
-                hitTran.GetComponent<UnitController>().Hit(damage / 5, ownerTran);
+                hitTran.GetComponent<UnitController>().Hit(damage / 10, ownerTran);
                 isHit = true;
                 break;
 

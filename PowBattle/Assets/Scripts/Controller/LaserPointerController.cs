@@ -4,6 +4,8 @@ using System.Collections;
 public class LaserPointerController : MonoBehaviour
 {
     [SerializeField]
+    private bool IsVisibleNoTarget;
+    [SerializeField]
     private LineRenderer laser;
     [SerializeField]
     private GameObject impactPoint;
@@ -101,7 +103,7 @@ public class LaserPointerController : MonoBehaviour
         }
         else
         {
-            if (targetTran != null) direction = Vector3.zero;
+            direction = Vector3.zero;
         }
         //Debug.Log("direction >> "+ direction);
         laser.SetPosition(1, direction);

@@ -42,4 +42,10 @@ public class AppManager : SingletonMonoBehaviour<AppManager>
     {
         Application.Quit();
     }
+
+    //タイトル画面へ
+    public void GoToTitle()
+    {
+        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_TITLE);
+    }
 }

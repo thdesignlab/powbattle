@@ -182,20 +182,21 @@ namespace Common
         }
 
         //配列内存在チェック
-        public static bool InArrayString(string[] array, string target)
+        public static int InArray<T>(T[] array, T target)
         {
-            bool flg = false;
-            foreach (string a in array)
+            int index = -1;
+            //foreach (T a in array)
+            for (int i = 0; i < array.Length; i++)
             {
-                if (target == a)
+                if (target.Equals(array[i]))
                 {
-                    flg = true;
+                    index = i;
                     break;
                 }
             }
-            return flg;
+            return index;
         }
-
+        
         //三角関数
         public static float GetSin(float time, float anglePerSec = 360, float startAngle = 0)
         {
@@ -329,6 +330,23 @@ namespace Common
             return child;
         }
 
+        //一番近いTransformを取得
+        public static Transform GetNearest(List<Transform> tranList, Vector3 basePos)
+        {
+            float distance = 0;
+            Transform nearTran = null;
+            foreach (Transform tran in tranList)
+            {
+                if (tran == null) continue;
+                float tmpDistance = Vector3.Distance(tran.position, basePos);
+                if (distance == 0 || distance > tmpDistance)
+                {
+                    distance = tmpDistance;
+                    nearTran = tran;
+                }
+            }
+            return nearTran;
+        }
     }
 
     //### ユニット ###

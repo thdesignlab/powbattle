@@ -13,6 +13,7 @@ public class UnitController : BaseMoveController
     protected int targetLayer;
 
     protected Transform HQTran;
+    //protected HQController HQCtrl;
     protected Transform targetTran;
     protected float targetDistance;
     //protected bool isAttackRange;
@@ -84,7 +85,7 @@ public class UnitController : BaseMoveController
     //初期処理
     protected virtual void Init()
     {
-        OpenShield(3.0f);
+        OpenShield(1.0f);
         SetHpGage();
         EquipWeapon();
         GetLaserPointer();
@@ -93,7 +94,7 @@ public class UnitController : BaseMoveController
 
     protected virtual void Update()
     {
-        if (nowHP <= 0) return;
+        if (nowHP <= 0 || BattleManager.Instance.isBattleEnd) return;
         UpdateHpGage();
         researchTime += Time.deltaTime;
         if (leftForceTargetTime > 0) leftForceTargetTime -= Time.deltaTime;
@@ -107,6 +108,7 @@ public class UnitController : BaseMoveController
         float wait = 0.5f;
         for (;;)
         {
+            if (nowHP <= 0 || BattleManager.Instance.isBattleEnd) yield break;
             Action();
             yield return new WaitForSeconds(wait);
         }
@@ -284,21 +286,7 @@ public class UnitController : BaseMoveController
     //ターゲット切り替え判定
     protected virtual void JugdeChangeTarget(Transform t)
     {
-        if (t == null) return;
-        if (targetTran == null
-            || targetTran == HQTran 
-            || targetTran.tag == Common.CO.TAG_BREAK_OBSTACLE
-        ) {
-            SetTarget(t);
-        }
-        else
-        {
-            float enemyDistance = Vector3.Distance(myTran.position, t.position);
-            if (targetDistance > enemyDistance)
-            {
-                SetTarget(t);
-            }
-        }
+        return;
     }
 
     //ターゲット設定

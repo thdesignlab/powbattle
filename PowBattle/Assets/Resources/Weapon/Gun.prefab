@@ -80,10 +80,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5af9efbca7088f44b93d1a81776231c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 15
+  range: 12
   reload: 4
+  attackWait: 0
   moveDelay: 2
   bullet: {fileID: 1861109683996740, guid: 701935560259e3842acd3f8bd665ce02, type: 2}
   rapidCount: 3
   rapidInterval: 0.2
-  shootDiff: 1
+  shootDiff: 0.5
