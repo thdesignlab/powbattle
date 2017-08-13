@@ -51,10 +51,12 @@ public class ShootWeaponController : WeaponController
         if (shootDiff > 0)
         {
             float rate = Vector3.Distance(myTran.position, pos) / range;
-            pos += muzzleList[muzzleNo].up * Random.Range(-shootDiff, shootDiff);
-            pos += muzzleList[muzzleNo].right * Random.Range(-shootDiff, shootDiff);
-            pos += muzzleList[muzzleNo].forward * Random.Range(-shootDiff, shootDiff);
-            pos *= (rate < 0.3f) ? 0.3f : rate;
+            Vector3 diffpos = Vector3.zero;
+            diffpos += muzzleList[muzzleNo].up * Random.Range(-shootDiff, shootDiff);
+            diffpos += muzzleList[muzzleNo].right * Random.Range(-shootDiff, shootDiff);
+            diffpos += muzzleList[muzzleNo].forward * Random.Range(-shootDiff, shootDiff);
+            diffpos *= (rate < 0.3f) ? 0.3f : rate;
+            pos += diffpos;
         }
         muzzleList[muzzleNo].LookAt(pos);
     }

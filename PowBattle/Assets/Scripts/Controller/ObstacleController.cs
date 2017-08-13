@@ -17,11 +17,12 @@ public class ObstacleController : UnitController
     }
 
     //発見判定
-    public bool IsDiscovery(Transform target, int targetSide)
+    public bool IsDiscovery(Transform target, int targetSide, float attackRange = 0)
     {
         if (camouflageRange <= 0) return false;
         if (side != Common.CO.SIDE_UNKNOWN && side == targetSide) return false;
-        if (Vector3.Distance(myTran.position, target.position) > camouflageRange) return false;
+        float distance = Vector3.Distance(myTran.position, target.position);
+        if (distance > camouflageRange || distance > attackRange) return false;
         return true;
     }
 

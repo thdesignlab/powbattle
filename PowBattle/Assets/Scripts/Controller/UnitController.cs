@@ -24,9 +24,17 @@ public class UnitController : BaseMoveController
     [SerializeField]
     protected GameObject weapon;
     //[SerializeField]
-    protected GameObject bufEffect;
+    protected GameObject _bufEffect;
+    protected GameObject bufEffect
+    {
+        get {　return (_bufEffect != null) ? _bufEffect : _bufEffect = Resources.Load<GameObject>("Effect/BufEffect");}
+    }
     //[SerializeField]
-    protected GameObject debufEffect;
+    protected GameObject _debufEffect;
+    protected GameObject debufEffect
+    {
+        get { return (_debufEffect != null) ? _debufEffect : _debufEffect = Resources.Load<GameObject>("Effect/DebufEffect"); }
+    }
     [SerializeField]
     protected int maxHP;
     protected int nowHP;
@@ -173,9 +181,8 @@ public class UnitController : BaseMoveController
     //バフエフェクト設定
     protected void SetEffect()
     {
-        bufEffect = Resources.Load<GameObject>("Effect/BufEffect");
-        debufEffect = Resources.Load<GameObject>("Effect/DebufEffect");
-        Debug.Log(bufEffect);
+        //bufEffect = Resources.Load<GameObject>("Effect/BufEffect");
+        //debufEffect = Resources.Load<GameObject>("Effect/DebufEffect");
     }
 
     //武器装備
@@ -523,6 +530,7 @@ public class UnitController : BaseMoveController
     //ステータスエフェクト
     IEnumerator StatusEffect(int type, int rate, GameObject effect)
     {
+        Debug.Log(effect);
         if (effect == null) yield break;
         GameObject effectObj = Instantiate(effect, myTran.position + Vector3.up * 1.5f, myTran.rotation);
         effectObj.transform.SetParent(myTran, true);

@@ -33,7 +33,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     [HideInInspector]
     public List<int> unitCntRate = new List<int>() { 50, 50 };
     private List<HQController> mainHqCtrl = new List<HQController>() { null, null };
-    private List<List<HQController>> hqCtrlList = new List<List<HQController>>() { new List<HQController>(), new List<HQController>() };
+    private List<List<HQController>> subHqCtrlList = new List<List<HQController>>() { new List<HQController>(), new List<HQController>() };
     [HideInInspector]
     public List<List<Transform>> unitList = new List<List<Transform>> { new List<Transform>() { }, new List<Transform>() { } };
 
@@ -63,7 +63,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     List<int> testRespawnUnits;
     [SerializeField]
     List<int> testEnemyRespawnUnits;
-    List<int> testExtraUnits = new List<int>() { 0, 1, 2, 3, 4 };
+    List<int> testExtraUnits = new List<int>() { 0, 1, 2, 2, 3, 3, 4, 4 };
 
 
     protected override void Awake()
@@ -206,7 +206,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
                 }
                 else
                 {
-                    hqCtrlList[side].Add(ctrl);
+                    subHqCtrlList[side].Add(ctrl);
                 }
             }
         }
@@ -218,7 +218,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         HQController ctrl = mainHqCtrl[side];
 
         float distance = 0;
-        foreach (HQController subHqCtrl in hqCtrlList[side])
+        foreach (HQController subHqCtrl in subHqCtrlList[side])
         {
             if (subHqCtrl == null) continue;
             float tmpDistance = Vector3.Distance(subHqCtrl.transform.position, t.position);
@@ -324,45 +324,65 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     }
 
     //出現位置選択
-    private Transform SelectSpawnPoint(int side, bool isExtra = false, bool isRandom = false)
+    private Transform SelectSpawnPoint(int side, bool isExtra = false)
     {
+        List<Transform> points = new List<Transform>();
+        int index = 0;
         Transform sp = null;
         if (!isExtra || exSpawnPoints[side].Count == 0)
         {
             //通常
-            if (isRandom)
+            subHqCtrlList[side].RemoveAll(a => a == null);
+            spawnPoints[side].RemoveAll(a => a == null);
+            if (subHqCtrlList[side].Count > 0)
             {
-                //ランダム
-                int index = UnityEngine.Random.Range(0, spawnPoints[side].Count);
-                sp = spawnPoints[side][index];
-                if (sp == null)
+                //サブHQから取得
+                foreach (HQController subHqCtrl in subHqCtrlList[side])
                 {
-                    spawnPoints[side].RemoveAt(index);
-                    return SelectSpawnPoint(side, isExtra, isRandom);
+                    points.Add(subHqCtrl.transform);
                 }
             }
-            else
+            else if (spawnPoints[side].Count > 0)
             {
-                //順番
-                sp = spawnPoints[side][spawnIndex[side]];
-                if (sp == null)
-                {
-                    spawnPoints[side].RemoveAt(spawnIndex[side]);
-                    return SelectSpawnPoint(side, isExtra, isRandom);
-                }
-                spawnIndex[side] = (spawnIndex[side] + 1) % spawnPoints[side].Count;
+                //出現ポイントから取得
+                points = spawnPoints[side];
+            }
+
+            //インデックス
+            if (points.Count > 0)
+            {
+                spawnIndex[side] = (spawnIndex[side] + 1) % points.Count;
+                index = spawnIndex[side];
             }
         }
         else
         {
             //援軍
-            int exIndex = UnityEngine.Random.Range(0, exSpawnPoints[side].Count);
-            sp = exSpawnPoints[side][exIndex];
-            if (sp == null)
+            exSpawnPoints[side].RemoveAll(a => a == null);
+            if (exSpawnPoints[side].Count > 0)
             {
-                exSpawnPoints[side].RemoveAt(exIndex);
-                return SelectSpawnPoint(side, isExtra, isRandom);
+                //出現ポイントから取得
+                points = exSpawnPoints[side];
             }
+            else if (unitList[side].Count > 0)
+            {
+                //自軍付近
+                points = unitList[side];
+            }
+
+            //インデックス
+            if (points.Count > 0) index = UnityEngine.Random.Range(0, points.Count);
+        }
+
+        //ポイント決定
+        if(points.Count <= index || points[index] == null)
+        {
+            //HQ
+            sp = mainHqCtrl[side].transform;
+        }
+        else
+        {
+            sp = points[index];
         }
         return sp;
     }
@@ -375,22 +395,11 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         List<int> units = (isExtra) ? extraUnits[side] : spawnUnits[side];
         foreach (int unit in units)
         {
-            SpawnUnit(unit, sp, side);
-        }
-
-    }
-    //ユニット生成(ランダムポイント)
-    private void SpawnUnitsRandom(int side, bool isExtra = false)
-    {
-        //出現位置取得
-        List<int> units = (isExtra) ? extraUnits[side] : spawnUnits[side];
-        foreach (int unit in units)
-        {
-            Transform sp = SelectSpawnPoint(side, isExtra, true);
             GameObject unitObj = SpawnUnit(unit, sp, side);
+
+            //援軍バフ
             if (isExtra)
             {
-                //援軍バフ
                 UnitController unitCtrl = unitObj.GetComponent<UnitController>();
                 unitCtrl.AttackEffect(50, 15);
                 unitCtrl.DefenceEffect(75, 15);
@@ -399,12 +408,30 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 
     }
 
+    //対象がHQか判定
+    private bool IsHq(Transform tran)
+    {
+        bool flg = false;
+        switch (tran.tag)
+        {
+            case Common.CO.TAG_HQ:
+            case Common.CO.TAG_ENEMY_HQ:
+                flg = true;
+                break;
+        }
+        return flg;
+    }
+
     //ユニット生成処理
     private GameObject SpawnUnit(int unitNo, Transform spawnPoint, int side)
     {
+        //出現位置決定
+        Vector3 spawnPos = spawnPoint.position;
+        if (IsHq(spawnPoint)) spawnPos += spawnPoint.forward * 2.0f;
+
         //生成
         GameObject unitPref = Resources.Load<GameObject>(Common.CO.RESOURCE_UNIT_DIR + Common.Unit.unitInfo[unitNo]);
-        GameObject unit = Instantiate(unitPref, PickAroundPosition(spawnPoint.position), spawnPoint.rotation);
+        GameObject unit = Instantiate(unitPref, PickAroundPosition(spawnPos), spawnPoint.rotation);
         unitList[side].Add(unit.transform);
 
         //情報変更
@@ -420,6 +447,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             mats[0].color = bodyColors[side];
             unitBody.GetComponent<Renderer>().materials = mats;
         }
+
         return unit;
     }
 
@@ -482,7 +510,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 
         foreach (int side in callExtraSides)
         {
-            SpawnUnitsRandom(side, true);
+            SpawnUnits(side, true);
         }
         if (callExtraSides.Count > 0) extraRateList.RemoveAt(0);
     }
@@ -532,9 +560,12 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             //ユニット生成
             foreach (int side in Common.CO.sideArray)
             {
-                if (unitCnt[side] < testUnitLimit)
+                for (int j = 0; j < 2; j++)
                 {
-                    SpawnUnitsRandom(side, false);
+                    if (unitCnt[side] < testUnitLimit)
+                    {
+                        SpawnUnits(side, false);
+                    }
                 }
             }
 

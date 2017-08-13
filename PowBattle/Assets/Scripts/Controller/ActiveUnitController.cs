@@ -158,7 +158,7 @@ public class ActiveUnitController : UnitController
         obstacleIndex = (obstacleIndex + 1) % BattleManager.Instance.obstacleCtrls.Count;
         ObstacleController obstacleCtrl = BattleManager.Instance.obstacleCtrls[obstacleIndex];
         if (obstacleCtrl == null) return;
-        if (obstacleCtrl.IsDiscovery(myTran, mySide))
+        if (obstacleCtrl.IsDiscovery(myTran, mySide, attackRange))
         {
             SetTarget(obstacleCtrl.transform);
         }
