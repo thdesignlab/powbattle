@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using TouchScript.Gestures.TransformGestures;
 
 public class PlayerController : GestureManager
@@ -16,6 +17,7 @@ public class PlayerController : GestureManager
     protected Transform camTargetTran;
     protected Transform camPointTran;
     protected Vector3 lookAtVector;
+    protected Slider hpSlider;
 
     const string CAM_POINT = "CamPoint/";
     const string CAM_POINT_FIRST = "First";
@@ -134,8 +136,7 @@ public class PlayerController : GestureManager
         if (Physics.Raycast(ray, out hit, myTran.position.y * 10, tapLayerMask))
         {
             camTargetTran = hit.transform;
-
-            MenuController.Instance.OpenCamMenu();
+            MenuController.Instance.OpenCamMenu(camTargetTran);
         }
     }
 

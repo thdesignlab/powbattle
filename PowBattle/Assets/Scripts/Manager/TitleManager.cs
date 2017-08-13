@@ -46,7 +46,7 @@ public class TitleManager : MonoBehaviour
 #endif
         yield return new WaitForSeconds(1.0f);
         //ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
-        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_STORY);
+        //ScreenManager.Instance.SceneLoad(Common.CO.SCENE_STORY);
 
         isSplashFinished = true;
 
@@ -78,7 +78,7 @@ public class TitleManager : MonoBehaviour
             {
                 messageText.color = new Color(messageText.color.r, messageText.color.g, messageText.color.b, 1);
                 //ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
-                ScreenManager.Instance.SceneLoad(Common.CO.SCENE_STORY);
+                ScreenManager.Instance.SceneLoad(Common.CO.SCENE_MAIN);
                 yield break;
             }
             yield return null;

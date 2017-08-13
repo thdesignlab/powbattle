@@ -23,9 +23,9 @@ public class UnitController : BaseMoveController
     protected Slider hpGage;
     [SerializeField]
     protected GameObject weapon;
-    [SerializeField]
+    //[SerializeField]
     protected GameObject bufEffect;
-    [SerializeField]
+    //[SerializeField]
     protected GameObject debufEffect;
     [SerializeField]
     protected int maxHP;
@@ -36,8 +36,8 @@ public class UnitController : BaseMoveController
     protected int defence;
     [SerializeField]
     protected float searchRange;
-    [SerializeField]
-    protected float researchLimit;
+    //[SerializeField]
+    protected float researchLimit = 3;
     protected float researchTime;
     protected float leftForceTargetTime;
 
@@ -58,42 +58,64 @@ public class UnitController : BaseMoveController
     protected const int MAX_DEFENCE = 90;
     protected const int MIN_SPEED_EFFECT = -100;
 
+    protected bool isActive = false;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        isActive = Common.Func.IsBattleScene();
+    }
+
     protected virtual void Start()
     {
-        nowHP = maxHP;
-        mySide = Common.Func.GetMySide(myTran.tag);
-        enemySide = BattleManager.Instance.GetEnemySide(mySide);
-        if (mySide != Common.CO.SIDE_UNKNOWN)
+        if (isActive)
         {
-            targetTag = Common.CO.tagUnitArray[enemySide];
-            targetHQTag = Common.CO.tagHQArray[enemySide];
-            targetLayer = Common.Func.GetSightLayerMask(enemySide);
+            nowHP = maxHP;
+            mySide = Common.Func.GetMySide(myTran.tag);
+            enemySide = BattleManager.Instance.GetEnemySide(mySide);
+            if (mySide != Common.CO.SIDE_UNKNOWN)
+            {
+                targetTag = Common.CO.tagUnitArray[enemySide];
+                targetHQTag = Common.CO.tagHQArray[enemySide];
+                targetLayer = Common.Func.GetSightLayerMask(enemySide);
+            }
+            else
+            {
+                enemySide = Common.CO.SIDE_UNKNOWN;
+            }
+            //isAttackRange = false;
+            isLockOn = false;
+            targetDistance = 0;
+            researchTime = 0;
+            leftForceTargetTime = 0;
         }
-        else
-        {
-            enemySide = Common.CO.SIDE_UNKNOWN;
-        }
-        //isAttackRange = false;
-        isLockOn = false;
-        targetDistance = 0;
-        researchTime = 0;
-        leftForceTargetTime = 0;
-
         Init();
     }
 
     //初期処理
     protected virtual void Init()
     {
-        OpenShield(1.0f);
-        SetHpGage();
-        EquipWeapon();
-        GetLaserPointer();
-        StartCoroutine(ActionRoutine());
+        if (isActive)
+        {
+            SetEffect();
+            SetHpGage();
+            EquipWeapon();
+            GetLaserPointer();
+            OpenShield(1.0f);
+            StartCoroutine(ActionRoutine());
+        }
+        else
+        {
+            if (myRigidbody != null) myRigidbody.isKinematic = true;
+            SetHpGage(false);
+        }
     }
 
     protected virtual void Update()
     {
+        if (!isActive) return;
+
         if (nowHP <= 0 || BattleManager.Instance.isBattleEnd) return;
         UpdateHpGage();
         researchTime += Time.deltaTime;
@@ -146,6 +168,14 @@ public class UnitController : BaseMoveController
             Color color = (mySide == Common.CO.SIDE_MINE) ? Color.cyan : Color.red;
             laserPointerCtrl.SetLaserColor(color);
         }
+    }
+
+    //バフエフェクト設定
+    protected void SetEffect()
+    {
+        bufEffect = Resources.Load<GameObject>("Effect/BufEffect");
+        debufEffect = Resources.Load<GameObject>("Effect/DebufEffect");
+        Debug.Log(bufEffect);
     }
 
     //武器装備
@@ -344,10 +374,15 @@ public class UnitController : BaseMoveController
     }
 
     //HPゲージ設定
-    public void SetHpGage()
+    public void SetHpGage(bool flg = true)
     {
         Transform statusCanvas = myTran.Find("StatusCanvas");
         if (statusCanvas == null) return;
+        if (!flg)
+        {
+            statusCanvas.gameObject.SetActive(false);
+            return;
+        }
         string myGageName = (mySide == Common.CO.SIDE_MINE) ? "HP" : "EnemyHP";
         string enemyGageName = (mySide == Common.CO.SIDE_MINE) ? "EnemyHP" : "HP";
         hpGage = statusCanvas.Find(myGageName).GetComponent<Slider>();

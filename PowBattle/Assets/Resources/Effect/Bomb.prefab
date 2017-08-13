@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 250
-  impact: 3000
+  impact: 1000
   isHitBreak: 0
   isShootDown: 0
 --- !u!135 &135271771876767670

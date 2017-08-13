@@ -1,28 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MenuController : SingletonMonoBehaviour<MenuController>
 {
-    [SerializeField]
+    private Transform battleCanvasTran;
     private GameObject menuList;
-    [SerializeField]
     private GameObject debugMenuList;
-    [SerializeField]
     private GameObject debugBtn;
-    [SerializeField]
     private GameObject camMenu;
-    //private Transform _myTran;
-    //private Transform myTran
-    //{
-    //    get { return _myTran ? _myTran : _myTran = transform; }
-    //}
-    //private GameObject _battleCanvas;
-    //private GameObject battleCanvas
-    //{
-    //    get { return _battleCanvas ? _battleCanvas : _battleCanvas = BattleManager.Instance.GetBattleCanvas(); }
-    //}
+    private Slider hpSlider;
 
     private bool isAdmin = false;
 
@@ -36,6 +25,14 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
     {
         //デバッグボタンON/OFF
         if (MyDebug.Instance.isDebugMode || UserManager.isAdmin) isAdmin = true;
+
+        //UI取得
+        Transform battleCanvasTran = transform;
+        menuList = battleCanvasTran.Find("MenuList").gameObject;
+        debugBtn = menuList.transform.Find("DebugBtn").gameObject;
+        debugMenuList = battleCanvasTran.Find("DebugMenuList").gameObject;
+        camMenu = battleCanvasTran.Find("CamMenu").gameObject;
+        hpSlider = camMenu.transform.Find("HP").GetComponent<Slider>();
 
         //初期表示
         menuList.SetActive(false);
@@ -103,15 +100,29 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
     }
 
     //カメラメニュー表示
-    public void OpenCamMenu()
+    private Coroutine camTargetHpCoroutine;
+    public void OpenCamMenu(Transform tran)
     {
         camMenu.SetActive(true);
+        camTargetHpCoroutine = StartCoroutine(CamTargetHpCoroutine(tran));
     }
 
     //カメラメニュー非表示
     public void CloseCamMenu()
     {
         camMenu.SetActive(false);
+        StopCoroutine(camTargetHpCoroutine);
+    }
+
+    IEnumerator CamTargetHpCoroutine(Transform tran)
+    {
+        UnitController unitCtrl = tran.GetComponent<UnitController>();
+        for (;;)
+        {
+            if (unitCtrl == null) break;
+            hpSlider.value = unitCtrl.GetHpRate();
+            yield return null;
+        }
     }
 
     //カメラモード切替

@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 150
-  impact: 500
+  impact: 250
   isHitBreak: 0
   isShootDown: 1
   speed: 0

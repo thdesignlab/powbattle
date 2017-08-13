@@ -5,7 +5,7 @@ public abstract class BaseMoveController : MonoBehaviour
 {
     protected Transform myTran;
     protected Rigidbody myRigidbody;
-    const float FORCE_REGIST = 50;
+    const float FORCE_REGIST = 10;
     
     protected virtual void Awake()
     {
@@ -70,7 +70,7 @@ public abstract class BaseMoveController : MonoBehaviour
     {
         if (myRigidbody == null || myRigidbody.isKinematic) return;
         force /= myRigidbody.mass;
-        if (force.magnitude <= FORCE_REGIST) return;
+        if (force.magnitude < FORCE_REGIST) return;
         myRigidbody.AddForce(force, ForceMode.Impulse);
     }
 }

@@ -31,6 +31,11 @@ public class ObjectController : MonoBehaviour {
         if (activeLimitDistance > 0) StartCoroutine(CheckDistance());
     }
 
+    private void Update()
+    {
+        if (myTran.position.y < -1) DestroyObject(0.5f);
+    }
+
     IEnumerator CountDown()
     {
         for (;;)

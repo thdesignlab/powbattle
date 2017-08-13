@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 namespace Common
 {
@@ -372,6 +374,12 @@ namespace Common
         {
             return UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
         }
+
+        //バトルシーン判定
+        public static bool IsBattleScene()
+        {
+            return (SceneManager.GetActiveScene().name.IndexOf(CO.SCENE_BATTLE) == 0);
+        }
     }
 
     //### ユニット ###
@@ -382,7 +390,8 @@ namespace Common
             { 0, "UnitKnight" },
             { 1, "UnitKnight2" },
             { 2, "UnitGunner" },
-            { 3, "UnitTank" },
+            { 3, "UnitArcher" },
+            { 4, "UnitTank" },
         };
     }
 

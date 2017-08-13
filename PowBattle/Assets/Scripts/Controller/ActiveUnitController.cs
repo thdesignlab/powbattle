@@ -22,13 +22,21 @@ public class ActiveUnitController : UnitController
 
     protected override void Init()
     {
-        //SearchHQ();
         base.Init();
-        SaveDefault();
+        if (isActive)
+        {
+            SaveDefault();
+        }
+        else
+        {
+            agent.enabled = false;
+        }           
     }
 
     protected override void Update()
     {
+        if (!isActive) return;
+
         if (nowHP <= 0 || BattleManager.Instance.isBattleEnd)
         {
             agent.isStopped = true;
