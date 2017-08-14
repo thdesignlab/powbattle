@@ -82,8 +82,8 @@ MeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1227023469760406}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectSpawn: {fileID: 1433351128113194, guid: bdac2360750d4294db09185952970c5f,
     type: 2}
-  activeLimitTime: 5
+  activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 0
 --- !u!114 &114488907791471848

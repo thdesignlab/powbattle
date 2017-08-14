@@ -62,24 +62,21 @@ public class BallisticShootWeaponController : ShootWeaponController
         float g = Physics.gravity.y;
         float y0 = shootPos.y;
         float y = targetPos.y;
+        float v0 = 0;
 
-        // Mathf.Cos()、Mathf.Tan()に渡す値の単位はラジアンだ。角度のまま渡してはいけないぞ！
-        float rad = angle * Mathf.Deg2Rad;
-
-        float cos = Mathf.Cos(rad);
-        float tan = Mathf.Tan(rad);
-
-        float v0Square = g * x * x / (2 * cos * cos * (y - y0 - x * tan));
-
-        // 負数を平方根計算すると虚数になってしまう。
-        // 虚数はfloatでは表現できない。
-        // こういう場合はこれ以上の計算は打ち切ろう。
-        if (v0Square <= 0.0f)
+        for (float a = angle; a < 90; a += 10)
         {
-            return 0.0f;
-        }
+            float rad = a * Mathf.Deg2Rad;
+            float cos = Mathf.Cos(rad);
+            float tan = Mathf.Tan(rad);
+            float v0Square = g * x * x / (2 * cos * cos * (y - y0 - x * tan));
 
-        float v0 = Mathf.Sqrt(v0Square);
+            if (v0Square <= 0.0f) continue;
+
+            v0 = Mathf.Sqrt(v0Square);
+            break;
+        }
+        
         return v0;
     }
 

@@ -184,16 +184,17 @@ public class PlayerController : GestureManager
     }
     private void SetFirstCamPoint()
     {
-            camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_FIRST);
+        camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_FIRST);
         if (camPointTran == null) camPointTran = camTargetTran;
         myTran.position = camPointTran.position;
         myTran.rotation = camPointTran.rotation;
         camTran.rotation = myTran.rotation;
+        lookAtVector = camTargetTran.position;
     }
     private void SetThirdCamPoint()
     {
         camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_THIRD);
-        if (camPointTran == null) camPointTran = camTargetTran;
+        if (camPointTran == null) camPointTran = camTargetTran ;
         myTran.position = camPointTran.position;
         myTran.rotation = camPointTran.rotation;
         lookAtVector = camTargetTran.position;
@@ -204,6 +205,7 @@ public class PlayerController : GestureManager
     {
         switch (camMode)
         {
+            case Common.CO.CAM_MODE_FIRST:
             case Common.CO.CAM_MODE_THIRD:
                 camTran.LookAt(lookAtVector + camTargetTran.forward * 10.0f);
                 break;

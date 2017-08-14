@@ -202,6 +202,7 @@ public class ActiveUnitController : UnitController
         {
             coolTime = weaponCtrl.GetMoveDelay();
             agent.isStopped = true;
+            researchTime = 0;
         }
         return atk;
     }

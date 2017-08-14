@@ -25,6 +25,8 @@ public class StoryManager : SingletonMonoBehaviour<StoryManager>
         base.Awake();
 
         Init();
+
+        Application.targetFrameRate = 30;
     }
 
     protected void Init()

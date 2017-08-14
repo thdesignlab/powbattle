@@ -10,12 +10,11 @@ using System.Text.RegularExpressions;
 public class TitleManager : MonoBehaviour
 {
     private bool isSplashFinished = false;
+    private bool isGameStart = false;
 
 
-    [SerializeField]
+    //[SerializeField]
     private Transform titleCanvas;
-
-
 
     private float processTime = 0;
 
@@ -31,6 +30,8 @@ public class TitleManager : MonoBehaviour
 
     IEnumerator Start()
     {
+        titleCanvas = GameObject.Find("TitleCanvas").transform;
+
         if (isSplashFinished) yield break;
 
 #if UNITY_EDITOR
@@ -38,13 +39,12 @@ public class TitleManager : MonoBehaviour
         //スプラッシュ終了待ち
         for (;;)
         {
-            Debug.Log("Splash >> "+UnityEngine.Rendering.SplashScreen.isFinished);
-            if (!UnityEngine.Rendering.SplashScreen.isFinished) break;
+            if (UnityEngine.Rendering.SplashScreen.isFinished) break;
             yield return null;
         }
 #else
 #endif
-        yield return new WaitForSeconds(1.0f);
+        //yield return new WaitForSeconds(1.0f);
         //ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
         //ScreenManager.Instance.SceneLoad(Common.CO.SCENE_STORY);
 
@@ -74,7 +74,8 @@ public class TitleManager : MonoBehaviour
             }
 
             //タップ判定
-            if (Input.GetMouseButtonDown(0))
+            //if (Input.GetMouseButtonDown(0))
+            if (isGameStart)
             {
                 messageText.color = new Color(messageText.color.r, messageText.color.g, messageText.color.b, 1);
                 //ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
@@ -98,6 +99,12 @@ public class TitleManager : MonoBehaviour
         //    yield return null;
         //}
 
+    }
+
+    public void StartGame()
+    {
+
+        isGameStart = true;
     }
 
     //void Update()

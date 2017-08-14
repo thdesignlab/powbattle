@@ -87,6 +87,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         SetSpawnPoint();
         SetSpawnUnit();
         UpdateSituation();
+
+        Application.targetFrameRate = 60;
     }
 
     private void Start()
@@ -161,6 +163,12 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             textLose.SetActive(false);
         }
         textLine.gameObject.SetActive(true);
+        StartCoroutine(ReturnMainScene());
+    }
+    IEnumerator ReturnMainScene()
+    {
+        yield return new WaitForSeconds(5.0f);
+        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_MAIN);
     }
 
     //敵陣営No取得
@@ -555,7 +563,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
         for (int i = 0; i < testRespawnCount; i++)
         {
-            if (isBattleEnd) yield break;
+            if (isBattleEnd) break;
 
             //ユニット生成
             foreach (int side in Common.CO.sideArray)

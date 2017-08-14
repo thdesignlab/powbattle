@@ -226,7 +226,7 @@ public class UnitController : BaseMoveController
         if (targetTran != null)
         {
             //isLockOn = IsDiscoveryTarget(targetTran, attackRange);
-            if (Vector3.Distance(myTran.position, targetTran.position) > attackRange)
+            if (Vector3.Distance(myTran.position, targetTran.position) > attackRange || researchTime > researchLimit)
             {
                 SetTarget(null);
                 isLockOn = false;
@@ -257,7 +257,7 @@ public class UnitController : BaseMoveController
     {
         if (!isLockOn) return false;
         bool atk = Attack();
-        if (atk) researchTime = 0;
+        //if (atk) researchTime = 0;
         return atk;
     }
 
@@ -268,7 +268,7 @@ public class UnitController : BaseMoveController
     }
 
     //目視チェック
-    protected bool IsDiscoveryTarget(Transform target, float range = 0)
+    protected virtual bool IsDiscoveryTarget(Transform target, float range = 0)
     {
         if (target == null) return false;
         if (range <= 0) range = searchRange;

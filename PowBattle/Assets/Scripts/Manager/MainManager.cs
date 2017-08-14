@@ -10,6 +10,11 @@ using TouchScript.Gestures.TransformGestures;
 
 public class MainManager : SingletonMonoBehaviour<MainManager>
 {
+    protected override void Awake()
+    {
+        base.Awake();
+        Application.targetFrameRate = 30;
+    }
 
     //ストーリーボタン押下
     public void ObClickStoryBtn()
