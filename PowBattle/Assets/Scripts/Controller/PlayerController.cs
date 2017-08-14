@@ -62,16 +62,19 @@ public class PlayerController : GestureManager
 
     protected override void Drag(float deltaX, float deltaY)
     {
-        if (camMode == Common.CO.CAM_MODE_FREE)
+        switch (camMode)
         {
-            Vector3 deltaMove = myTran.forward * deltaY + myTran.right * deltaX;
-            deltaMove *= dragRate;
-            if (!isEnabledMove(deltaMove)) return;
-            myTran.position += deltaMove;
-        }
-        else if (camMode == Common.CO.CAM_MODE_THIRD)
-        {
-            lookAtVector += (myTran.up * deltaY + myTran.right * deltaX) * dragRate;
+            case Common.CO.CAM_MODE_FREE:
+                Vector3 deltaMove = myTran.forward * deltaY + myTran.right * deltaX;
+                deltaMove *= dragRate;
+                if (!isEnabledMove(deltaMove)) return;
+                myTran.position += deltaMove;
+                break;
+
+            case Common.CO.CAM_MODE_FIRST:
+            case Common.CO.CAM_MODE_THIRD:
+                lookAtVector += (myTran.up * deltaY + myTran.right * deltaX) * dragRate;
+                break;
         }
     }
     protected override void Pinch(float delta)

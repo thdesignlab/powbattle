@@ -11,6 +11,7 @@ public class Shortcut
         Common.CO.SCENE_BATTLE,     //2
         Common.CO.SCENE_MAIN,      //3
         Common.CO.SCENE_STORY,      //4
+        Common.CO.SCENE_BATTLE+"Castel",     //2
     };
 
     [MenuItem("Tools/PlayGame &q")]

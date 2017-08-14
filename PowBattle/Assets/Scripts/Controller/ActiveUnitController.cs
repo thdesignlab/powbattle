@@ -94,6 +94,9 @@ public class ActiveUnitController : UnitController
         if (leftForceTargetTime > 0) return;
         if (targetTran != null && targetTran.tag == targetTag && researchTime < researchLimit) return;
 
+        //武器射程取得
+        float attackRange = weaponCtrl.GetMaxRange();
+
         //敵を探す
         List<Transform> targets = BattleManager.Instance.GetUnitList(enemySide);
 
@@ -142,7 +145,10 @@ public class ActiveUnitController : UnitController
         isLockOn = flg;
         if (flg)
         {
-            agent.stoppingDistance = attackRange * 0.8f;
+            //武器射程取得
+            float attackRangeMax = weaponCtrl.GetMaxRange();
+            float attackRangeMin = weaponCtrl.GetMinRange();
+            agent.stoppingDistance = (attackRangeMin > 0) ? attackRangeMin : attackRangeMax * 0.8f;
         }
         else
         {
@@ -158,7 +164,7 @@ public class ActiveUnitController : UnitController
         obstacleIndex = (obstacleIndex + 1) % BattleManager.Instance.obstacleCtrls.Count;
         ObstacleController obstacleCtrl = BattleManager.Instance.obstacleCtrls[obstacleIndex];
         if (obstacleCtrl == null) return;
-        if (obstacleCtrl.IsDiscovery(myTran, mySide, attackRange))
+        if (obstacleCtrl.IsDiscovery(myTran, mySide, weaponCtrl.GetMaxRange()))
         {
             SetTarget(obstacleCtrl.transform);
         }
@@ -184,7 +190,11 @@ public class ActiveUnitController : UnitController
     //攻撃判定
     protected override bool JudgeAttack()
     {
-        SetLockOn(IsDiscoveryTarget(targetTran, attackRange));
+        //武器射程取得
+        float attackRangeMax = weaponCtrl.GetMaxRange();
+        float attackRangeMin = weaponCtrl.GetMinRange();
+
+        SetLockOn(IsDiscoveryTarget(targetTran, attackRangeMax));
         if (!isLockOn) return false;
 
         bool atk = base.JudgeAttack();
@@ -215,7 +225,7 @@ public class ActiveUnitController : UnitController
             || targetTran.tag == targetHQTag
             || targetTran.tag == Common.CO.TAG_BREAK_OBSTACLE
         ) {
-            SetTarget(t);
+            SetTarget(t, 3.0f);
         }
         else
         {

@@ -28,6 +28,16 @@ public class ObstacleController : UnitController
 
     public float GetCamouflageRange()
     {
-        return camouflageRange;
+        return side;
+    }
+
+    protected override int GetMySide()
+    {
+        return GetSide();
+    }
+
+    public int GetSide()
+    {
+        return side;
     }
 }

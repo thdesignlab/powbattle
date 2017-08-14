@@ -13,13 +13,15 @@ public class ShootWeaponController : WeaponController
     protected float rapidInterval;
     [SerializeField]
     protected float shootDiff;
+    [SerializeField]
+    protected float addHeightRangeRate;
 
     protected BulletController bulletCtrl;
     protected List<Transform> muzzleList = new List<Transform>();
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         bulletCtrl = bullet.GetComponent<BulletController>();
         SetMuzzle();
     }
@@ -87,5 +89,16 @@ public class ShootWeaponController : WeaponController
         {
             muzzleList.Add(myTran);
         }
+    }
+
+    public override float GetMinRange()
+    {
+        return 0;
+    }
+
+    public override float GetMaxRange(Transform target = null)
+    {
+        float addRange = myTran.parent.position.y * addHeightRangeRate;
+        return range + addRange;
     }
 }

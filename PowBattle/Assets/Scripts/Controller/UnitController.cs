@@ -45,7 +45,7 @@ public class UnitController : BaseMoveController
     [SerializeField]
     protected float searchRange;
     //[SerializeField]
-    protected float researchLimit = 3;
+    protected float researchLimit = 5;
     protected float researchTime;
     protected float leftForceTargetTime;
 
@@ -60,7 +60,7 @@ public class UnitController : BaseMoveController
         get { return (_motionCtrl) ? _motionCtrl : _motionCtrl = GetComponent<UnitMotionController>(); }
     }
     protected WeaponController weaponCtrl;
-    protected float attackRange;
+    //protected float attackRange;
     protected LaserPointerController laserPointerCtrl;
 
     protected const int MAX_DEFENCE = 90;
@@ -80,7 +80,7 @@ public class UnitController : BaseMoveController
         if (isActive)
         {
             nowHP = maxHP;
-            mySide = Common.Func.GetMySide(myTran.tag);
+            mySide = GetMySide();
             enemySide = BattleManager.Instance.GetEnemySide(mySide);
             if (mySide != Common.CO.SIDE_UNKNOWN)
             {
@@ -97,8 +97,14 @@ public class UnitController : BaseMoveController
             targetDistance = 0;
             researchTime = 0;
             leftForceTargetTime = 0;
+            SetHpGage(isActive);
         }
         Init();
+    }
+
+    protected virtual int GetMySide()
+    {
+        return Common.Func.GetMySide(myTran.tag);
     }
 
     //初期処理
@@ -107,7 +113,6 @@ public class UnitController : BaseMoveController
         if (isActive)
         {
             SetEffect();
-            SetHpGage();
             EquipWeapon();
             GetLaserPointer();
             OpenShield(1.0f);
@@ -116,7 +121,6 @@ public class UnitController : BaseMoveController
         else
         {
             if (myRigidbody != null) myRigidbody.isKinematic = true;
-            SetHpGage(false);
         }
     }
 
@@ -205,7 +209,7 @@ public class UnitController : BaseMoveController
         w.transform.SetParent(joint, true);
         weaponCtrl = w.GetComponent<WeaponController>();
         weaponCtrl.SetOwner(myTran);
-        attackRange = weaponCtrl.GetRange();
+        //attackRange = weaponCtrl.GetRange();
         researchLimit = weaponCtrl.GetReload() * 1.5f;
         if (searchRange <= 0) searchRange = weaponCtrl.GetReload() * 1.5f;
         weaponCtrl.SetMotionCtrl(motionCtrl);
@@ -216,6 +220,9 @@ public class UnitController : BaseMoveController
     {
         //再索敵チェック
         if (leftForceTargetTime > 0) return;
+
+        //武器射程取得
+        float attackRange = weaponCtrl.GetMaxRange();
         if (targetTran != null)
         {
             //isLockOn = IsDiscoveryTarget(targetTran, attackRange);
@@ -530,9 +537,8 @@ public class UnitController : BaseMoveController
     //ステータスエフェクト
     IEnumerator StatusEffect(int type, int rate, GameObject effect)
     {
-        Debug.Log(effect);
         if (effect == null) yield break;
-        GameObject effectObj = Instantiate(effect, myTran.position + Vector3.up * 1.5f, myTran.rotation);
+        GameObject effectObj = Instantiate(effect, myTran.position + Vector3.up * 2.0f, myTran.rotation);
         effectObj.transform.SetParent(myTran, true);
         float wait = 0.5f;
         for (;;)

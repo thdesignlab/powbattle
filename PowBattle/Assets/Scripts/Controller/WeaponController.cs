@@ -21,7 +21,7 @@ public class WeaponController : MonoBehaviour
 
     protected float leftReload = 0;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         myTran = transform;
     }
@@ -81,7 +81,12 @@ public class WeaponController : MonoBehaviour
         return reload;
     }
 
-    public float GetRange()
+    public virtual float GetMinRange()
+    {
+        return 0;
+    }
+
+    public virtual float GetMaxRange(Transform target = null)
     {
         return range;
     }

@@ -39,7 +39,14 @@ public class DamageController : MonoBehaviour
 
             case Common.CO.TAG_BREAK_OBSTACLE:
                 //破壊可能障害物
-                hitTran.GetComponent<UnitController>().Hit(damage, ownerTran);
+                ObstacleController obstacleCtrl = hitTran.GetComponent<ObstacleController>();
+                if (ownerTran != null)
+                {
+                    int obstacleSide = obstacleCtrl.GetSide();
+                    if (obstacleSide != Common.CO.SIDE_UNKNOWN && obstacleSide == Common.Func.GetMySide(ownerTran.tag)) damage = 0;
+                }
+
+                if (damage > 0) obstacleCtrl.Hit(damage, ownerTran);
                 isHit = true;
                 break;
 

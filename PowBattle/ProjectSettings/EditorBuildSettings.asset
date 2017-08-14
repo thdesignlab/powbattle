@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Battle.unity
     guid: 5207b4a7173a7ce47849429256a6e0df
+  - enabled: 1
+    path: Assets/Scenes/BattleCastel.unity
+    guid: fffc89b0b8d33954ca586891abcc0fc4

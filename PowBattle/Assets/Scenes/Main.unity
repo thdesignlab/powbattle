@@ -326,7 +326,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 'Siege
+
+    Battle'
 --- !u!222 &390600822
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1082,7 +1084,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1415489322}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11669069}
+        m_MethodName: ObClickDebugBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1415489322
@@ -1851,22 +1864,22 @@ Prefab:
     - target: {fileID: 224849037053074864, guid: 07147485a66100841a3b48aa8e1f3a22,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224849037053074864, guid: 07147485a66100841a3b48aa8e1f3a22,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224120697606741992, guid: 07147485a66100841a3b48aa8e1f3a22,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224120697606741992, guid: 07147485a66100841a3b48aa8e1f3a22,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 07147485a66100841a3b48aa8e1f3a22, type: 2}
@@ -1992,6 +2005,26 @@ Prefab:
     - target: {fileID: 4939071038929264, guid: 27904c4082023c144a80ae8a7756dbdf, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 224573572402299344, guid: 27904c4082023c144a80ae8a7756dbdf,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224573572402299344, guid: 27904c4082023c144a80ae8a7756dbdf,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224723925557060056, guid: 27904c4082023c144a80ae8a7756dbdf,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224723925557060056, guid: 27904c4082023c144a80ae8a7756dbdf,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 27904c4082023c144a80ae8a7756dbdf, type: 2}

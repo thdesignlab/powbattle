@@ -17,8 +17,15 @@ public class MainManager : SingletonMonoBehaviour<MainManager>
         ScreenManager.Instance.SceneLoad(Common.CO.SCENE_STORY);
     }
 
+
+    //デバッグ用
     public void ObClickBattleBtn()
     {
         ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
+    }
+
+    public void ObClickDebugBtn()
+    {
+        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE+"Castel");
     }
 }
