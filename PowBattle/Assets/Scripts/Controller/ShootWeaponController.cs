@@ -37,30 +37,35 @@ public class ShootWeaponController : WeaponController
 
         for (int i = 1; i <= rapidCount; i++)
         {
-            int muzzleNo = i % muzzleList.Count;
-            if (target != null) LockOn(target, muzzleNo);
+            if (target != null) LockOn(target);
             AttackMotion(i);
             yield return new WaitForSeconds(attackWait);
-            Shoot();
+            for (int j = 0; j < muzzleList.Count; j++)
+            {
+                Shoot(j);
+            }
             yield return new WaitForSeconds(rapidInterval);
         }
         AttackMotion(0);
     }
 
-    protected virtual void LockOn(Transform target, int muzzleNo)
+    protected virtual void LockOn(Transform target)
     {
         Vector3 pos = target.position;
-        if (shootDiff > 0)
-        {
-            float rate = Vector3.Distance(myTran.position, pos) / range;
-            Vector3 diffpos = Vector3.zero;
-            diffpos += muzzleList[muzzleNo].up * Random.Range(-shootDiff, shootDiff);
-            diffpos += muzzleList[muzzleNo].right * Random.Range(-shootDiff, shootDiff);
-            diffpos += muzzleList[muzzleNo].forward * Random.Range(-shootDiff, shootDiff);
-            diffpos *= (rate < 0.3f) ? 0.3f : rate;
-            pos += diffpos;
-        }
-        muzzleList[muzzleNo].LookAt(pos);
+        pos += GetShootDiff(pos);
+        myTran.LookAt(pos);
+    }
+
+    protected Vector3 GetShootDiff(Vector3 targetPos)
+    {
+        Vector3 diffpos = Vector3.zero;
+        if (shootDiff <= 0) return diffpos;
+        float rate = Vector3.Distance(myTran.position, targetPos) / range;
+        diffpos += Vector3.up * Random.Range(-shootDiff, shootDiff);
+        diffpos += Vector3.right * Random.Range(-shootDiff, shootDiff);
+        diffpos += Vector3.forward * Random.Range(-shootDiff, shootDiff);
+        diffpos *= (rate < 0.2f) ? 0.2f : rate;
+        return diffpos;
     }
 
     protected virtual GameObject Shoot(int muzzleNo = 0)

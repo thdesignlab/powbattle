@@ -9,25 +9,26 @@ public class BallisticShootWeaponController : ShootWeaponController
     protected float shootAngle;
     private float speed;
 
-    protected override void LockOn(Transform target, int muzzleNo)
+    protected override void LockOn(Transform target)
     {
         if (shootAngle <= 0 || 90 < shootAngle) shootAngle = 45;
         Vector3 pos = target.position;
-        if (shootDiff > 0)
-        {
-            pos += muzzleList[muzzleNo].up * Random.Range(-shootDiff, shootDiff);
-            pos += muzzleList[muzzleNo].right * Random.Range(-shootDiff, shootDiff);
-            pos += muzzleList[muzzleNo].forward * Random.Range(-shootDiff, shootDiff);
-        }
-        muzzleList[muzzleNo].LookAt(new Vector3(pos.x, muzzleList[muzzleNo].position.y, pos.z));
-        muzzleList[muzzleNo].Rotate(Vector3.right, -shootAngle);
+        pos += GetShootDiff(pos);
+        myTran.LookAt(new Vector3(pos.x, myTran.position.y, pos.z));
+        myTran.Rotate(Vector3.right, -shootAngle);
 
         //初速計算
-        CalcShootSpeed(muzzleList[muzzleNo].position, pos, shootAngle);
+        CalcShootSpeed(myTran.position, pos, shootAngle);
     }
 
     protected override GameObject Shoot(int muzzleNo = 0)
     {
+        if (speed <= 0)
+        {
+            //攻撃不可の場合
+            myTran.parent.GetComponent<UnitController>().SetTarget(null);
+            return null;
+        }
         GameObject obj = base.Shoot(muzzleNo);
         if (obj == null) return null;
 

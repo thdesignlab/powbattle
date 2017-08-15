@@ -28,10 +28,10 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
 
         //UI取得
         Transform battleCanvasTran = transform;
-        menuList = battleCanvasTran.Find("MenuList").gameObject;
+        menuList = battleCanvasTran.Find("Menu/MenuList").gameObject;
         debugBtn = menuList.transform.Find("DebugBtn").gameObject;
-        debugMenuList = battleCanvasTran.Find("DebugMenuList").gameObject;
-        camMenu = battleCanvasTran.Find("CamMenu").gameObject;
+        debugMenuList = battleCanvasTran.Find("Menu/DebugMenuList").gameObject;
+        camMenu = battleCanvasTran.Find("Menu/CamMenu").gameObject;
         hpSlider = camMenu.transform.Find("HP").GetComponent<Slider>();
 
         //初期表示
@@ -69,20 +69,34 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
     //アプリ終了
     public void OnClickExitButton()
     {
-        //DialogController.OpenDialog("アプリを終了します", () => GameController.Instance.Exit(), true);
-        AppManager.Instance.ExitGame();
+        UnityAction callback = () =>
+        {
+            BattleManager.Instance.ResetPause();
+            AppManager.Instance.ExitGame();
+        };
+        DialogManager.OpenDialog("アプリを終了します", callback, null);
     }
 
     //タイトルへ戻る
     public void OnClickTitleButton()
     {
-        //UnityAction callback = () =>
-        //{
-        //    GameController.Instance.GoToTitle();
-        //};
+        UnityAction callback = () =>
+        {
+            BattleManager.Instance.ResetPause();
+            AppManager.Instance.GoToTitle();
+        };
+        DialogManager.OpenDialog("タイトルへ戻ります", callback, null);
+    }
 
-        //DialogController.OpenDialog("タイトルに戻ります", callback, true);
-        AppManager.Instance.GoToTitle();
+    //ホームへ戻る
+    public void OnClickHomeButton()
+    {
+        UnityAction callback = () =>
+        {
+            BattleManager.Instance.ResetPause();
+            AppManager.Instance.GoToHome();
+        };
+        DialogManager.OpenDialog("ホームへ戻ります", callback, null);
     }
 
 
@@ -146,10 +160,17 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
     //##### デバッグメニュー(管理者のみ実行可能) #####
 
     //デバッグメニュー表示切り替え
-    public void OnClickDebugButton(bool flg)
+    public void OnClickDebugButton()
     {
         if (!isAdmin) return;
-        debugMenuList.SetActive(true);
+        if (debugMenuList.activeSelf)
+        {
+            debugMenuList.SetActive(false);
+        }
+        else
+        {
+            debugMenuList.SetActive(true);
+        }
     }
 
     //リスタート

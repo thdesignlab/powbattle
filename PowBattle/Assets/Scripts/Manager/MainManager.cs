@@ -12,6 +12,7 @@ public class MainManager : SingletonMonoBehaviour<MainManager>
 {
     protected override void Awake()
     {
+        isDontDestroyOnLoad = false;
         base.Awake();
         Application.targetFrameRate = 30;
     }

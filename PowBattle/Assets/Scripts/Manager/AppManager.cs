@@ -51,4 +51,10 @@ public class AppManager : SingletonMonoBehaviour<AppManager>
     {
         ScreenManager.Instance.SceneLoad(Common.CO.SCENE_TITLE);
     }
+
+    //ホーム画面へ
+    public void GoToHome()
+    {
+        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_MAIN);
+    }
 }

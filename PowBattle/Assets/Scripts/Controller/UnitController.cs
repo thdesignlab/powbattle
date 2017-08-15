@@ -97,8 +97,8 @@ public class UnitController : BaseMoveController
             targetDistance = 0;
             researchTime = 0;
             leftForceTargetTime = 0;
-            SetHpGage(isActive);
         }
+        SetHpGage(isActive);
         Init();
     }
 

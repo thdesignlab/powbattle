@@ -163,7 +163,7 @@ public class DialogManager : MonoBehaviour
     //オプション反映
     public static void ExecDialogLowPosition()
     {
-        if (dialog == null || dialogLowPosition < 0) return;
+        if (dialog == null || dialogLowPosition <= 0) return;
         Transform dialogArea = dialogTran.Find(DIALOG_AREA);
         RectTransform rectTran = dialogArea.GetComponent<RectTransform>();
         rectTran.pivot = new Vector2(0.5f, 0.0f);

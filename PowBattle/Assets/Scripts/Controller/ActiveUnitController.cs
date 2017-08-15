@@ -14,10 +14,11 @@ public class ActiveUnitController : UnitController
 
     protected float coolTime = 0;
 
-    protected override void Start()
+    protected override void Awake()
     {
+        base.Awake();
         agent = GetComponent<NavMeshAgent>();
-        base.Start();
+        agent.enabled = isActive;
     }
 
     protected override void Init()
@@ -27,10 +28,6 @@ public class ActiveUnitController : UnitController
         {
             SaveDefault();
         }
-        else
-        {
-            agent.enabled = false;
-        }           
     }
 
     protected override void Update()

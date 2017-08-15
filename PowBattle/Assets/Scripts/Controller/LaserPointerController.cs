@@ -5,7 +5,7 @@ public class LaserPointerController : MonoBehaviour
 {
     [SerializeField]
     private bool IsVisibleNoTarget;
-    [SerializeField]
+    //[SerializeField]
     private LineRenderer laser;
     [SerializeField]
     private GameObject impactPoint;
@@ -27,6 +27,7 @@ public class LaserPointerController : MonoBehaviour
     void Awake()
     {
         myTran = transform;
+        laser = GetComponent<LineRenderer>();
         if (impactPoint != null) impactScale = new Vector3(pointSize, impactPoint.transform.localScale.y, pointSize);
         SetOff();
     }

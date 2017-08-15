@@ -4,12 +4,13 @@ using System.Collections;
 public class UnitMotionController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject body;
-    private Animator _animator;
-    private Animator animator
-    {
-        get { return (_animator) ? _animator : _animator = body.GetComponent<Animator>(); }
-    }
+    private Animator animator;
+    //private GameObject body;
+    //private Animator _animator;
+    //private Animator animator
+    //{
+    //    get { return (_animator) ? _animator : _animator = body.GetComponent<Animator>(); }
+    //}
 
     void Update()
     {

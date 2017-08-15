@@ -149,6 +149,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     //バトル終了
     private void BattleResult(int loseSide)
     {
+        if (isBattleEnd) return;
+
         isBattleEnd = true;
         if (loseSide == Common.CO.SIDE_MINE)
         {
