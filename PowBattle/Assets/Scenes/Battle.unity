@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44300452, g: 0.4921977, b: 0.5719268, a: 1}
+  m_IndirectSpecularColor: {r: 0.44300425, g: 0.49219704, b: 0.57192606, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -358,6 +358,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!1 &384261116
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,6 +769,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!1001 &805536465
 Prefab:
   m_ObjectHideFlags: 0
@@ -968,7 +970,7 @@ Prefab:
     - target: {fileID: 224242674267966450, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 224841462317840580, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -988,7 +990,7 @@ Prefab:
     - target: {fileID: 224841462317840580, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 224342686450222190, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1008,7 +1010,117 @@ Prefab:
     - target: {fileID: 224342686450222190, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
+      objectReference: {fileID: 0}
+    - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 255.80258
+      objectReference: {fileID: 0}
+    - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 511.60516
+      objectReference: {fileID: 0}
+    - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 767.4077
+      objectReference: {fileID: 0}
+    - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 511.60516
+      objectReference: {fileID: 0}
+    - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 224347061309996524, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224347061309996524, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224347061309996524, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 224347061309996524, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -80
+      objectReference: {fileID: 0}
+    - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 511.60516
+      objectReference: {fileID: 0}
+    - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 511.60516
+      objectReference: {fileID: 0}
+    - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -220
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
@@ -1129,6 +1241,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!114 &932586442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1275,6 +1388,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!208 &946834773
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -1442,6 +1556,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!65 &1169514493
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1572,6 +1687,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!23 &1270995327
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1701,6 +1817,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!114 &1302578833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1894,6 +2011,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!1 &1613472742
 GameObject:
   m_ObjectHideFlags: 0
@@ -2042,6 +2160,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!23 &1741014326
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2171,6 +2290,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!114 &1903809577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2295,6 +2415,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!1001 &1941711113
 Prefab:
   m_ObjectHideFlags: 0
@@ -2387,6 +2508,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!114 &1941711117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2585,6 +2707,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!114 &1953787895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2695,6 +2818,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!114 &1993895527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2819,6 +2943,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!1 &2036461192
 GameObject:
   m_ObjectHideFlags: 0
@@ -2943,6 +3068,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!114 &2052509696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3089,6 +3215,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!208 &2118351139
 NavMeshObstacle:
   m_ObjectHideFlags: 0
