@@ -65,7 +65,7 @@ public class BallisticShootWeaponController : ShootWeaponController
         float y = targetPos.y;
         float v0 = 0;
 
-        for (float a = angle; a < 90; a += 10)
+        for (float a = angle; a < 90; a += 5)
         {
             float rad = a * Mathf.Deg2Rad;
             float cos = Mathf.Cos(rad);

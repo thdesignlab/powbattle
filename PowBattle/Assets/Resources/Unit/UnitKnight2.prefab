@@ -2655,6 +2655,7 @@ MonoBehaviour:
   defence: 0
   searchRange: 10
   hqDamage: 150
+  isPathCheck: 1
 --- !u!114 &114428236931876412
 MonoBehaviour:
   m_ObjectHideFlags: 1

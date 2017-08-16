@@ -71,14 +71,10 @@ public class ShootWeaponController : WeaponController
     protected virtual GameObject Shoot(int muzzleNo = 0)
     {
         GameObject obj = Instantiate(bullet, muzzleList[muzzleNo].position, muzzleList[muzzleNo].rotation);
-        SetEffectOwner(obj);
-        return obj;
-    }
-
-    protected void SetEffectOwner(GameObject obj)
-    {
         DamageEffectController effectCtrl = obj.GetComponent<DamageEffectController>();
         effectCtrl.SetOwner(ownerTran);
+        effectCtrl.SetDamageRate(attackRate);
+        return obj;
     }
 
     protected void SetMuzzle()
@@ -96,14 +92,20 @@ public class ShootWeaponController : WeaponController
         }
     }
 
-    public override float GetMinRange()
+    public override float GetMinRange(Transform target = null)
     {
-        return 0;
+        if (target == null) return 0;
+
+        float diffRange = Mathf.Abs(myTran.position.y - target.position.y) * 1.2f;
+        return diffRange;
     }
 
     public override float GetMaxRange(Transform target = null)
     {
-        float addRange = myTran.parent.position.y * addHeightRangeRate;
-        return range + addRange;
+        if (addHeightRangeRate <= 0 || target == null) return range;
+        float heightDiff = myTran.position.y - target.position.y;
+        if (heightDiff <= 0) return range;
+        float diffRange = heightDiff * (100 + addHeightRangeRate) / 100.0f;
+        return range + diffRange;
     }
 }

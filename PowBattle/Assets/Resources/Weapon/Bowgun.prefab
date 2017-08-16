@@ -204,5 +204,5 @@ MonoBehaviour:
   rapidCount: 1
   rapidInterval: 0
   shootDiff: 1
-  addHeightRangeRate: 0.5
+  addHeightRangeRate: 50
   shootAngle: 50

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44300452, g: 0.4921977, b: 0.5719268, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -423,8 +423,8 @@ MonoBehaviour:
   testRespawnCount: 100
   testRespawnInterval: 45
   testRespawnIntervalAdd: 1
-  testRespawnUnits: 0200000000000000020000000200000001000000
-  testEnemyRespawnUnits: 0000000002000000020000000200000001000000
+  testRespawnUnits: 01000000010000000100000001000000010000000100000001000000
+  testEnemyRespawnUnits: 01000000010000000100000001000000010000000100000001000000
 --- !u!4 &419198005
 Transform:
   m_ObjectHideFlags: 0

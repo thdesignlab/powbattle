@@ -392,6 +392,8 @@ namespace Common
             { 2, "UnitGunner" },
             { 3, "UnitArcher" },
             { 4, "UnitTank" },
+            { 5, "UnitWizard" },
+            { 6, "UnitIceWizard" },
         };
     }
 

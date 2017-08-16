@@ -10,6 +10,8 @@ public class ActiveUnitController : UnitController
 
     [SerializeField]
     protected int hqDamage;
+    [SerializeField]
+    protected bool isPathCheck;
     protected float defaultSpeed;
 
     protected float coolTime = 0;
@@ -81,7 +83,7 @@ public class ActiveUnitController : UnitController
     protected void SearchHQ(bool isSetTarget = false)
     {
         if (HQTran == null) HQTran = BattleManager.Instance.SelectTargetHQTran(enemySide, myTran);
-        if (isSetTarget) SetTarget(HQTran);
+        if (isSetTarget) SetTarget(HQTran, 1.0f);
     }
 
     //ターゲットサーチ
@@ -89,29 +91,54 @@ public class ActiveUnitController : UnitController
     {
         //再索敵チェック
         if (leftForceTargetTime > 0) return;
-        if (targetTran != null && targetTran.tag == targetTag && researchTime < researchLimit) return;
-
-        //武器射程取得
-        float attackRange = weaponCtrl.GetMaxRange();
+        if (targetTran != null && targetTran.tag == targetTag)
+        {
+            if (isPathCheck)
+            {
+                if (IsEnabledPath(targetTran))
+                {
+                    //再ターゲット
+                    SetTarget(targetTran);
+                    return;
+                }
+            }
+            else
+            {
+                if (IsDiscoveryTarget(targetTran, searchRange) && weaponCtrl.IsWithinRange(targetTran))
+                {
+                    //再ターゲット
+                    SetTarget(targetTran);
+                    return;
+                }
+            }
+        }
 
         //敵を探す
         List<Transform> targets = BattleManager.Instance.GetUnitList(enemySide);
 
         Transform tmpTarget = null;
         float tmpDistance = 0;
+        bool isWithinRange = false;
         foreach (Transform target in targets)
         {
             if (target == null) continue;
             //if (mySide == 0) Debug.Log(myTran.position + " >> " + target.position);
-
+            //索敵範囲判定
             float distance = Vector3.Distance(myTran.position, target.position);
             if (distance > searchRange) continue;
+
+            //目視判定
             if (!IsDiscoveryTarget(target, searchRange)) continue;
 
-            if (distance <= attackRange)
+            //到達可否判定
+            if (isPathCheck && !IsEnabledPath(target)) continue;
+
+            //射程内判定
+            if (weaponCtrl.IsWithinRange(target, distance))
             {
                 //決定
                 tmpTarget = target;
+                isWithinRange = true;
                 break;
             }
             else
@@ -127,14 +154,22 @@ public class ActiveUnitController : UnitController
         if (tmpTarget != null) SetTarget(tmpTarget);
 
         //敵以外をターゲット
-        if (targetTran == null || targetDistance > attackRange)
+        if (targetTran == null || !isWithinRange)
         {
             //HQ
             SearchHQ(true);
 
             //破壊可能オブジェクト
-            if (targetDistance > attackRange) SearchObstacle();
+            if (!IsDiscoveryTarget(targetTran, searchRange)) SearchObstacle();
         }
+    }
+
+    //ターゲットへ到達可否判定
+    protected bool IsEnabledPath(Transform target)
+    {
+        NavMeshPath path = new NavMeshPath();
+        agent.CalculatePath(target.position, path);
+        return (path.status == NavMeshPathStatus.PathComplete);
     }
 
     protected void SetLockOn(bool flg)
@@ -143,8 +178,8 @@ public class ActiveUnitController : UnitController
         if (flg)
         {
             //武器射程取得
-            float attackRangeMax = weaponCtrl.GetMaxRange();
-            float attackRangeMin = weaponCtrl.GetMinRange();
+            float attackRangeMax = weaponCtrl.GetMaxRange(targetTran);
+            float attackRangeMin = weaponCtrl.GetMinRange(targetTran);
             agent.stoppingDistance = (attackRangeMin > 0) ? attackRangeMin : attackRangeMax * 0.8f;
         }
         else
@@ -161,7 +196,7 @@ public class ActiveUnitController : UnitController
         obstacleIndex = (obstacleIndex + 1) % BattleManager.Instance.obstacleCtrls.Count;
         ObstacleController obstacleCtrl = BattleManager.Instance.obstacleCtrls[obstacleIndex];
         if (obstacleCtrl == null) return;
-        if (obstacleCtrl.IsDiscovery(myTran, mySide, weaponCtrl.GetMaxRange()))
+        if (obstacleCtrl.IsDiscovery(myTran, mySide, searchRange))
         {
             SetTarget(obstacleCtrl.transform);
         }
@@ -171,7 +206,14 @@ public class ActiveUnitController : UnitController
     protected bool IsEffectiveAgent()
     {
         if (agent == null) return false;
-        if (agent.pathStatus == NavMeshPathStatus.PathInvalid) return false;
+        if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
+        {
+            Debug.Log(name + " >> agentStatus Invalid");
+            agent.enabled = false;
+            SetTarget(null);
+            agent.enabled = true;
+            return false;
+        }
         return true;
     }
 
@@ -199,7 +241,6 @@ public class ActiveUnitController : UnitController
         {
             coolTime = weaponCtrl.GetMoveDelay();
             agent.isStopped = true;
-            researchTime = 0;
         }
         return atk;
     }
@@ -219,11 +260,20 @@ public class ActiveUnitController : UnitController
     protected override void JugdeChangeTarget(Transform t)
     {
         if (t == null) return;
-        if (targetTran == null
-            || targetTran.tag == targetHQTag
-            || targetTran.tag == Common.CO.TAG_BREAK_OBSTACLE
-        ) {
-            SetTarget(t, 3.0f);
+        if (targetTran == null)
+        {
+            SetTarget(t);
+        }
+        else if (targetTran.tag == targetHQTag || targetTran.tag == Common.CO.TAG_BREAK_OBSTACLE)
+        {
+            if (isPathCheck)
+            {
+                if (IsEnabledPath(t)) SetTarget(t);
+            }
+            else
+            {
+                if (IsDiscoveryTarget(t)) SetTarget(t);
+            }
         }
         else
         {
@@ -246,14 +296,9 @@ public class ActiveUnitController : UnitController
     protected void DeadDamage()
     {
         if (hqDamage <= 0) return;
-        //if (BattleManager.Instance.hqCtrl[mySide] == null) return;
-        //if (HQCtrl == null) return;
 
         //HQにダメージを与える
         BattleManager.Instance.DeadDamage(mySide, hqDamage, myTran);
-        //float rate = 1.0f;
-        //if (!BattleManager.Instance.IsSuperioritySituation(mySide)) rate *= 0.75f;
-        //HQCtrl.Hit((int)(hqDamage * rate), null);
     }
     
     //HQまでの距離取得

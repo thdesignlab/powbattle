@@ -45,8 +45,8 @@ public class UnitController : BaseMoveController
     [SerializeField]
     protected float searchRange;
     //[SerializeField]
-    protected float researchLimit = 5;
-    protected float researchTime;
+    //protected float researchLimit = 5;
+    //protected float researchTime;
     protected float leftForceTargetTime;
 
     protected ObjectController _objCtrl;
@@ -95,7 +95,6 @@ public class UnitController : BaseMoveController
             //isAttackRange = false;
             isLockOn = false;
             targetDistance = 0;
-            researchTime = 0;
             leftForceTargetTime = 0;
         }
         SetHpGage(isActive);
@@ -130,7 +129,6 @@ public class UnitController : BaseMoveController
 
         if (nowHP <= 0 || BattleManager.Instance.isBattleEnd) return;
         UpdateHpGage();
-        researchTime += Time.deltaTime;
         if (leftForceTargetTime > 0) leftForceTargetTime -= Time.deltaTime;
     }
 
@@ -210,7 +208,7 @@ public class UnitController : BaseMoveController
         weaponCtrl = w.GetComponent<WeaponController>();
         weaponCtrl.SetOwner(myTran);
         //attackRange = weaponCtrl.GetRange();
-        researchLimit = weaponCtrl.GetReload() * 1.5f;
+        //researchLimit = weaponCtrl.GetReload() * 1.5f;
         if (searchRange <= 0) searchRange = weaponCtrl.GetReload() * 1.5f;
         weaponCtrl.SetMotionCtrl(motionCtrl);
     }
@@ -222,11 +220,10 @@ public class UnitController : BaseMoveController
         if (leftForceTargetTime > 0) return;
 
         //武器射程取得
-        float attackRange = weaponCtrl.GetMaxRange();
         if (targetTran != null)
         {
             //isLockOn = IsDiscoveryTarget(targetTran, attackRange);
-            if (Vector3.Distance(myTran.position, targetTran.position) > attackRange || researchTime > researchLimit)
+            if (!weaponCtrl.IsWithinRange(targetTran))
             {
                 SetTarget(null);
                 isLockOn = false;
@@ -243,9 +240,9 @@ public class UnitController : BaseMoveController
             for (int i = 0; i < targets.Count; i++)
             {
                 if (targets[i] == null) continue;
-                if (Vector3.Distance(myTran.position, targets[i].position) > attackRange) continue;
-                if (!IsDiscoveryTarget(targets[i], attackRange)) continue;
-                SetTarget(targets[i]);
+                if (!weaponCtrl.IsWithinRange(targets[i])) continue;
+                if (!IsDiscoveryTarget(targets[i], searchRange)) continue;
+                SetTarget(targets[i], 5.0f);
                 break;
             }
             isLockOn = (targetTran != null);
@@ -256,15 +253,14 @@ public class UnitController : BaseMoveController
     protected virtual bool JudgeAttack()
     {
         if (!isLockOn) return false;
-        bool atk = Attack();
-        //if (atk) researchTime = 0;
-        return atk;
+        if (targetTran == null) return false;
+        return Attack();
     }
 
     //攻撃
     protected bool Attack()
     {
-        return weaponCtrl.Attack(targetTran);
+        return weaponCtrl.Attack(targetTran, GetAttack());
     }
 
     //目視チェック
@@ -334,12 +330,16 @@ public class UnitController : BaseMoveController
     }
 
     //ターゲット設定
-    public void SetTarget(Transform tran, float forceTime = 0.0f)
+    public void SetTarget(Transform tran, float forceTime = 3.0f)
     {
         targetTran = tran;
         targetDistance = (targetTran != null) ? Vector3.Distance(myTran.position, targetTran.position) : 99999;
-        leftForceTargetTime = forceTime;
+        leftForceTargetTime = (targetTran == null) ? 0 : forceTime;
+        SetTargetSight();
+    }
 
+    protected void SetTargetSight()
+    {
         if (BattleManager.Instance.isVisibleTargetSight)
         {
             if (laserPointerCtrl != null)

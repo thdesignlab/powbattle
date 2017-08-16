@@ -8,7 +8,11 @@ public class DamageEffectController : BaseMoveController
     protected Transform ownerTran;
     protected string ownerTag;
     protected DamageController dmgCtrl;
-    protected ObjectController objCtrl;
+    private ObjectController _objCtrl;
+    protected ObjectController objCtrl
+    {
+        get { return (_objCtrl) ? _objCtrl : GetComponent<ObjectController>(); }
+    }
 
     [SerializeField]
     protected int damage;
@@ -19,18 +23,30 @@ public class DamageEffectController : BaseMoveController
     [SerializeField]
     protected bool isShootDown;
 
+    protected const int MIN_DAMAGE_RATE = -90;
+
     protected override void Awake()
     {
         base.Awake();
 
         dmgCtrl = GetComponent<DamageController>();
-        objCtrl = GetComponent<ObjectController>();
     }
 
     public void SetOwner(Transform t)
     {
         ownerTran = t;
-        if (ownerTran != null) ownerTag = ownerTran.tag;
+        if (ownerTran != null)
+        {
+            ownerTag = ownerTran.tag;
+            objCtrl.SetOwner(ownerTran);
+        }
+    }
+
+    public void SetDamageRate(int rate)
+    {
+        if (rate == 0) return;
+        if (rate < MIN_DAMAGE_RATE) rate = MIN_DAMAGE_RATE;
+        damage = damage * (100 + rate) / 100;
     }
 
     //衝突イベント
@@ -38,31 +54,34 @@ public class DamageEffectController : BaseMoveController
     {
         //Debug.Log(ownerTran + " >> "+ other.transform);
         Transform hitTran = other.transform;
-        //撃墜判定
-        if (hitTran.tag == Common.CO.TAG_DAMAGE_EFFECT)
-        {
-            ShootDown(hitTran);
-            return;
-        }
-        //ダメージ判定
+
         if (Common.Func.IsMySide(ownerTag, hitTran.tag)) return;
-        Hit(hitTran);
+
+        bool isHit = false;
+
+        //撃墜
+        if (!isHit) isHit = ShootDown(hitTran);
+
+        //ダメージ
+        if (!isHit) isHit = Hit(hitTran);
+
+        //自壊判
+        if (isHit && IsHitBreak(hitTran.tag)) BreakProcess();
     }
 
     //ダメージ判定
-    protected virtual void Hit(Transform hitTran)
+    protected virtual bool Hit(Transform hitTran)
     {
-        if (dmgCtrl.Damage(damage, impact, myTran, hitTran, ownerTran))
-        {
-            if (IsHitBreak(hitTran.tag)) BreakProcess();
-        }
+        return dmgCtrl.Damage(damage, impact, myTran, hitTran, ownerTran);
     }
 
-    //撃墜判定
-    protected virtual void ShootDown(Transform hitTran)
+    //撃墜
+    protected bool ShootDown(Transform hitTran)
     {
-        if (!isShootDown) return;
-        hitTran.GetComponent<ObjectController>().DestroyObject();
+        if (hitTran.tag != Common.CO.TAG_DAMAGE_EFFECT || !isShootDown) return false;
+
+        hitTran.GetComponent<ObjectController>().ShootDown();
+        return true;
     }
 
     //衝突判定
@@ -74,7 +93,6 @@ public class DamageEffectController : BaseMoveController
     //自壊
     protected virtual void BreakProcess()
     {
-        objCtrl.SetOwner(ownerTran);
         objCtrl.DestroyObject();
     }
 }

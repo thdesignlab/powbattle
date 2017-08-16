@@ -7,8 +7,9 @@ public class WeaponController : MonoBehaviour
 {
     protected Transform myTran;
     protected Transform ownerTran;
-    protected Transform targetTran;
     protected UnitMotionController motionCtrl;
+    protected float maxRange;
+    protected float minRange;
 
     [SerializeField]
     protected float range;
@@ -20,6 +21,7 @@ public class WeaponController : MonoBehaviour
     protected float moveDelay;
 
     protected float leftReload = 0;
+    protected int attackRate = 0;
 
     protected virtual void Awake()
     {
@@ -34,12 +36,13 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    public bool Attack(Transform target)
+    public bool Attack(Transform target, int rate = 0)
     {
         if (!isEnabledAttack()) return false;
-        Transform targetPoint = Common.Func.SearchChildTag(target, Common.CO.TAG_UNIT_BODY);
-        if (targetPoint == null) targetPoint = target;
-        AttackProcess(targetPoint);
+        //Transform targetPoint = Common.Func.SearchChildTag(target, Common.CO.TAG_UNIT_BODY);
+        //if (targetPoint == null) targetPoint = target;
+        attackRate = rate;
+        AttackProcess(target);
         Reload();
         return true;
     }
@@ -81,7 +84,7 @@ public class WeaponController : MonoBehaviour
         return reload;
     }
 
-    public virtual float GetMinRange()
+    public virtual float GetMinRange(Transform target = null)
     {
         return 0;
     }
@@ -94,5 +97,12 @@ public class WeaponController : MonoBehaviour
     public float GetMoveDelay()
     {
         return moveDelay;
+    }
+
+    //射程内判定
+    public bool IsWithinRange(Transform target, float distance = -1)
+    {
+        if (distance < 0) distance = Vector3.Distance(myTran.position, target.position);
+        return (GetMinRange(target) <= distance && distance <= GetMaxRange(target));
     }
 }

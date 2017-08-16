@@ -71,6 +71,7 @@ MonoBehaviour:
   activeLimitTime: 0.5
   activeLimitDistance: 0
   isNotAutoBreak: 0
+  isNotShootDown: 1
 --- !u!114 &114909766534243306
 MonoBehaviour:
   m_ObjectHideFlags: 1

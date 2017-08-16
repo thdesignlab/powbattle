@@ -11,6 +11,8 @@ public class ObjectController : MonoBehaviour {
     private float activeLimitDistance = 0;
     [SerializeField]
     private bool isNotAutoBreak = false;
+    [SerializeField]
+    private bool isNotShootDown = false;
 
     private Transform myTran;
     private Transform ownerTran;
@@ -63,6 +65,12 @@ public class ObjectController : MonoBehaviour {
         }
     }
 
+    public void ShootDown()
+    {
+        if (isNotShootDown) return;
+        DestroyObject();
+    }
+
     public void DestroyObject(float delay = 0)
     {
         if (isDestroyProc) return;
@@ -103,6 +111,7 @@ public class ObjectController : MonoBehaviour {
     {
         ownerTran = owner;
     }
+
     public void SetTarget(Transform target)
     {
         targetTran = target;

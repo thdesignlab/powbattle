@@ -494,6 +494,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!114 &114091497406066836
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -596,6 +597,7 @@ MonoBehaviour:
   defence: 0
   searchRange: 15
   hqDamage: 200
+  isPathCheck: 0
 --- !u!114 &114316935531661562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -935,7 +937,7 @@ NavMeshAgent:
   m_Height: 1
   m_BaseOffset: 0.5
   m_WalkableMask: 15
-  m_ObstacleAvoidanceType: 1
+  m_ObstacleAvoidanceType: 4
 --- !u!222 &222021023904707892
 CanvasRenderer:
   m_ObjectHideFlags: 1
