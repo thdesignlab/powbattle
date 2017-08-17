@@ -13,9 +13,9 @@ public class DialogManager : MonoBehaviour
     private static Transform btnAreaTran;
 
     //リソース
-    const string RESOURCE_DIALOG = "UI/DialogCanvas";
-    const string RESOURCE_POSITIVE_BUTTON = "UI/PositiveButton";
-    const string RESOURCE_NEGATIVE_BUTTON = "UI/NegativeButton";
+    const string RESOURCE_DIALOG = "DialogCanvas";
+    const string RESOURCE_POSITIVE_BUTTON = "PositiveButton";
+    const string RESOURCE_NEGATIVE_BUTTON = "NegativeButton";
 
     //ダイアログ構造
     const string DIALOG_AREA = "DialogArea";
@@ -61,7 +61,7 @@ public class DialogManager : MonoBehaviour
         if (btnCnt >= 3) isVertical = true;
 
         //ダイアログ作成
-        dialog = Instantiate(Resources.Load< GameObject>(RESOURCE_DIALOG));
+        dialog = Instantiate(Common.Func.GetUIResource(RESOURCE_DIALOG));
         dialogTran = dialog.transform;
         ExecDialogLowPosition();
 
@@ -107,7 +107,7 @@ public class DialogManager : MonoBehaviour
     private static void SetBtn(string resourceName, string text, UnityAction action = null)
     {
         if (dialog == null) return;
-        GameObject btnObj = Instantiate(Resources.Load<GameObject>(resourceName));
+        GameObject btnObj = Instantiate(Common.Func.GetUIResource(resourceName));
         btnObj.transform.SetParent(btnAreaTran, false);
         btnObj.GetComponent<Button>().onClick.AddListener(() => OnClickButton(action));
         Text btnText = btnObj.transform.GetComponentInChildren<Text>();

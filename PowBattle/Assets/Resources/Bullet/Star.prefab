@@ -106,7 +106,7 @@ Transform:
   m_GameObject: {fileID: 1440697131794602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4480599586668064}
   m_Father: {fileID: 0}
@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eab71ea54d9f944f8e5fc432c0e8d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageEffect: {fileID: 0}
   damage: 1500
   impact: 0
   isHitBreak: 1
@@ -288,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1988451237659874, guid: b2e69fe53ec04a249846adfc5b114370,
+  effectSpawn: {fileID: 1433351128113194, guid: bdac2360750d4294db09185952970c5f,
     type: 2}
   activeLimitTime: 0
   activeLimitDistance: 0
@@ -305,6 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6fe0bf72bab79c4db2db0d010b58b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrollTime: 0
   scrollSpeedX: 0.3
   scrollSpeedY: 0
 --- !u!114 &114833063316710292

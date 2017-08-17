@@ -72,6 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5502e5949efe3874fbd391cf40906986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSpawnDamageEffect: 0
 --- !u!114 &114406665303969540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -83,7 +84,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dbaf4c2285f23f40854003bc0c7142c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageEffect: {fileID: 0}
   damage: 500
   impact: 1500
   isHitBreak: 0

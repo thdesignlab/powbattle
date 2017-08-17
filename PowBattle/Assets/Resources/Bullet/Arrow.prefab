@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 54797223942384092}
   - component: {fileID: 114581945552767456}
   - component: {fileID: 135316463436302544}
-  - component: {fileID: 114295792230387132}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: DamageEffect
@@ -194,18 +193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5502e5949efe3874fbd391cf40906986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114295792230387132
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1964319338860388}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 226679f5d5bc0ce4ab040b3a9a3d7752, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetTran: {fileID: 0}
 --- !u!114 &114581945552767456
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 12
-  reload: 5
+  reload: 4
   attackWait: 0.2
   moveDelay: 2
   bullet: {fileID: 1964319338860388, guid: 69220d0cb1946674e8ec2463cb3d3516, type: 2}

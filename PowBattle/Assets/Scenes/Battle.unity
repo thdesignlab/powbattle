@@ -424,13 +424,13 @@ MonoBehaviour:
   unitCntRate: 3200000032000000
   isBattleStart: 0
   isBattleEnd: 0
-  isVisibleTargetSight: 1
+  isVisibleTarget: 0
   testUnitLimit: 20
   testRespawnCount: 100
-  testRespawnInterval: 45
-  testRespawnIntervalAdd: 1
-  testRespawnUnits: 01000000010000000100000001000000010000000100000001000000
-  testEnemyRespawnUnits: 01000000010000000100000001000000010000000100000001000000
+  testRespawnInterval: 60
+  testRespawnIntervalAdd: 0
+  testRespawnUnits: 05000000000000000200000002000000010000000000000000000000
+  testEnemyRespawnUnits: 00000000050000000000000000000000010000000200000002000000
 --- !u!4 &419198005
 Transform:
   m_ObjectHideFlags: 0

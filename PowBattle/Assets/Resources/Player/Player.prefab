@@ -289,9 +289,9 @@ MonoBehaviour:
   dragBorder: 5
   pinchBorder: 0.1
   twistBorder: 1
-  dragRate: -0.05
-  pinchRate: 9
-  twistRate: 0.8
+  dragRate: -0.03
+  pinchRate: 10
+  twistRate: 0.7
   xLimit: 50
   zLimit: 50
   yLimitMin: 5

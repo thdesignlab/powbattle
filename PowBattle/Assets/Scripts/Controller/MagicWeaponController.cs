@@ -17,6 +17,10 @@ public class MagicWeaponController : WeaponController
     protected float shootDiff;
     [SerializeField]
     protected Vector3 shootPoint;
+    [SerializeField]
+    protected bool isGround;
+    [SerializeField]
+    protected bool isLookAt;
 
     protected override void Awake()
     {
@@ -50,7 +54,13 @@ public class MagicWeaponController : WeaponController
         diffpos += target.up * shootPoint.y;
         diffpos += target.right * shootPoint.x;
         diffpos += target.forward * shootPoint.z;
-        return target.position + diffpos;
+        Vector3 shootPos = target.position + diffpos;
+        if (isGround)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(shootPos, Vector3.down, out hit)) shootPos = hit.point;
+        }
+        return shootPos;
     }
 
     protected Vector3 GetTargetPosition(Transform target)
@@ -69,7 +79,7 @@ public class MagicWeaponController : WeaponController
     protected virtual GameObject Shoot(Vector3 shootPos, Vector3 targetPos)
     {
         GameObject obj = Instantiate(bullet, shootPos, Quaternion.identity);
-        if (shootPos != targetPos) obj.transform.LookAt(targetPos);
+        if (isLookAt && shootPos != targetPos) obj.transform.LookAt(targetPos);
         DamageEffectController effectCtrl = obj.GetComponent<DamageEffectController>();
         effectCtrl.SetOwner(ownerTran);
         effectCtrl.SetDamageRate(attackRate);

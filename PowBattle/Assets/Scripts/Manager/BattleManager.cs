@@ -15,11 +15,12 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     private GameObject textLine;
     private GameObject textWin;
     private GameObject textLose;
+    private GameObject spawnEffect;
 
     //援軍設定
     [SerializeField]
     private List<int> extraRateList;
-    private int callExtraDiff = 3;
+    private int CALL_EXTRA_DIFF = 3;
 
     //ステージ情報
     private List<List<Transform>> spawnPoints = new List<List<Transform>>() { new List<Transform>() { }, new List<Transform>() { } };
@@ -36,6 +37,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     private List<List<HQController>> subHqCtrlList = new List<List<HQController>>() { new List<HQController>(), new List<HQController>() };
     [HideInInspector]
     public List<List<Transform>> unitList = new List<List<Transform>> { new List<Transform>() { }, new List<Transform>() { } };
+    private const float SPAWN_UNIT_INTERVAL = 0.3f;
 
     //プレイヤー情報
     private GameObject player;
@@ -271,6 +273,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     //ユニット出現位置取得
     private void SetSpawnPoint()
     {
+        spawnEffect = Common.Func.GetEffectResource("SpawnEffect");
         foreach (int side in Common.CO.sideArray)
         {
             //通常
@@ -286,11 +289,6 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
                 exSpawnPoints[side].Add(exSpObj.transform);
             }
         }
-    }
-    //ユニット出現位置削除
-    private void RemoveSpawnPoint()
-    {
-
     }
 
     //★ユニット情報取得
@@ -329,7 +327,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         Vector3 pos = (playerSP != null) ? playerSP.transform.position : new Vector3(0, 15, 0);
         Quaternion rot = (playerSP != null) ? playerSP.transform.rotation : Quaternion.identity;
         player = GameObject.FindGameObjectWithTag(Common.CO.TAG_PLAYER);
-        if (player == null) player = Instantiate(Resources.Load<GameObject>("Player"));
+        if (player == null) player = Instantiate(Common.Func.GetPlayerResource("Player"));
         player.transform.position = pos;
         player.transform.rotation = rot;
     }
@@ -403,7 +401,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     }
 
     //ユニット生成
-    private void SpawnUnits(int side, bool isExtra = false)
+    IEnumerator SpawnUnits(int side, bool isExtra = false)
     {
         //出現位置取得
         Transform sp = SelectSpawnPoint(side, isExtra);
@@ -419,6 +417,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
                 unitCtrl.AttackEffect(50, 15);
                 unitCtrl.DefenceEffect(75, 15);
             }
+            yield return new WaitForSeconds(SPAWN_UNIT_INTERVAL);
         }
 
     }
@@ -445,8 +444,10 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         if (IsHq(spawnPoint)) spawnPos += spawnPoint.forward * 2.0f;
 
         //生成
-        GameObject unitPref = Resources.Load<GameObject>(Common.CO.RESOURCE_UNIT_DIR + Common.Unit.unitInfo[unitNo]);
-        GameObject unit = Instantiate(unitPref, PickAroundPosition(spawnPos), spawnPoint.rotation);
+        Vector3 pos = PickAroundPosition(spawnPos);
+        if (spawnEffect != null) Instantiate(spawnEffect, pos, spawnPoint.rotation);
+        GameObject unitPref = Common.Func.GetUnitResource(Common.Unit.unitInfo[unitNo]);
+        GameObject unit = Instantiate(unitPref, pos, spawnPoint.rotation);
         unitList[side].Add(unit.transform);
 
         //情報変更
@@ -515,17 +516,17 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         if (mine <= extraRateList[0])
         {
             callExtraSides.Add(Common.CO.SIDE_MINE);
-            if (enemy - mine <= callExtraDiff) callExtraSides.Add(Common.CO.SIDE_ENEMY);
+            if (enemy - mine <= CALL_EXTRA_DIFF) callExtraSides.Add(Common.CO.SIDE_ENEMY);
         }
         else if (enemy <= extraRateList[0])
         {
             callExtraSides.Add(Common.CO.SIDE_ENEMY);
-            if (mine - enemy <= callExtraDiff) callExtraSides.Add(Common.CO.SIDE_MINE);
+            if (mine - enemy <= CALL_EXTRA_DIFF) callExtraSides.Add(Common.CO.SIDE_MINE);
         }
 
         foreach (int side in callExtraSides)
         {
-            SpawnUnits(side, true);
+            StartCoroutine(SpawnUnits(side, true));
         }
         if (callExtraSides.Count > 0) extraRateList.RemoveAt(0);
     }
@@ -579,7 +580,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
                 {
                     if (unitCnt[side] < testUnitLimit)
                     {
-                        SpawnUnits(side, false);
+                        StartCoroutine(SpawnUnits(side, false));
                     }
                 }
                 yield return new WaitForSeconds(1.0f);

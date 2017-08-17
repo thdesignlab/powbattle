@@ -5,35 +5,43 @@ using UnityEngine.AI;
 
 public class DamageController : MonoBehaviour
 {
+    [SerializeField]
+    protected bool isSpawnDamageEffect;
+
     const float FORWARD_RATE = 0.8f;
     const float SIDE_RATE = 1.2f;
     const float BACK_RATE = 1.5f;
 
+    private GameObject _damageEffect;
+    protected GameObject damageEffect
+    {
+        get { return (_damageEffect) ? _damageEffect : _damageEffect = Common.Func.GetEffectResource("DamageEffect"); }
+    }
+
     public bool Damage(int damage, float impact, Transform attackTran, Transform hitTran, Transform ownerTran)
     {
-        if (hitTran == null) return false;
+        if (hitTran == null || attackTran == null) return false;
 
         bool isHit = false;
-        //Debug.Log(hitTran.tag);
+        int hitDamage = 0;
         switch (hitTran.tag)
         {
             case Common.CO.TAG_UNIT:
             case Common.CO.TAG_ENEMY:
                 //ユニット
                 //被弾方向補正
-                if (attackTran == null) return false;
                 Vector3 hitVector = attackTran.position - hitTran.position;
-
                 float damageRate = GetHitAngleRate(hitTran, hitVector);
                 damage = (int)(damage * damageRate);
-                hitTran.GetComponent<UnitController>().Hit(damage, impact * -hitVector.normalized, ownerTran);
+                hitDamage = hitTran.GetComponent<UnitController>().Hit(damage, impact * -hitVector.normalized, ownerTran);
+                if (hitDamage > 0) SpawnDamageEffect(attackTran, hitTran);
                 isHit = true;
                 break;
 
             case Common.CO.TAG_HQ:
             case Common.CO.TAG_ENEMY_HQ:
                 //HQ
-                hitTran.GetComponent<UnitController>().Hit(damage / 10, ownerTran);
+                hitDamage = hitTran.GetComponent<UnitController>().Hit(damage / 10, ownerTran);
                 isHit = true;
                 break;
 
@@ -46,7 +54,7 @@ public class DamageController : MonoBehaviour
                     if (obstacleSide != Common.CO.SIDE_UNKNOWN && obstacleSide == Common.Func.GetMySide(ownerTran.tag)) damage = 0;
                 }
 
-                if (damage > 0) obstacleCtrl.Hit(damage, ownerTran);
+                if (damage > 0) hitDamage = obstacleCtrl.Hit(damage, ownerTran);
                 isHit = true;
                 break;
 
@@ -55,6 +63,7 @@ public class DamageController : MonoBehaviour
                 isHit = true;
                 break;
         }
+
         return isHit;
     }
 
@@ -75,5 +84,13 @@ public class DamageController : MonoBehaviour
         //Debug.Log(angleDiff + ">> " + damageRate);
         
         return damageRate;
+    }
+
+    private void SpawnDamageEffect(Transform attackTran, Transform hitTran)
+    {
+        if (damageEffect == null) return;
+        Vector3 hitPos = (attackTran.position + hitTran.position) / 2.0f;
+        //hitPos = (hitPos + hitTran.position) / 2.0f;
+        Instantiate(damageEffect, hitPos, Quaternion.identity);
     }
 }

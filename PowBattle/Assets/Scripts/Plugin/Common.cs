@@ -25,10 +25,12 @@ namespace Common
         public const string SCENE_BATTLE = "Battle";
 
         //リソースフォルダ
-        public const string RESOURCE_DIR = "Resources/";
+        public const string RESOURCE_UI_DIR = "UI/";
         public const string RESOURCE_IMAGE_DIR = "Images/";
         public const string RESOURCE_MESSAGE_DIR = RESOURCE_IMAGE_DIR + "Message/";
         public const string RESOURCE_UNIT_DIR = "Unit/";
+        public const string RESOURCE_EFFECT_DIR = "Effect/";
+        public const string RESOURCE_PLAYER_DIR = "Player/";
 
         //自軍・敵軍
         public const int SIDE_UNKNOWN = -1;
@@ -177,7 +179,7 @@ namespace Common
 #endif
             return url;
         }
-        
+
         //ステータスバー設定
         public static void SetStatusbar()
         {
@@ -204,7 +206,7 @@ namespace Common
             }
             return index;
         }
-        
+
         //三角関数
         public static float GetSinCycle(float time, float anglePerSec = 360, float startAngle = 0)
         {
@@ -302,7 +304,7 @@ namespace Common
         public static int GetSightLayerMask(int side)
         {
             string targetLayer = CO.layerUnitArray[side];
-            return LayerMask.GetMask(new string[] { targetLayer, CO.LAYER_OBSTACLE, CO.LAYER_BREAK_OBSTACLE });
+            return LayerMask.GetMask(new string[] { targetLayer, CO.LAYER_OBSTACLE, CO.LAYER_BREAK_OBSTACLE, CO.LAYER_STAGE });
         }
 
         //陣判定
@@ -379,6 +381,37 @@ namespace Common
         public static bool IsBattleScene()
         {
             return (SceneManager.GetActiveScene().name.IndexOf(CO.SCENE_BATTLE) == 0);
+        }
+
+        //リソースロード
+        private static Dictionary<string, GameObject> resourceCacheDic = new Dictionary<string, GameObject>();
+        public static GameObject GetResource(string name)
+        {
+            if (resourceCacheDic.ContainsKey(name)) return resourceCacheDic[name];
+
+            GameObject obj = Resources.Load<GameObject>(name);
+            resourceCacheDic.Add(name, obj);
+            return obj;
+        }
+        public static GameObject GetEffectResource(string name)
+        {
+            return GetResource(CO.RESOURCE_EFFECT_DIR + name);
+        }
+        public static GameObject GetUIResource(string name)
+        {
+            return GetResource(CO.RESOURCE_UI_DIR + name);
+        }
+        public static GameObject GetMessageImageResource(string name)
+        {
+            return GetResource(CO.RESOURCE_MESSAGE_DIR + name);
+        }
+        public static GameObject GetUnitResource(string name)
+        {
+            return GetResource(CO.RESOURCE_UNIT_DIR + name);
+        }
+        public static GameObject GetPlayerResource(string name)
+        {
+            return GetResource(CO.RESOURCE_PLAYER_DIR + name);
         }
     }
 

@@ -27,13 +27,13 @@ public class UnitController : BaseMoveController
     protected GameObject _bufEffect;
     protected GameObject bufEffect
     {
-        get {　return (_bufEffect != null) ? _bufEffect : _bufEffect = Resources.Load<GameObject>("Effect/BufEffect");}
+        get {　return (_bufEffect != null) ? _bufEffect : _bufEffect = Common.Func.GetEffectResource("BufEffect"); }
     }
     //[SerializeField]
     protected GameObject _debufEffect;
     protected GameObject debufEffect
     {
-        get { return (_debufEffect != null) ? _debufEffect : _debufEffect = Resources.Load<GameObject>("Effect/DebufEffect"); }
+        get { return (_debufEffect != null) ? _debufEffect : _debufEffect = Common.Func.GetEffectResource("DebufEffect"); }
     }
     [SerializeField]
     protected int maxHP;
@@ -44,9 +44,6 @@ public class UnitController : BaseMoveController
     protected int defence;
     [SerializeField]
     protected float searchRange;
-    //[SerializeField]
-    //protected float researchLimit = 5;
-    //protected float researchTime;
     protected float leftForceTargetTime;
 
     protected ObjectController _objCtrl;
@@ -63,6 +60,7 @@ public class UnitController : BaseMoveController
     protected WeaponController weaponCtrl;
     protected LaserPointerController laserPointerCtrl;
 
+    protected const float SPAWN_WAIT_TIME = 1.0f;
     protected const int MAX_DEFENCE = 90;
     protected const int MIN_SPEED_EFFECT = -100;
 
@@ -111,10 +109,8 @@ public class UnitController : BaseMoveController
     {
         if (isActive)
         {
-            SetEffect();
             EquipWeapon();
             GetLaserPointer();
-            OpenShield(1.0f);
             StartCoroutine(ActionRoutine());
         }
         else
@@ -135,6 +131,9 @@ public class UnitController : BaseMoveController
     //行動ルーチン
     IEnumerator ActionRoutine()
     {
+        OpenShield(SPAWN_WAIT_TIME);
+        yield return new WaitForSeconds(SPAWN_WAIT_TIME);
+
         if (weapon == null) yield break;
 
         float wait = 0.5f;
@@ -177,13 +176,6 @@ public class UnitController : BaseMoveController
             Color color = (mySide == Common.CO.SIDE_MINE) ? Color.cyan : Color.red;
             laserPointerCtrl.SetLaserColor(color);
         }
-    }
-
-    //バフエフェクト設定
-    protected void SetEffect()
-    {
-        //bufEffect = Resources.Load<GameObject>("Effect/BufEffect");
-        //debufEffect = Resources.Load<GameObject>("Effect/DebufEffect");
     }
 
     //武器装備
