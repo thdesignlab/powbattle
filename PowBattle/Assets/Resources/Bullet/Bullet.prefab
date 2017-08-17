@@ -145,6 +145,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 15
   isNotAutoBreak: 0
+  isNotShootDown: 0
 --- !u!114 &114440254844874504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -167,6 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eab71ea54d9f944f8e5fc432c0e8d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageEffect: {fileID: 1740011786601246, guid: a4c16f92a3b662d4aaadf8b5e3c54f44,
+    type: 2}
   damage: 150
   impact: 0
   isHitBreak: 1

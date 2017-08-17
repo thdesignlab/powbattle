@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class DamageEffectController : BaseMoveController
 {
+    [SerializeField]
+    protected GameObject damageEffect;
+
     protected Transform ownerTran;
     protected string ownerTag;
     protected DamageController dmgCtrl;
@@ -72,7 +75,9 @@ public class DamageEffectController : BaseMoveController
     //ダメージ判定
     protected virtual bool Hit(Transform hitTran)
     {
-        return dmgCtrl.Damage(damage, impact, myTran, hitTran, ownerTran);
+        bool isHit = dmgCtrl.Damage(damage, impact, myTran, hitTran, ownerTran);
+        if (isHit && damageEffect != null) Instantiate(damageEffect, myTran.position, Quaternion.identity);
+        return isHit;
     }
 
     //撃墜
