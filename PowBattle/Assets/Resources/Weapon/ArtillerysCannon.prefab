@@ -58,6 +58,6 @@ MonoBehaviour:
   bullet: {fileID: 1231082633142808, guid: 5cab82675ba589745ac84e54dd197be1, type: 2}
   rapidCount: 1
   rapidInterval: 0
-  shootDiff: 2
+  shootDiff: 0.5
   addHeightRangeRate: 50
   shootAngle: 75

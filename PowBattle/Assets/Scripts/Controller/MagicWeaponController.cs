@@ -8,6 +8,8 @@ public class MagicWeaponController : WeaponController
     [SerializeField]
     protected GameObject bullet;
     [SerializeField]
+    protected GameObject magicCircle;
+    [SerializeField]
     protected int rapidCount;
     [SerializeField]
     protected float rapidInterval;

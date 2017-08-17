@@ -2609,7 +2609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1094726004314330, guid: 9c6d9f8a7b8ab3f45bf5f39417ce5f22,
+  effectSpawn: {fileID: 1914455522586362, guid: d3e9a61b4c793944aac787cb840109ba,
     type: 2}
   activeLimitTime: 0
   activeLimitDistance: 0

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44300425, g: 0.49219704, b: 0.57192606, a: 1}
+  m_IndirectSpecularColor: {r: 0.44300452, g: 0.4921977, b: 0.5719268, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -180,7 +180,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 151004861}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 2.69, y: 0, z: 5.2}
+  m_LocalPosition: {x: 6.24, y: 0, z: 5.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 152440329}
@@ -342,6 +342,11 @@ MonoBehaviour:
   searchRange: 0
   side: 0
   camouflageRange: 10
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &253806046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,6 +758,11 @@ MonoBehaviour:
   searchRange: 0
   side: 1
   camouflageRange: 3
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &794947907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,12 +1035,12 @@ Prefab:
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 255.80258
+      value: 225.202
       objectReference: {fileID: 0}
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 511.60516
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1050,12 +1060,12 @@ Prefab:
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 767.4077
+      value: 675.60596
       objectReference: {fileID: 0}
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 511.60516
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1095,7 +1105,7 @@ Prefab:
     - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 511.60516
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1115,7 +1125,7 @@ Prefab:
     - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 511.60516
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1260,6 +1270,11 @@ MonoBehaviour:
   searchRange: 0
   side: 1
   camouflageRange: 10
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &946834766
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,6 +1555,11 @@ MonoBehaviour:
   searchRange: 0
   side: 1
   camouflageRange: 10
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &1169514492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1836,6 +1856,11 @@ MonoBehaviour:
   searchRange: 0
   side: 0
   camouflageRange: 5
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &1334292807
 GameObject:
   m_ObjectHideFlags: 0
@@ -1902,6 +1927,7 @@ Transform:
   - {fileID: 1993895524}
   - {fileID: 1941711114}
   - {fileID: 932586439}
+  - {fileID: 1626595642}
   m_Father: {fileID: 2036461193}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1995,6 +2021,11 @@ MonoBehaviour:
   searchRange: 0
   side: -1
   camouflageRange: 0
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &1606764577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2042,6 +2073,122 @@ Transform:
   m_Father: {fileID: 152440329}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1626595641
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1421385552}
+    m_Modifications:
+    - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -9.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 11.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683024797137350, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_Name
+      value: BreakableRock (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683024797137350, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_TagString
+      value: BreakableObstacle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683024797137350, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &1626595642 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79,
+    type: 2}
+  m_PrefabInternal: {fileID: 1626595641}
+--- !u!1 &1626595643 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1683024797137350, guid: 308ef7f8b579c0a4495112ce58413c79,
+    type: 2}
+  m_PrefabInternal: {fileID: 1626595641}
+--- !u!114 &1626595644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1626595643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e22fc55dc578bc45902c3aeebb62045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 0}
+  maxHP: 15000
+  attack: 0
+  defence: 0
+  searchRange: 0
+  side: 1
+  camouflageRange: 0
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &1626595645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1626595643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
+    type: 2}
+  activeLimitTime: 0
+  activeLimitDistance: 0
+  isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!1 &1741014319
 GameObject:
   m_ObjectHideFlags: 0
@@ -2309,6 +2456,11 @@ MonoBehaviour:
   searchRange: 0
   side: 0
   camouflageRange: 0
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1001 &1941243630
 Prefab:
   m_ObjectHideFlags: 0
@@ -2399,6 +2551,11 @@ MonoBehaviour:
   searchRange: 0
   side: 1
   camouflageRange: 5
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &1941243634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2425,7 +2582,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.9
+      value: -4.82
       objectReference: {fileID: 0}
     - target: {fileID: 4373923810542000, guid: 308ef7f8b579c0a4495112ce58413c79, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2527,6 +2684,11 @@ MonoBehaviour:
   searchRange: 0
   side: 1
   camouflageRange: 0
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &1942402540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2726,6 +2888,11 @@ MonoBehaviour:
   searchRange: 0
   side: 0
   camouflageRange: 0
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1001 &1993895523
 Prefab:
   m_ObjectHideFlags: 0
@@ -2837,6 +3004,11 @@ MonoBehaviour:
   searchRange: 0
   side: -1
   camouflageRange: 0
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1001 &2025656876
 Prefab:
   m_ObjectHideFlags: 0
@@ -2927,6 +3099,11 @@ MonoBehaviour:
   searchRange: 0
   side: 1
   camouflageRange: 0
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &2025656880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3087,6 +3264,11 @@ MonoBehaviour:
   searchRange: 0
   side: 0
   camouflageRange: 0
+  breakAction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &2118351132
 GameObject:
   m_ObjectHideFlags: 0
