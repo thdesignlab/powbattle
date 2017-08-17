@@ -2732,6 +2732,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
+  isNotShootDown: 0
 --- !u!114 &114639944600064390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3076,7 +3077,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1989333327633116}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.4
+  m_Radius: 0.25
   m_Speed: 3
   m_Acceleration: 10
   avoidancePriority: 50
@@ -3088,7 +3089,7 @@ NavMeshAgent:
   m_Height: 1.5
   m_BaseOffset: 0.75
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!222 &222271603319875022
 CanvasRenderer:
   m_ObjectHideFlags: 1

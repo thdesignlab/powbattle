@@ -122,7 +122,7 @@ public class ActiveUnitController : UnitController
         foreach (Transform target in targets)
         {
             if (target == null) continue;
-            //if (mySide == 0) Debug.Log(myTran.position + " >> " + target.position);
+
             //索敵範囲判定
             float distance = Vector3.Distance(myTran.position, target.position);
             if (distance > searchRange) continue;
@@ -132,7 +132,7 @@ public class ActiveUnitController : UnitController
 
             //到達可否判定
             if (isPathCheck && !IsEnabledPath(target)) continue;
-
+            
             //射程内判定
             if (weaponCtrl.IsWithinRange(target, distance))
             {
@@ -179,8 +179,8 @@ public class ActiveUnitController : UnitController
         {
             //武器射程取得
             float attackRangeMax = weaponCtrl.GetMaxRange(targetTran);
-            float attackRangeMin = weaponCtrl.GetMinRange(targetTran);
-            agent.stoppingDistance = (attackRangeMin > 0) ? attackRangeMin : attackRangeMax * 0.8f;
+            //float attackRangeMin = weaponCtrl.GetMinRange(targetTran);
+            agent.stoppingDistance = attackRangeMax * 0.8f;
         }
         else
         {
@@ -208,7 +208,6 @@ public class ActiveUnitController : UnitController
         if (agent == null) return false;
         if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
         {
-            Debug.Log(name + " >> agentStatus Invalid");
             agent.enabled = false;
             SetTarget(null);
             agent.enabled = true;
@@ -230,8 +229,7 @@ public class ActiveUnitController : UnitController
     protected override bool JudgeAttack()
     {
         //武器射程取得
-        float attackRangeMax = weaponCtrl.GetMaxRange();
-        float attackRangeMin = weaponCtrl.GetMinRange();
+        float attackRangeMax = weaponCtrl.GetMaxRange(targetTran);
 
         SetLockOn(IsDiscoveryTarget(targetTran, attackRangeMax));
         if (!isLockOn) return false;

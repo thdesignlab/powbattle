@@ -79,9 +79,7 @@ public class DamageEffectController : BaseMoveController
     protected bool ShootDown(Transform hitTran)
     {
         if (hitTran.tag != Common.CO.TAG_DAMAGE_EFFECT || !isShootDown) return false;
-
-        hitTran.GetComponent<ObjectController>().ShootDown();
-        return true;
+        return hitTran.GetComponent<ObjectController>().ShootDown(ownerTran);
     }
 
     //衝突判定

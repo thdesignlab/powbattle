@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class ObstacleController : UnitController
 {
@@ -9,6 +10,8 @@ public class ObstacleController : UnitController
     protected int side;
     [SerializeField]
     protected float camouflageRange;
+    [SerializeField]
+    protected UnityEvent breakAction;
 
     //初期処理
     protected override void Init()
@@ -39,5 +42,11 @@ public class ObstacleController : UnitController
     public int GetSide()
     {
         return side;
+    }
+
+    protected override void Dead()
+    {
+        if (breakAction != null) breakAction.Invoke();
+        base.Dead();
     }
 }

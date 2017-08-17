@@ -6,10 +6,13 @@ using UnityEngine.UI;
 
 public class ArtilleryUnitController : UnitController
 {
+    [SerializeField]
+    protected bool isNotNeedSight;
 
     //目視チェック
     protected override bool IsDiscoveryTarget(Transform target, float range = 0)
     {
-        return true;
+        if (isNotNeedSight) return true;
+        return base.IsDiscoveryTarget(target, range);
     }
 }

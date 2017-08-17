@@ -59,6 +59,7 @@ public class UnitController : BaseMoveController
     {
         get { return (_motionCtrl) ? _motionCtrl : _motionCtrl = GetComponent<UnitMotionController>(); }
     }
+    protected Transform weaponTran;
     protected WeaponController weaponCtrl;
     //protected float attackRange;
     protected LaserPointerController laserPointerCtrl;
@@ -204,11 +205,10 @@ public class UnitController : BaseMoveController
         }
         //武器生成＆装備
         GameObject w = Instantiate(weapon, joint.position, joint.rotation);
-        w.transform.SetParent(joint, true);
+        weaponTran = w.transform;
+        weaponTran.SetParent(joint, true);
         weaponCtrl = w.GetComponent<WeaponController>();
         weaponCtrl.SetOwner(myTran);
-        //attackRange = weaponCtrl.GetRange();
-        //researchLimit = weaponCtrl.GetReload() * 1.5f;
         if (searchRange <= 0) searchRange = weaponCtrl.GetReload() * 1.5f;
         weaponCtrl.SetMotionCtrl(motionCtrl);
     }
@@ -268,13 +268,26 @@ public class UnitController : BaseMoveController
     {
         if (target == null) return false;
         if (range <= 0) range = searchRange;
+        Vector3 basePos = myTran.position + myTran.forward + myTran.up;
 
         bool ret = false;
-        RaycastHit hit;
-        Ray ray = new Ray(myTran.position, target.position - myTran.position);
-        if (Physics.SphereCast(ray, 0.3f, out hit, range, targetLayer))
+        if (target == targetTran && targetDistance <= 1.0f)
         {
-            if (hit.transform == target) ret = true;
+            ret = true;
+        }
+        else if (Vector3.Distance(basePos, target.position) <= 1.0f)
+        {
+            ret = true;
+        }
+        else
+        {
+            RaycastHit hit;
+            Ray ray = new Ray(basePos, target.position - basePos);
+            //Debug.DrawRay(basePos, target.position - basePos);
+            if (Physics.SphereCast(ray, 0.2f, out hit, range, targetLayer))
+            {
+                if (hit.transform == target) ret = true;
+            }
         }
         return ret;
     }

@@ -316,7 +316,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1433627830384690}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4212775101390446}
@@ -649,7 +649,7 @@ MonoBehaviour:
   maxHP: 3000
   attack: 0
   defence: 0
-  searchRange: 15
+  searchRange: 20
   hqDamage: 100
   isPathCheck: 0
 --- !u!114 &114469558767201606
@@ -925,7 +925,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1476335710664518}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.4
+  m_Radius: 0.25
   m_Speed: 2.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -937,7 +937,7 @@ NavMeshAgent:
   m_Height: 1.5
   m_BaseOffset: 0.75
   m_WalkableMask: 15
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!222 &222135966093475188
 CanvasRenderer:
   m_ObjectHideFlags: 1

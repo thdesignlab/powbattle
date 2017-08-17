@@ -65,10 +65,18 @@ public class ObjectController : MonoBehaviour {
         }
     }
 
-    public void ShootDown()
+    public bool ShootDown(Transform opponentTran)
     {
-        if (isNotShootDown) return;
+        if (isNotShootDown) return false;
+
+        if (opponentTran != null)
+        {
+            int mySide = Common.Func.GetMySide(tag);
+            int opponentSide = Common.Func.GetMySide(opponentTran.tag);
+            if (mySide == opponentSide) return false;
+        }
         DestroyObject();
+        return true;
     }
 
     public void DestroyObject(float delay = 0)

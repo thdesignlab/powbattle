@@ -392,6 +392,10 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         }
         else
         {
+            if (!points[index].gameObject.activeSelf)
+            {
+                return SelectSpawnPoint(side, isExtra);
+            }
             sp = points[index];
         }
         return sp;
@@ -568,15 +572,16 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
             if (isBattleEnd) break;
 
             //ユニット生成
-            foreach (int side in Common.CO.sideArray)
+            for (int j = 0; j < 2; j++)
             {
-                for (int j = 0; j < 2; j++)
+                foreach (int side in Common.CO.sideArray)
                 {
                     if (unitCnt[side] < testUnitLimit)
                     {
                         SpawnUnits(side, false);
                     }
                 }
+                yield return new WaitForSeconds(1.0f);
             }
 
             testRespawnInterval += testRespawnIntervalAdd;

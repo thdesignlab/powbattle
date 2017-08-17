@@ -2574,7 +2574,7 @@ MonoBehaviour:
   maxHP: 3000
   attack: 0
   defence: 0
-  searchRange: 15
+  searchRange: 30
   hqDamage: 100
   isPathCheck: 0
 --- !u!114 &114504184367702248
@@ -2925,7 +2925,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1287490403169854}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.4
+  m_Radius: 0.25
   m_Speed: 2.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -2937,7 +2937,7 @@ NavMeshAgent:
   m_Height: 1.5
   m_BaseOffset: 0.75
   m_WalkableMask: 15
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!222 &222164443944701754
 CanvasRenderer:
   m_ObjectHideFlags: 1

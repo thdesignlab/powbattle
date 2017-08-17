@@ -96,7 +96,7 @@ public class ShootWeaponController : WeaponController
     {
         if (target == null) return 0;
 
-        float diffRange = Mathf.Abs(myTran.position.y - target.position.y) * 1.2f;
+        float diffRange = Mathf.Abs(myTran.position.y - target.position.y) * 1.3f;
         return diffRange;
     }
 

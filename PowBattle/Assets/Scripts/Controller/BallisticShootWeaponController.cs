@@ -96,25 +96,4 @@ public class BallisticShootWeaponController : ShootWeaponController
 
         return vec;
     }
-
-    //private void InstantiateShootObject(Vector3 i_shootVector)
-    //{
-    //    if (m_shootObject == null)
-    //    {
-    //        throw new System.NullReferenceException("m_shootObject");
-    //    }
-
-    //    if (m_shootPoint == null)
-    //    {
-    //        throw new System.NullReferenceException("m_shootPoint");
-    //    }
-
-    //    var obj = Instantiate<GameObject>(m_shootObject, m_shootPoint.position, Quaternion.identity);
-    //    var rigidbody = obj.AddComponent<Rigidbody>();
-
-    //    // 速さベクトルのままAddForce()を渡してはいけないぞ。力(速さ×重さ)に変換するんだ
-    //    Vector3 force = i_shootVector * rigidbody.mass;
-
-    //    rigidbody.AddForce(force, ForceMode.Impulse);
-    //}
 }
