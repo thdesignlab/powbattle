@@ -180,4 +180,12 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
         ScreenManager.Instance.SceneLoad(SceneManager.GetActiveScene().name);
         CloseMenu();
     }
+
+    //ターゲット可視化
+    public void OnClickDrawTarget()
+    {
+        if (!isAdmin) return;
+        BattleManager.Instance.isVisibleTarget = !BattleManager.Instance.isVisibleTarget;
+        CloseMenu();
+    }
 }

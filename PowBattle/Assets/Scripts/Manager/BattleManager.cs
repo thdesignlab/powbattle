@@ -50,7 +50,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     private bool isPause = false;
 
     //test用
-    public bool isVisibleTargetSight;
+    [HideInInspector]
+    public bool isVisibleTarget = false;
     [SerializeField]
     int testUnitLimit;
     [SerializeField]

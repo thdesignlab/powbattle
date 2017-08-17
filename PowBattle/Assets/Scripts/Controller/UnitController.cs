@@ -61,7 +61,6 @@ public class UnitController : BaseMoveController
     }
     protected Transform weaponTran;
     protected WeaponController weaponCtrl;
-    //protected float attackRange;
     protected LaserPointerController laserPointerCtrl;
 
     protected const int MAX_DEFENCE = 90;
@@ -174,7 +173,6 @@ public class UnitController : BaseMoveController
         laserPointerCtrl = targetSight.GetComponent<LaserPointerController>();
         if (laserPointerCtrl != null)
         {
-            //laserPointerCtrl.SetMaxLength(searchRange);
             laserPointerCtrl.SetLayerMask(LayerMask.GetMask(new string[] { Common.CO.layerUnitArray[enemySide] }));
             Color color = (mySide == Common.CO.SIDE_MINE) ? Color.cyan : Color.red;
             laserPointerCtrl.SetLaserColor(color);
@@ -351,21 +349,19 @@ public class UnitController : BaseMoveController
         SetTargetSight();
     }
 
+    //ターゲット視覚化
     protected void SetTargetSight()
     {
-        if (BattleManager.Instance.isVisibleTargetSight)
+        if (!BattleManager.Instance.isVisibleTarget) return;
+        if (laserPointerCtrl == null) return;
+
+        if (targetTran != null)
         {
-            if (laserPointerCtrl != null)
-            {
-                if (targetTran != null)
-                {
-                    laserPointerCtrl.SetOn(targetTran);
-                }
-                else
-                {
-                    laserPointerCtrl.SetOff();
-                }
-            }
+            laserPointerCtrl.SetOn(targetTran);
+        }
+        else
+        {
+            laserPointerCtrl.SetOff();
         }
     }
 

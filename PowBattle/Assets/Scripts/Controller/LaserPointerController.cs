@@ -36,6 +36,12 @@ public class LaserPointerController : MonoBehaviour
     {
         if (isActive)
         {
+            if (!BattleManager.Instance.isVisibleTarget)
+            {
+                SetOff();
+                return;
+            }
+
             if (maxLength <= 0) maxLength = 100.0f;
             RaycastHit hit;
             //bool isHit = Physics.Raycast(myTran.position, GetDirection(), out hit, maxLength, layerMask);
