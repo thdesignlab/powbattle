@@ -8,12 +8,6 @@ public class ActiveUnitController : UnitController
 {
     protected NavMeshAgent agent;
 
-    [SerializeField]
-    protected int hqDamage;
-    [SerializeField]
-    protected bool isPathCheck;
-    protected float defaultSpeed;
-
     protected float coolTime = 0;
 
     protected override void Awake()
@@ -21,15 +15,6 @@ public class ActiveUnitController : UnitController
         base.Awake();
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = isActive;
-    }
-
-    protected override void Init()
-    {
-        base.Init();
-        if (isActive)
-        {
-            SaveDefault();
-        }
     }
 
     protected override void Update()
@@ -73,12 +58,6 @@ public class ActiveUnitController : UnitController
         motionCtrl.Run(agent.velocity != Vector3.zero);
     }
 
-    //デフォルトステータス保管
-    protected void SaveDefault()
-    {
-        defaultSpeed = agent.speed;
-    }
-
     //ターゲットHQサーチ
     protected void SearchHQ(bool isSetTarget = false)
     {
@@ -90,28 +69,7 @@ public class ActiveUnitController : UnitController
     protected override void Search()
     {
         //再索敵チェック
-        if (leftForceTargetTime > 0) return;
-        if (targetTran != null && targetTran.tag == targetTag)
-        {
-            if (isPathCheck)
-            {
-                if (IsEnabledPath(targetTran))
-                {
-                    //再ターゲット
-                    SetTarget(targetTran);
-                    return;
-                }
-            }
-            else
-            {
-                if (IsDiscoveryTarget(targetTran, searchRange) && weaponCtrl.IsWithinRange(targetTran))
-                {
-                    //再ターゲット
-                    SetTarget(targetTran);
-                    return;
-                }
-            }
-        }
+        if (!IsResearch()) return;
 
         //敵を探す
         List<Transform> targets = BattleManager.Instance.GetUnitList(enemySide);
@@ -131,7 +89,7 @@ public class ActiveUnitController : UnitController
             if (!IsDiscoveryTarget(target, searchRange)) continue;
 
             //到達可否判定
-            if (isPathCheck && !IsEnabledPath(target)) continue;
+            if (!IsEnabledPath(target)) continue;
             
             //射程内判定
             if (weaponCtrl.IsWithinRange(target, distance))
@@ -164,12 +122,26 @@ public class ActiveUnitController : UnitController
         }
     }
 
-    //ターゲットへ到達可否判定
-    protected bool IsEnabledPath(Transform target)
+    //再索敵判定
+    protected override bool IsResearch()
     {
-        NavMeshPath path = new NavMeshPath();
-        agent.CalculatePath(target.position, path);
-        return (path.status == NavMeshPathStatus.PathComplete);
+        if (leftForceTargetTime > 0) return false;
+        if (targetTran != null && targetTran.tag == targetTag)
+        {
+            if (IsDiscoveryTarget(targetTran, searchRange) && weaponCtrl.IsWithinRange(targetTran))
+            {
+                //再ターゲット
+                SetTarget(targetTran);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //ターゲットへ到達可否判定
+    protected virtual bool IsEnabledPath(Transform target)
+    {
+        return true;
     }
 
     protected void SetLockOn(bool flg)
@@ -179,7 +151,6 @@ public class ActiveUnitController : UnitController
         {
             //武器射程取得
             float attackRangeMax = weaponCtrl.GetMaxRange(targetTran);
-            //float attackRangeMin = weaponCtrl.GetMinRange(targetTran);
             agent.stoppingDistance = attackRangeMax * 0.8f;
         }
         else
@@ -217,7 +188,7 @@ public class ActiveUnitController : UnitController
     }
 
     //移動
-    protected void Move()
+    protected virtual void Move()
     {
         if (coolTime > 0 || targetTran == null) return;
 
@@ -264,21 +235,11 @@ public class ActiveUnitController : UnitController
         }
         else if (targetTran.tag == targetHQTag || targetTran.tag == Common.CO.TAG_BREAK_OBSTACLE)
         {
-            if (isPathCheck)
-            {
-                if (IsEnabledPath(t)) SetTarget(t);
-            }
-            else
-            {
-                if (IsDiscoveryTarget(t)) SetTarget(t);
-            }
+            if (IsDiscoveryTarget(t)) SetTarget(t);
         }
         else
         {
-            if (targetDistance > Vector3.Distance(myTran.position, t.position))
-            {
-                SetTarget(t);
-            }
+            if (targetDistance > Vector3.Distance(myTran.position, t.position)) SetTarget(t);
         }
     }
 
@@ -293,16 +254,14 @@ public class ActiveUnitController : UnitController
     //死亡ダメージ
     protected void DeadDamage()
     {
-        if (hqDamage <= 0) return;
-
         //HQにダメージを与える
-        BattleManager.Instance.DeadDamage(mySide, hqDamage, myTran);
+        BattleManager.Instance.DeadDamage(mySide, myTran);
     }
     
     //HQまでの距離取得
     protected float GetHQDistance()
     {
-        if (HQTran == null) return 99999;
+        if (HQTran == null) return 9999;
         return Vector3.Distance(myTran.position, HQTran.position);
 
     }
@@ -310,8 +269,6 @@ public class ActiveUnitController : UnitController
     //ステータス取得
     protected float GetSpeed()
     {
-        int rate = GetStatusEffect(Common.CO.STATUS_SPEED);
-        if (rate < MIN_SPEED_EFFECT) rate = MIN_SPEED_EFFECT;
-        return  agent.speed * (100 + rate) / 100.0f;
+        return  agent.speed;
     }
 }

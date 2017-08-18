@@ -13,23 +13,18 @@ public class UnitController : BaseMoveController
     protected int targetLayer;
 
     protected Transform HQTran;
-    //protected HQController HQCtrl;
     protected Transform targetTran;
     protected float targetDistance;
-    //protected bool isAttackRange;
     protected bool isLockOn;
 
-    //[SerializeField]
     protected Slider hpGage;
     [SerializeField]
     protected GameObject weapon;
-    //[SerializeField]
     protected GameObject _bufEffect;
     protected GameObject bufEffect
     {
         get {　return (_bufEffect != null) ? _bufEffect : _bufEffect = Common.Func.GetEffectResource("BufEffect"); }
     }
-    //[SerializeField]
     protected GameObject _debufEffect;
     protected GameObject debufEffect
     {
@@ -38,9 +33,7 @@ public class UnitController : BaseMoveController
     [SerializeField]
     protected int maxHP;
     protected int nowHP;
-    [SerializeField]
     protected int attack;
-    [SerializeField]
     protected int defence;
     [SerializeField]
     protected float searchRange;
@@ -141,7 +134,7 @@ public class UnitController : BaseMoveController
 
         if (weapon == null) yield break;
 
-        float wait = 0.5f;
+        float wait = 1.0f;
         for (;;)
         {
             if (nowHP <= 0 || BattleManager.Instance.isBattleEnd) yield break;
@@ -206,12 +199,11 @@ public class UnitController : BaseMoveController
     protected virtual void Search()
     {
         //再索敵チェック
-        if (leftForceTargetTime > 0) return;
+        if (!IsResearch()) return;
 
         //武器射程取得
         if (targetTran != null)
         {
-            //isLockOn = IsDiscoveryTarget(targetTran, attackRange);
             if (!weaponCtrl.IsWithinRange(targetTran))
             {
                 SetTarget(null);
@@ -238,6 +230,13 @@ public class UnitController : BaseMoveController
         }
     }
 
+    //再索敵判定
+    protected virtual bool IsResearch()
+    {
+        if (leftForceTargetTime > 0) return false;
+        return true;
+    }
+
     //攻撃判定
     protected virtual bool JudgeAttack()
     {
@@ -260,11 +259,11 @@ public class UnitController : BaseMoveController
         Vector3 basePos = myTran.position + myTran.forward + myTran.up;
 
         bool ret = false;
-        if (target == targetTran && targetDistance <= 1.0f)
+        if (target == targetTran && targetDistance <= 1.5f)
         {
             ret = true;
         }
-        else if (Vector3.Distance(basePos, target.position) <= 1.0f)
+        else if (Vector3.Distance(basePos, target.position) <= 1.5f)
         {
             ret = true;
         }
@@ -379,6 +378,12 @@ public class UnitController : BaseMoveController
             if (motionCtrl.IsFinishedDead()) break;
         }
         objCtrl.DestroyObject();
+    }
+
+    //最大HP取得
+    public int GetMaxHp()
+    {
+        return maxHP;
     }
 
     //HP割合取得

@@ -337,8 +337,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 30000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 0
   camouflageRange: 10
@@ -422,6 +420,7 @@ MonoBehaviour:
   extraRateList: 32000000280000001e000000140000000a000000
   obstacleCtrls: []
   unitCntRate: 3200000032000000
+  unitDeadDamageRate: 0100000003000000
   isBattleStart: 0
   isBattleEnd: 0
   isVisibleTarget: 0
@@ -753,8 +752,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 30000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 1
   camouflageRange: 3
@@ -1265,8 +1262,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 15000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 1
   camouflageRange: 10
@@ -1380,8 +1375,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 1036260209594930, guid: 7dabc85c8b1e4304cbc810f0a03316f9, type: 2}
   maxHP: 20000
-  attack: 0
-  defence: 0
   searchRange: 0
   isMain: 1
   aleartDistance: 50
@@ -1550,8 +1543,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 10000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 1
   camouflageRange: 10
@@ -1684,8 +1675,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 1938369445840822, guid: eefa7761c6d41b649a2f73a64af5a662, type: 2}
   maxHP: 8000
-  attack: 0
-  defence: 0
   searchRange: 0
   isMain: 0
   aleartDistance: 20
@@ -1851,8 +1840,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 15000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 0
   camouflageRange: 5
@@ -2016,8 +2003,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 15000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: -1
   camouflageRange: 0
@@ -2162,8 +2147,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 15000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 1
   camouflageRange: 0
@@ -2284,8 +2267,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 1938369445840822, guid: eefa7761c6d41b649a2f73a64af5a662, type: 2}
   maxHP: 6000
-  attack: 0
-  defence: 0
   searchRange: 0
   isMain: 0
   aleartDistance: 20
@@ -2451,8 +2432,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 5000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 0
   camouflageRange: 0
@@ -2546,8 +2525,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 15000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 1
   camouflageRange: 5
@@ -2679,8 +2656,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 15000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 1
   camouflageRange: 0
@@ -2883,8 +2858,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 30000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 0
   camouflageRange: 0
@@ -2999,8 +2972,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 15000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: -1
   camouflageRange: 0
@@ -3094,8 +3065,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 25000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 1
   camouflageRange: 0
@@ -3259,8 +3228,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   maxHP: 20000
-  attack: 0
-  defence: 0
   searchRange: 0
   side: 0
   camouflageRange: 0
@@ -3374,8 +3341,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 1036260209594930, guid: 7dabc85c8b1e4304cbc810f0a03316f9, type: 2}
   maxHP: 10000
-  attack: 0
-  defence: 0
   searchRange: 0
   isMain: 1
   aleartDistance: 50

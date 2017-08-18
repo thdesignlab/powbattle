@@ -54,7 +54,7 @@ MonoBehaviour:
   range: 15
   reload: 10
   attackWait: 3
-  moveDelay: 2
+  moveDelay: 4
   bullet: {fileID: 1406308116368392, guid: 17bebbcdedec01c4bac690226519d969, type: 2}
   magicCircle: {fileID: 1489970011207296, guid: 20778b29e12d53e4087efcb4314cbcb6,
     type: 2}

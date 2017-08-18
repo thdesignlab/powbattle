@@ -855,7 +855,7 @@ GameObject:
   - component: {fileID: 54596600206751854}
   - component: {fileID: 195166408107024854}
   - component: {fileID: 136367688126102244}
-  - component: {fileID: 114530164785035482}
+  - component: {fileID: 114327522068000552}
   - component: {fileID: 114061932468744500}
   - component: {fileID: 114232055659523006}
   m_Layer: 9
@@ -1466,7 +1466,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1131509924127790}
-  m_LocalRotation: {x: 0.70106614, y: 0.7105511, z: 0.059235703, w: -0.0107035795}
+  m_LocalRotation: {x: 0.7010662, y: 0.71055114, z: 0.059235707, w: -0.01070358}
   m_LocalPosition: {x: -0.044519108, y: 0.017301608, z: -0.01272776}
   m_LocalScale: {x: 0.99999994, y: 1.0000001, z: 1.0000001}
   m_Children: []
@@ -2367,6 +2367,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95207399231669980}
+--- !u!114 &114327522068000552
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1692266074615522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5d155a28993e84ca5c948da640c5f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 1927420743177176, guid: 1e39eedb3aadb89428f7fe51c7d92910, type: 2}
+  maxHP: 8000
+  searchRange: 10
 --- !u!114 &114400845392358866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2529,24 +2543,6 @@ MonoBehaviour:
   m_FillAmount: 0.5
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114530164785035482
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1692266074615522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b70d1f586b255e47b4dcb29712025ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 1927420743177176, guid: 1e39eedb3aadb89428f7fe51c7d92910, type: 2}
-  maxHP: 8000
-  attack: 0
-  defence: 0
-  searchRange: 10
-  hqDamage: 150
-  isPathCheck: 1
 --- !u!114 &114728969959000470
 MonoBehaviour:
   m_ObjectHideFlags: 1

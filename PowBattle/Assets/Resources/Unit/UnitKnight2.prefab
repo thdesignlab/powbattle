@@ -1200,7 +1200,7 @@ GameObject:
   - component: {fileID: 54137845104845408}
   - component: {fileID: 195811830740346282}
   - component: {fileID: 136229100859407980}
-  - component: {fileID: 114399966451982896}
+  - component: {fileID: 114110883639348082}
   - component: {fileID: 114489514750210392}
   - component: {fileID: 114941770893762614}
   m_Layer: 9
@@ -2613,6 +2613,20 @@ MonoBehaviour:
   m_FillAmount: 0.5
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114110883639348082
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1989333327633116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5d155a28993e84ca5c948da640c5f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 1927420743177176, guid: 1e39eedb3aadb89428f7fe51c7d92910, type: 2}
+  maxHP: 8000
+  searchRange: 10
 --- !u!114 &114216031399624794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2667,24 +2681,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114399966451982896
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1989333327633116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b70d1f586b255e47b4dcb29712025ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 1927420743177176, guid: 1e39eedb3aadb89428f7fe51c7d92910, type: 2}
-  maxHP: 8000
-  attack: 0
-  defence: 0
-  searchRange: 10
-  hqDamage: 150
-  isPathCheck: 1
 --- !u!114 &114428236931876412
 MonoBehaviour:
   m_ObjectHideFlags: 1

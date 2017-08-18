@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 54192022071423464}
   - component: {fileID: 195656478111883444}
   - component: {fileID: 136341839775913576}
-  - component: {fileID: 114674640570641616}
+  - component: {fileID: 114872191893895108}
   - component: {fileID: 114725679449691624}
   m_Layer: 9
   m_Name: UnitWizard
@@ -733,24 +733,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114674640570641616
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1386705431784120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b70d1f586b255e47b4dcb29712025ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 1778612927633544, guid: c416920b8b623ac41838da1a18dd0e6c, type: 2}
-  maxHP: 1800
-  attack: 0
-  defence: 0
-  searchRange: 20
-  hqDamage: 100
-  isPathCheck: 0
 --- !u!114 &114725679449691624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -795,6 +777,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114872191893895108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1386705431784120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52db8f73ffaab9041ae5e8f40a5bd81b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 1778612927633544, guid: c416920b8b623ac41838da1a18dd0e6c, type: 2}
+  maxHP: 1800
+  searchRange: 20
+  isArtillery: 0
+  isNotNeedLockOn: 0
 --- !u!114 &114955637002742864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -965,7 +963,7 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 2.5
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 180

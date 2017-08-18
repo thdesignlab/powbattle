@@ -37,6 +37,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     private List<List<HQController>> subHqCtrlList = new List<List<HQController>>() { new List<HQController>(), new List<HQController>() };
     [HideInInspector]
     public List<List<Transform>> unitList = new List<List<Transform>> { new List<Transform>() { }, new List<Transform>() { } };
+    [SerializeField]
+    protected List<int> unitDeadDamageRate = new List<int>() { 0, 0 };
     private const float SPAWN_UNIT_INTERVAL = 0.3f;
 
     //プレイヤー情報
@@ -250,12 +252,18 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     }
 
     //ユニット死亡ダメージ
-    public void DeadDamage(int side, int damage, Transform t)
+    public void DeadDamage(int side, Transform t)
     {
+        if (unitDeadDamageRate[side] <= 0) return;
+
         HQController target = SelectTargetHQ(side, t);
         if (target == null) return;
-        float rate = (IsSuperioritySituation(side)) ? 1.0f :0.75f;
-        target.Hit((int)(damage * rate), null);
+
+        int maxHP = target.GetMaxHp();
+        float situationRate = (IsSuperioritySituation(side)) ? 1.0f : 0.8f;
+        int damage = (int)(maxHP * (unitDeadDamageRate[side] / 100.0f) * situationRate);
+        if (damage <= 0) damage = 1;
+        target.Hit(damage, null);
     }
 
     //マップオブジェクト取得

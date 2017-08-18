@@ -53,8 +53,8 @@ public class DamageController : MonoBehaviour
                     int obstacleSide = obstacleCtrl.GetSide();
                     if (obstacleSide != Common.CO.SIDE_UNKNOWN && obstacleSide == Common.Func.GetMySide(ownerTran.tag)) damage = 0;
                 }
-
                 if (damage > 0) hitDamage = obstacleCtrl.Hit(damage, ownerTran);
+                if (hitDamage > 0) SpawnDamageEffect(attackTran, hitTran);
                 isHit = true;
                 break;
 
