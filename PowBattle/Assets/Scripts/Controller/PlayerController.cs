@@ -12,16 +12,6 @@ public class PlayerController : GestureManager
     protected Camera mainCam;
     protected Transform camTran;
     protected int tapLayerMask;
-    protected Quaternion freeCamRotation;
-    protected int camMode;
-    protected Transform camTargetTran;
-    protected Transform camPointTran;
-    protected Vector3 lookAtVector;
-    protected Slider hpSlider;
-
-    const string CAM_POINT = "CamPoint/";
-    const string CAM_POINT_FIRST = "First";
-    const string CAM_POINT_THIRD = "Third";
 
     [SerializeField]
     protected float dragRate;
@@ -39,62 +29,56 @@ public class PlayerController : GestureManager
     [SerializeField]
     protected float yLimitMax;
 
-    private void Awake()
+    [SerializeField]
+    protected float moveTime;
+
+    protected void Awake()
     {
         myTran = transform;
         mainCam = Camera.main;
         camTran = mainCam.transform;
         Init();
-        SetTapLayerMask();
         StartCoroutine(KeyboardInput());
     }
 
     protected virtual void Init()
     {
-        camMode = Common.CO.CAM_MODE_FREE;
-        freeCamRotation = camTran.localRotation;
+        return;
     }
 
-    protected virtual void SetTapLayerMask()
+    //タップ対象のレイヤーをセット
+    protected void SetTapLayerMask(string[] layers)
     {
-        tapLayerMask = LayerMask.GetMask(new string[] { Common.CO.LAYER_UNIT});
+        tapLayerMask = LayerMask.GetMask(layers);
     }
 
+    //ドラッグ時処理
     protected override void Drag(float deltaX, float deltaY)
     {
-        switch (camMode)
-        {
-            case Common.CO.CAM_MODE_FREE:
-                Vector3 deltaMove = myTran.forward * deltaY + myTran.right * deltaX;
-                deltaMove *= dragRate;
-                if (!isEnabledMove(deltaMove)) return;
-                myTran.position += deltaMove;
-                break;
-
-            case Common.CO.CAM_MODE_FIRST:
-            case Common.CO.CAM_MODE_THIRD:
-                lookAtVector += (myTran.up * deltaY + myTran.right * deltaX) * dragRate;
-                break;
-        }
+        Vector3 deltaMove = myTran.forward * deltaY + myTran.right * deltaX;
+        deltaMove *= dragRate;
+        if (!isEnabledMove(deltaMove)) return;
+        myTran.position += deltaMove;
     }
+
+    //ピンチイン・アウト時処理
     protected override void Pinch(float delta)
     {
-        if (camMode != Common.CO.CAM_MODE_FREE) return;
-
         Vector3 deltaMove = camTran.forward * delta * pinchRate;
         if (!isEnabledMove(deltaMove)) return;
         myTran.position += deltaMove;
     }
+
+    //ひねり時処理
     protected override void Twist(float delta)
     {
-        if (camMode != Common.CO.CAM_MODE_FREE) return;
-
         delta *= twistRate;
         if (delta > 30) delta = 30;
         myTran.Rotate(0, delta, 0);
     }
 
-    private bool isEnabledMove(Vector3 deltaMove = default(Vector3))
+    //移動可能判定
+    protected bool isEnabledMove(Vector3 deltaMove = default(Vector3))
     {
         Vector3 expectPos = myTran.position + deltaMove;
         //x方向制限
@@ -103,11 +87,6 @@ public class PlayerController : GestureManager
         if (expectPos.z < -zLimit || zLimit < expectPos.z) return false;
         //y方向制限
         if (expectPos.y < yLimitMin || yLimitMax < expectPos.y) return false;
-        ////マップ内制限
-        //int layerMask = LayerMask.GetMask(new string[] { Common.CO.LAYER_STAGE });
-        //Ray ray = new Ray(myTran.position + deltaMove, Vector3.down);
-        //RaycastHit hit;
-        //if (!Physics.Raycast(ray, out hit, yLimitMax, layerMask)) return false;
         return true;
     }
 
@@ -132,100 +111,25 @@ public class PlayerController : GestureManager
     //タップ
     protected override void Tap(Vector2 screenPoint)
     {
-        if (camMode != Common.CO.CAM_MODE_FREE) return;
-        if (Common.Func.IsPointerUI()) return;
-        Ray ray = mainCam.ScreenPointToRay(screenPoint);
-        RaycastHit hit = new RaycastHit();
-        if (Physics.Raycast(ray, out hit, myTran.position.y * 10, tapLayerMask))
-        {
-            camTargetTran = hit.transform;
-            MenuController.Instance.OpenCamMenu(camTargetTran);
-        }
-    }
-
-    //カメラモード切替
-    public void SwitchCameraMode(int mode)
-    {
-        switch (mode)
-        {
-            case Common.CO.CAM_MODE_FREE:
-                SetFreeCamPoint();
-                MenuController.Instance.CloseCamMenu();
-                break;
-
-            case Common.CO.CAM_MODE_FIRST:
-            case Common.CO.CAM_MODE_VR:
-                if (camTargetTran == null)
-                {
-                    SwitchCameraMode(Common.CO.CAM_MODE_FREE);
-                    return;
-                }
-                SetFirstCamPoint();
-                break;
-
-            case Common.CO.CAM_MODE_THIRD:
-                if (camTargetTran == null)
-                {
-                    SwitchCameraMode(Common.CO.CAM_MODE_FREE);
-                    return;
-                }
-                SetThirdCamPoint();
-                break;
-        }
-        camMode = mode;
-    }
-
-    //カメラポジション設定
-    private void SetFreeCamPoint()
-    {
-        myTran.position = new Vector3(myTran.position.x, yLimitMin, myTran.position.z);
-        camTran.localRotation = freeCamRotation;
-        camTargetTran = null;
-    }
-    private void SetFirstCamPoint()
-    {
-        camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_FIRST);
-        if (camPointTran == null) camPointTran = camTargetTran;
-        myTran.position = camPointTran.position;
-        myTran.rotation = camPointTran.rotation;
-        camTran.rotation = myTran.rotation;
-        lookAtVector = camTargetTran.position;
-    }
-    private void SetThirdCamPoint()
-    {
-        camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_THIRD);
-        if (camPointTran == null) camPointTran = camTargetTran ;
-        myTran.position = camPointTran.position;
-        myTran.rotation = camPointTran.rotation;
-        lookAtVector = camTargetTran.position;
-    }
-
-    //カメラ方向セット
-    private void LookAtForword()
-    {
-        switch (camMode)
-        {
-            case Common.CO.CAM_MODE_FIRST:
-            case Common.CO.CAM_MODE_THIRD:
-                camTran.LookAt(lookAtVector + camTargetTran.forward * 10.0f);
-                break;
-        }
+        return;
     }
 
     //カメラの中心を対象に設定
-    const float MOVE_TIME = 0.5f;
     Coroutine moveCenterCoroutine;
-    public void SetTargetCenter(Transform target, UnityAction callback = null, float time = MOVE_TIME)
+    public void SetTargetCenter(Transform target, UnityAction callback = null, float time = -1)
     {
+        if (time < 0) time = moveTime;
+
         float h = yLimitMin;
         float z = h / Common.Func.Tan(camTran.localRotation.eulerAngles.x);
         Vector3 centerTargetPos = target.position - myTran.forward * z + myTran.up * h;
         if (moveCenterCoroutine != null) StopCoroutine(moveCenterCoroutine);
-        moveCenterCoroutine = StartCoroutine(MoveCenter(centerTargetPos, callback));
+        moveCenterCoroutine = StartCoroutine(MoveCenter(centerTargetPos, time, callback));
     }
-    IEnumerator MoveCenter(Vector3 targetPos, UnityAction callback = null, float time = MOVE_TIME)
+    IEnumerator MoveCenter(Vector3 targetPos, float time, UnityAction callback = null)
     {
-        if (time <= 0) time = MOVE_TIME;
+        if (time < 0) yield break;
+
         Vector3 start = myTran.position;
         float r = 0;
         for (;;)
@@ -236,19 +140,5 @@ public class PlayerController : GestureManager
             yield return null;
         }
         if (callback != null) callback.Invoke();
-    }
-
-    protected virtual void Update()
-    {
-        if (camMode == Common.CO.CAM_MODE_FREE) return;
-
-        if (camTargetTran == null)
-        {
-            SwitchCameraMode(Common.CO.CAM_MODE_FREE);
-            return;
-        }
-        myTran.position = camPointTran.position;
-        myTran.rotation = camTargetTran.rotation;
-        LookAtForword();
     }
 }

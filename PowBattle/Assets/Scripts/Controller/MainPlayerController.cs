@@ -4,20 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 using TouchScript.Gestures.TransformGestures;
 
-public class StoryPlayerController : MainPlayerController
+public class MainPlayerController : PlayerController
 {
 
     protected override void Init()
     {
         base.Init();
-        SetTapLayerMask(new string[] { Common.CO.LAYER_STAGE });
+        SetTapLayerMask(new string[] { Common.CO.LAYER_UNIT });
     }
 
-    protected override void Twist(float delta)
-    {
-        return;
-    }
-    
     //タップ
     protected override void Tap(Vector2 screenPoint)
     {
@@ -27,7 +22,7 @@ public class StoryPlayerController : MainPlayerController
         RaycastHit hit = new RaycastHit();
         if (Physics.Raycast(ray, out hit, myTran.position.y * 10, tapLayerMask))
         {
-            StoryManager.Instance.SelectStage(hit.transform);
+            SetTargetCenter(hit.transform);
         }
     }
 }

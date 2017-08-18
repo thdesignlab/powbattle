@@ -107,10 +107,10 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
     {
         get { return _player ? _player : _player = BattleManager.Instance.GetPlayer(); }
     }
-    private PlayerController _playerCtrl;
-    private PlayerController playerCtrl
+    private BattlePlayerController _playerCtrl;
+    private BattlePlayerController playerCtrl
     {
-        get { return _playerCtrl ? _playerCtrl : _playerCtrl = player.GetComponent<PlayerController>(); }
+        get { return _playerCtrl ? _playerCtrl : _playerCtrl = player.GetComponent<BattlePlayerController>(); }
     }
 
     //カメラメニュー表示

@@ -125,7 +125,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4104881922191106, guid: 2b0d5a545fa2760459d2ebf6939e942c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -20
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 4104881922191106, guid: 2b0d5a545fa2760459d2ebf6939e942c, type: 2}
       propertyPath: m_LocalRotation.x
@@ -428,8 +428,8 @@ MonoBehaviour:
   testRespawnCount: 100
   testRespawnInterval: 60
   testRespawnIntervalAdd: 0
-  testRespawnUnits: 00000000000000000000000001000000000000000000000000000000
-  testEnemyRespawnUnits: 00000000000000000000000001000000000000000000000000000000
+  testRespawnUnits: 01000000010000000100000001000000010000000100000001000000
+  testEnemyRespawnUnits: 01000000010000000100000001000000010000000100000001000000
 --- !u!4 &419198005
 Transform:
   m_ObjectHideFlags: 0
@@ -2052,7 +2052,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1613472742}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 15, z: -30}
+  m_LocalPosition: {x: 0, y: 15, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 152440329}

@@ -39,14 +39,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4104881922191106}
   - component: {fileID: 114402021573602544}
-  - component: {fileID: 114602517181949596}
   - component: {fileID: 114842907539610902}
   - component: {fileID: 114517986511893626}
   - component: {fileID: 114616854238282152}
   - component: {fileID: 114343097572999496}
   - component: {fileID: 114363352687972638}
+  - component: {fileID: 114834519688499198}
   m_Layer: 0
-  m_Name: Player
+  m_Name: BattlePlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -272,30 +272,6 @@ MonoBehaviour:
     m_TypeName: TouchScript.Gestures.Gesture+GestureEvent, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   ignoreChildren: 0
---- !u!114 &114602517181949596
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1792669404848742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c3d1ea764d9c2443bf24885caadba73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flick: 0
-  tap: 1
-  drag: 1
-  dragBorder: 5
-  pinchBorder: 0.1
-  twistBorder: 1
-  dragRate: -0.03
-  pinchRate: 10
-  twistRate: 0.7
-  xLimit: 50
-  zLimit: 50
-  yLimitMin: 5
-  yLimitMax: 50
 --- !u!114 &114616854238282152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -331,6 +307,30 @@ MonoBehaviour:
     m_TypeName: TouchScript.Gestures.Gesture+GestureEvent, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   ignoreChildren: 0
+--- !u!114 &114834519688499198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1792669404848742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71d0cc95b6cf7c14d850e4f5aa03755f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flick: 0
+  tap: 1
+  drag: 1
+  dragBorder: 5
+  pinchBorder: 0.1
+  twistBorder: 1
+  dragRate: -0.03
+  pinchRate: 10
+  twistRate: 0.7
+  xLimit: 50
+  zLimit: 50
+  yLimitMin: 5
+  yLimitMax: 50
 --- !u!114 &114842907539610902
 MonoBehaviour:
   m_ObjectHideFlags: 1
