@@ -51,9 +51,6 @@ namespace Common
         //タグ HQ
         public const string TAG_HQ = "HQ";
         public const string TAG_ENEMY_HQ = "EnemyHQ";
-        //タグ ユニットパーツ
-        public const string TAG_UNIT_BODY = "UnitBody";
-        public const string TAG_WEAPON_JOINT = "WeaponJoint";
         //タグ 出現位置
         public const string TAG_SP_MINE = "SpawnPointMine";
         public const string TAG_SP_ENEMY = "SpawnPointEnemy";

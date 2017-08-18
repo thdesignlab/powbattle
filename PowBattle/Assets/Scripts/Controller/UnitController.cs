@@ -64,6 +64,11 @@ public class UnitController : BaseMoveController
     protected const int MAX_DEFENCE = 90;
     protected const int MIN_SPEED_EFFECT = -100;
 
+    protected const string UNIT_PARTS_GROUND = "Ground";
+    protected const string UNIT_PARTS_WEAPON_JOINT = "WeaponJoint";
+    protected const string UNIT_PARTS_TARGET_SIGHT = "TargetSIght";
+    protected const string UNIT_PARTS_STATUS_CANVAS = "StatusCanvas";
+
     protected bool isActive = false;
 
     protected override void Awake()
@@ -167,7 +172,7 @@ public class UnitController : BaseMoveController
     //レーザーポインター取得
     protected void GetLaserPointer()
     {
-        Transform targetSight = transform.Find("TargetSight");
+        Transform targetSight = transform.Find(UNIT_PARTS_TARGET_SIGHT);
         if (targetSight == null) return;
         laserPointerCtrl = targetSight.GetComponent<LaserPointerController>();
         if (laserPointerCtrl != null)
@@ -184,15 +189,9 @@ public class UnitController : BaseMoveController
         if (weapon == null) return;
 
         //装備箇所検索
-        Transform joint = null;
-        foreach (Transform child in myTran)
-        {
-            if (child.tag == Common.CO.TAG_WEAPON_JOINT)
-            {
-                joint = child;
-                break;
-            }
-        }
+        Transform joint = transform.Find(UNIT_PARTS_WEAPON_JOINT);
+        if (joint == null) joint = myTran;
+
         //武器生成＆装備
         GameObject w = Instantiate(weapon, joint.position, joint.rotation);
         weaponTran = w.transform;
@@ -391,7 +390,7 @@ public class UnitController : BaseMoveController
     //HPゲージ設定
     public void SetHpGage(bool flg = true)
     {
-        Transform statusCanvas = myTran.Find("StatusCanvas");
+        Transform statusCanvas = myTran.Find(UNIT_PARTS_STATUS_CANVAS);
         if (statusCanvas == null) return;
         if (!flg)
         {
@@ -548,5 +547,13 @@ public class UnitController : BaseMoveController
             yield return new WaitForSeconds(wait);
         }
         Destroy(effectObj);
+    }
+
+    //足元取得
+    public Transform GetGround()
+    {
+        Transform ground = myTran.Find(UNIT_PARTS_GROUND);
+        if (ground == null) ground = myTran;
+        return ground;
     }
 }

@@ -53,13 +53,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 15
   reload: 10
-  attackWait: 0
+  attackWait: 3
   moveDelay: 2
   bullet: {fileID: 1406308116368392, guid: 17bebbcdedec01c4bac690226519d969, type: 2}
-  magicCircle: {fileID: 0}
+  magicCircle: {fileID: 1489970011207296, guid: 20778b29e12d53e4087efcb4314cbcb6,
+    type: 2}
   rapidCount: 1
   rapidInterval: 0
   shootDiff: 1
-  shootPoint: {x: 0, y: 0, z: 0}
-  isGround: 1
+  shootPoint: {x: 0, y: -1, z: 0}
   isLookAt: 0

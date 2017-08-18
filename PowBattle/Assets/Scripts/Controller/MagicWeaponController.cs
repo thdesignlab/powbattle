@@ -18,13 +18,15 @@ public class MagicWeaponController : WeaponController
     [SerializeField]
     protected Vector3 shootPoint;
     [SerializeField]
-    protected bool isGround;
-    [SerializeField]
     protected bool isLookAt;
+
+    protected Transform groundTran;
+    protected GameObject magicCircleObj;
 
     protected override void Awake()
     {
         base.Awake();
+        if (magicCircle == null) magicCircle = Common.Func.GetEffectResource("MagicCircle");
     }
 
     protected override void AttackProcess(Transform target)
@@ -34,6 +36,7 @@ public class MagicWeaponController : WeaponController
 
     IEnumerator RapidShoot(Transform target)
     {
+        SwitchMagicCircle(true);
         yield return new WaitForSeconds(attackWait);
 
         for (int i = 1; i <= rapidCount; i++)
@@ -45,7 +48,22 @@ public class MagicWeaponController : WeaponController
             Shoot(shootPos, targetPos);
             yield return new WaitForSeconds(rapidInterval);
         }
+
+        SwitchMagicCircle(false);
         AttackMotion(0);
+    }
+
+    protected void SwitchMagicCircle(bool flg)
+    {
+        if (magicCircle == null) return;
+
+        if (magicCircleObj == null)
+        {
+            magicCircleObj = Instantiate(magicCircle, groundTran.position, groundTran.rotation);
+            magicCircleObj.transform.SetParent(ownerTran, true);
+        }
+
+        magicCircleObj.SetActive(flg);
     }
 
     protected Vector3 GetShootPosition(Transform target)
@@ -55,11 +73,6 @@ public class MagicWeaponController : WeaponController
         diffpos += target.right * shootPoint.x;
         diffpos += target.forward * shootPoint.z;
         Vector3 shootPos = target.position + diffpos;
-        if (isGround)
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(shootPos, Vector3.down, out hit)) shootPos = hit.point;
-        }
         return shootPos;
     }
 
@@ -84,5 +97,14 @@ public class MagicWeaponController : WeaponController
         effectCtrl.SetOwner(ownerTran);
         effectCtrl.SetDamageRate(attackRate);
         return obj;
+    }
+
+    public override void SetOwner(Transform t)
+    {
+        base.SetOwner(t);
+        if (ownerTran != null)
+        {
+            groundTran = ownerTran.GetComponent<UnitController>().GetGround();
+        }
     }
 }

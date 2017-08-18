@@ -39,8 +39,6 @@ public class WeaponController : MonoBehaviour
     public bool Attack(Transform target, int rate = 0)
     {
         if (!isEnabledAttack()) return false;
-        //Transform targetPoint = Common.Func.SearchChildTag(target, Common.CO.TAG_UNIT_BODY);
-        //if (targetPoint == null) targetPoint = target;
         attackRate = rate;
         AttackProcess(target);
         Reload();
@@ -69,7 +67,7 @@ public class WeaponController : MonoBehaviour
         leftReload = reload;
     }
 
-    public void SetOwner(Transform t)
+    public virtual void SetOwner(Transform t)
     {
         ownerTran = t;
     }

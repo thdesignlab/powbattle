@@ -82,7 +82,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4819098648327482}
   - component: {fileID: 33252938977484834}
-  - component: {fileID: 136075828350780330}
   - component: {fileID: 23562240351512480}
   m_Layer: 0
   m_Name: Body
@@ -174,6 +173,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1528157862609538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4267443775985354}
+  m_Layer: 0
+  m_Name: Ground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1583409301703890
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,8 +197,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4915914419767304}
   - component: {fileID: 54955987159821240}
-  - component: {fileID: 143726242924545590}
   - component: {fileID: 195890786782637108}
+  - component: {fileID: 136891314240615444}
   - component: {fileID: 114458716223006334}
   - component: {fileID: 114942463088569064}
   m_Layer: 9
@@ -236,7 +250,7 @@ GameObject:
   - component: {fileID: 4452008177256966}
   m_Layer: 0
   m_Name: WeaponJoint
-  m_TagString: WeaponJoint
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -308,6 +322,19 @@ Transform:
   m_Father: {fileID: 4730421207722336}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4267443775985354
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1528157862609538}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4915914419767304}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4363739886592844
 Transform:
   m_ObjectHideFlags: 1
@@ -357,7 +384,7 @@ Transform:
   m_GameObject: {fileID: 1377000483671808}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 4915914419767304}
   m_RootOrder: 0
@@ -390,6 +417,7 @@ Transform:
   - {fileID: 4730421207722336}
   - {fileID: 224249050973303024}
   - {fileID: 4363739886592844}
+  - {fileID: 4267443775985354}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -901,21 +929,8 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!136 &136075828350780330
+--- !u!136 &136891314240615444
 CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1377000483671808}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!143 &143726242924545590
-CharacterController:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -923,13 +938,9 @@ CharacterController:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1.5
   m_Radius: 0.4
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_Height: 1.5
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &195890786782637108
 NavMeshAgent:

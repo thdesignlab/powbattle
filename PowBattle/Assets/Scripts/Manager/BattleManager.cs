@@ -403,30 +403,39 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     //ユニット生成
     IEnumerator SpawnUnits(int side, bool isExtra = false)
     {
-        //出現位置取得
-        Transform sp = SelectSpawnPoint(side, isExtra);
+        //生成ユニット
         List<int> units = (isExtra) ? extraUnits[side] : spawnUnits[side];
+        //生成位置
+        Transform sp = SelectSpawnPoint(side, isExtra);
+        Vector3 spawnPos = sp.position;
+        if (IsHq(sp.tag)) spawnPos += sp.forward * 2.0f;
+        Quaternion spawnRot = sp.rotation;
+
         foreach (int unit in units)
         {
-            GameObject unitObj = SpawnUnit(unit, sp, side);
+            GameObject unitObj = SpawnUnit(unit, spawnPos, spawnRot, side);
 
             //援軍バフ
             if (isExtra)
             {
                 UnitController unitCtrl = unitObj.GetComponent<UnitController>();
                 unitCtrl.AttackEffect(50, 15);
-                unitCtrl.DefenceEffect(75, 15);
+                unitCtrl.DefenceEffect(50, 15);
             }
             yield return new WaitForSeconds(SPAWN_UNIT_INTERVAL);
         }
-
     }
 
     //対象がHQか判定
-    private bool IsHq(Transform tran)
+    private bool IsHq(Transform t)
+    {
+        if (t == null) return false;
+        return IsHq(t.tag);
+    }
+    private bool IsHq(string tag)
     {
         bool flg = false;
-        switch (tran.tag)
+        switch (tag)
         {
             case Common.CO.TAG_HQ:
             case Common.CO.TAG_ENEMY_HQ:
@@ -437,17 +446,18 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     }
 
     //ユニット生成処理
-    private GameObject SpawnUnit(int unitNo, Transform spawnPoint, int side)
+    private GameObject SpawnUnit(int unitNo, Vector3 spawnPos, int side)
     {
-        //出現位置決定
-        Vector3 spawnPos = spawnPoint.position;
-        if (IsHq(spawnPoint)) spawnPos += spawnPoint.forward * 2.0f;
+        return SpawnUnit(unitNo, spawnPos, Quaternion.identity, side);
+    }
 
-        //生成
-        Vector3 pos = PickAroundPosition(spawnPos);
-        if (spawnEffect != null) Instantiate(spawnEffect, pos, spawnPoint.rotation);
+    private GameObject SpawnUnit(int unitNo, Vector3 spawnPos, Quaternion spawnRot, int side)
+    {
+            //生成
+            Vector3 pos = PickAroundPosition(spawnPos);
+        if (spawnEffect != null) Instantiate(spawnEffect, pos, spawnRot);
         GameObject unitPref = Common.Func.GetUnitResource(Common.Unit.unitInfo[unitNo]);
-        GameObject unit = Instantiate(unitPref, pos, spawnPoint.rotation);
+        GameObject unit = Instantiate(unitPref, pos, spawnRot);
         unitList[side].Add(unit.transform);
 
         //情報変更
@@ -455,7 +465,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         Common.Func.SetLayer(unit, Common.CO.layerUnitArray[side], false);
         //★ボディ色変え
         Color[] bodyColors = new Color[] { Color.white, Color.red };
-        Transform unitBody = Common.Func.SearchChildTag(unit.transform, Common.CO.TAG_UNIT_BODY);
+        Transform unitBody = Common.Func.SearchChildTag(unit.transform, "UnitBody");
         Renderer unitRenderer = unitBody.GetComponent<Renderer>();
         if (unitRenderer != null)
         {

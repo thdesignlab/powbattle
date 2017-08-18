@@ -52,14 +52,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 15
-  reload: 12
-  attackWait: 0
+  reload: 13
+  attackWait: 5
   moveDelay: 5
   bullet: {fileID: 1440697131794602, guid: e76ea14c947bebf4ab6e80f1f478e6f0, type: 2}
-  magicCircle: {fileID: 0}
+  magicCircle: {fileID: 1140668815022580, guid: e49dcf32260d69744b2f2252001cbbce,
+    type: 2}
   rapidCount: 1
   rapidInterval: 0
   shootDiff: 0
   shootPoint: {x: 0, y: 8, z: 3}
-  isGround: 0
   isLookAt: 1
