@@ -461,8 +461,8 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 
     private GameObject SpawnUnit(int unitNo, Vector3 spawnPos, Quaternion spawnRot, int side)
     {
-            //生成
-            Vector3 pos = PickAroundPosition(spawnPos);
+        //生成
+        Vector3 pos = PickAroundPosition(spawnPos);
         if (spawnEffect != null) Instantiate(spawnEffect, pos, spawnRot);
         GameObject unitPref = Common.Func.GetUnitResource(Common.Unit.unitInfo[unitNo]);
         GameObject unit = Instantiate(unitPref, pos, spawnRot);
@@ -486,7 +486,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     }
 
     //周辺ポイント決定
-    private Vector3 PickAroundPosition(Vector3 basePos, float range = 1.0f)
+    private Vector3 PickAroundPosition(Vector3 basePos, float range = 2.0f)
     {
         Vector3 pos = basePos;
         NavMeshHit hit;

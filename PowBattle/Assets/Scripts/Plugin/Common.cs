@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
+using UnityEngine.Audio;
 
 namespace Common
 {
@@ -31,6 +32,7 @@ namespace Common
         public const string RESOURCE_UNIT_DIR = "Unit/";
         public const string RESOURCE_EFFECT_DIR = "Effect/";
         public const string RESOURCE_PLAYER_DIR = "Player/";
+        public const string RESOURCE_SOUND_DIR = "Sound/";
 
         //自軍・敵軍
         public const int SIDE_UNKNOWN = -1;
@@ -108,6 +110,17 @@ namespace Common
         public const string MOTION_TAG_DEAD = "Dead";
 
     }
+
+    public static class Var
+    {
+        //AudioMixer
+        private static AudioMixer _audioMixer;
+        public static AudioMixer audioMixer
+        {
+            get { return (_audioMixer) ? _audioMixer : _audioMixer = Resources.Load<AudioMixer>(CO.RESOURCE_SOUND_DIR + "AudioMixer"); }
+        }
+    }
+
 
     //### 端末保持情報 ###
     public static class PP
@@ -192,7 +205,7 @@ namespace Common
         public static int InArray<T>(T[] array, T target)
         {
             int index = -1;
-            //foreach (T a in array)
+            if (array == null) return index;
             for (int i = 0; i < array.Length; i++)
             {
                 if (target.Equals(array[i]))
@@ -369,6 +382,7 @@ namespace Common
             return nearTran;
         }
 
+        //カーソルがUI上か判定
         public static bool IsPointerUI()
         {
             return UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();

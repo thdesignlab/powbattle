@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4070443569779208}
+  - component: {fileID: 114023398225095558}
   m_Layer: 0
   m_Name: MagicCircleFire
   m_TagString: Untagged
@@ -109,3 +110,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1565941222401776}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114023398225095558
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1140668815022580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e47dd4cad6ed74dbb65663857d33bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 567e50b57ac95394c953455d33d8e84e, type: 3}
+  editVolume: 0
+  isPlayOnAwake: 1
+  isLoop: 0

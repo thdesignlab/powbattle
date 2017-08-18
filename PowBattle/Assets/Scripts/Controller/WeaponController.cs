@@ -7,7 +7,9 @@ public class WeaponController : MonoBehaviour
 {
     protected Transform myTran;
     protected Transform ownerTran;
+    protected Transform targetTran;
     protected UnitMotionController motionCtrl;
+    protected AudioManager audioMgr;
     protected float maxRange;
     protected float minRange;
 
@@ -26,6 +28,7 @@ public class WeaponController : MonoBehaviour
     protected virtual void Awake()
     {
         myTran = transform;
+        audioMgr = myTran.GetComponentInChildren<AudioManager>();
     }
 
     protected virtual void Update()
@@ -39,8 +42,9 @@ public class WeaponController : MonoBehaviour
     public bool Attack(Transform target, int rate = 0)
     {
         if (!isEnabledAttack()) return false;
+        targetTran = target;
         attackRate = rate;
-        AttackProcess(target);
+        AttackProcess();
         Reload();
         return true;
     }
@@ -51,8 +55,9 @@ public class WeaponController : MonoBehaviour
         motionCtrl.Attack(count);
     }
 
-    protected virtual void AttackProcess(Transform target)
+    protected virtual void AttackProcess()
     {
+        PlaySE();
         return;
     }
 
@@ -102,5 +107,11 @@ public class WeaponController : MonoBehaviour
     {
         if (distance < 0) distance = Vector3.Distance(myTran.position, target.position);
         return (GetMinRange(target) <= distance && distance <= GetMaxRange(target));
+    }
+
+    protected void PlaySE(int no = 0)
+    {
+        if (audioMgr == null) return;
+        audioMgr.Play(no, true);
     }
 }

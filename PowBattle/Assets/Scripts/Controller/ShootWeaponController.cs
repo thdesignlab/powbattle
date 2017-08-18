@@ -26,20 +26,22 @@ public class ShootWeaponController : WeaponController
         SetMuzzle();
     }
 
-    protected override void AttackProcess(Transform target)
+    protected override void AttackProcess()
     {
-        StartCoroutine(RapidShoot(target));
+        StartCoroutine(RapidShoot());
     }
 
-    IEnumerator RapidShoot(Transform target)
+    protected virtual IEnumerator RapidShoot()
     {
         if (muzzleList.Count == 0) yield break;
 
         for (int i = 1; i <= rapidCount; i++)
         {
-            if (target != null) LockOn(target);
+            LockOn();
             AttackMotion(i);
             yield return new WaitForSeconds(attackWait);
+
+            PlaySE(i - 1);
             for (int j = 0; j < muzzleList.Count; j++)
             {
                 Shoot(j);
@@ -49,9 +51,10 @@ public class ShootWeaponController : WeaponController
         AttackMotion(0);
     }
 
-    protected virtual void LockOn(Transform target)
+    protected virtual void LockOn()
     {
-        Vector3 pos = target.position;
+        if (targetTran == null) return;
+        Vector3 pos = targetTran.position;
         pos += GetShootDiff(pos);
         myTran.LookAt(pos);
     }
@@ -73,6 +76,7 @@ public class ShootWeaponController : WeaponController
         GameObject obj = Instantiate(bullet, muzzleList[muzzleNo].position, muzzleList[muzzleNo].rotation);
         DamageEffectController effectCtrl = obj.GetComponent<DamageEffectController>();
         effectCtrl.SetOwner(ownerTran);
+        effectCtrl.SetTarget(targetTran);
         effectCtrl.SetDamageRate(attackRate);
         return obj;
     }

@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4512737634204816}
   - component: {fileID: 114695983350024932}
+  - component: {fileID: 114226748393041518}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -40,6 +41,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114226748393041518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1938369445840822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e47dd4cad6ed74dbb65663857d33bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: a28c14a034d826e49afd3b21a9015449, type: 3}
+  editVolume: 0
+  isPlayOnAwake: 0
+  isLoop: 0
 --- !u!114 &114695983350024932
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 4935625433340136}
   - component: {fileID: 114454901509250874}
   - component: {fileID: 114422547801421948}
+  - component: {fileID: 114956652195114262}
   m_Layer: 0
   m_Name: SpawnEffect
   m_TagString: Untagged
@@ -171,3 +172,19 @@ MonoBehaviour:
   activeLimitDistance: 0
   isNotAutoBreak: 0
   isNotShootDown: 0
+--- !u!114 &114956652195114262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1254655010990186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e47dd4cad6ed74dbb65663857d33bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: bf3927334688dfb41a3799f8e34b5ff0, type: 3}
+  editVolume: 0
+  isPlayOnAwake: 1
+  isLoop: 0

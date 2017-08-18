@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 135937900532630270}
   - component: {fileID: 54155487061824038}
   - component: {fileID: 114896562117969398}
+  - component: {fileID: 114578366362746470}
   m_Layer: 0
   m_Name: Icicle
   m_TagString: DamageEffect
@@ -217,6 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5502e5949efe3874fbd391cf40906986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSpawnDamageEffect: 0
 --- !u!114 &114541506050475736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -234,6 +236,22 @@ MonoBehaviour:
   isShootDown: 1
   speed: 0
   isPenetrate: 1
+--- !u!114 &114578366362746470
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1406308116368392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e47dd4cad6ed74dbb65663857d33bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 9eb20f77c2a90504795925461a41d746, type: 3}
+  editVolume: 0
+  isPlayOnAwake: 1
+  isLoop: 0
 --- !u!114 &114896562117969398
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,10 +9,12 @@ public class BallisticShootWeaponController : ShootWeaponController
     protected float shootAngle;
     private float speed;
 
-    protected override void LockOn(Transform target)
+    protected override void LockOn()
     {
+        if (targetTran == null) return;
+
         if (shootAngle <= 0 || 90 < shootAngle) shootAngle = 45;
-        Vector3 pos = target.position;
+        Vector3 pos = targetTran.position;
         pos += GetShootDiff(pos);
         myTran.LookAt(new Vector3(pos.x, myTran.position.y, pos.z));
         myTran.Rotate(Vector3.right, -shootAngle);
@@ -42,14 +44,7 @@ public class BallisticShootWeaponController : ShootWeaponController
     private void CalcShootSpeed(Vector3 shootPos, Vector3 targetPos, float angle)
     {
         speed = ComputeVectorFromAngle(shootPos, targetPos, angle);
-        if (speed <= 0.0f)
-        {
-            //Debug.LogWarning("!!");
-            return;
-        }
-
-        //Vector3 vec = ConvertVectorToVector3(speed, angle, shootPos, targetPos);
-        //InstantiateShootObject(vec);
+        if (speed <= 0.0f) return;
     }
 
     private float ComputeVectorFromAngle(Vector3 shootPos, Vector3 targetPos, float angle)

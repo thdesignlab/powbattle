@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4966149299538882}
   - component: {fileID: 114382364033836324}
+  - component: {fileID: 114736493523119098}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -57,6 +58,22 @@ MonoBehaviour:
   moveDelay: 2
   bullet: {fileID: 1861109683996740, guid: 701935560259e3842acd3f8bd665ce02, type: 2}
   rapidCount: 4
-  rapidInterval: 0.2
+  rapidInterval: 0.3
   shootDiff: 0.5
   addHeightRangeRate: 50
+--- !u!114 &114736493523119098
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288816425657906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e47dd4cad6ed74dbb65663857d33bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: f4343fa072cedc7478a1eb7d4433963f, type: 3}
+  editVolume: 0
+  isPlayOnAwake: 0
+  isLoop: 0

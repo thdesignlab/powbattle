@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 135271771876767670}
   - component: {fileID: 114668227511142474}
   - component: {fileID: 114513891828374468}
+  - component: {fileID: 114343929514238134}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: DamageEffect
@@ -165,6 +166,22 @@ Transform:
   m_Father: {fileID: 4096071052050166}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114343929514238134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1433351128113194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e47dd4cad6ed74dbb65663857d33bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: e225f8ee689ee8340b67bcc0380e2d9e, type: 3}
+  editVolume: 0
+  isPlayOnAwake: 1
+  isLoop: 0
 --- !u!114 &114513891828374468
 MonoBehaviour:
   m_ObjectHideFlags: 1

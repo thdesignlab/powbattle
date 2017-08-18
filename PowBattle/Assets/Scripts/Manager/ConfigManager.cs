@@ -9,8 +9,6 @@ public class ConfigManager : SingletonMonoBehaviour<ConfigManager>
 {
     [SerializeField]
     private GameObject configCanvas;
-    //[SerializeField]
-    //private GameObject helpCanvas;
     [SerializeField]
     private AudioMixer mixer;
 

@@ -62,6 +62,9 @@ MonoBehaviour:
   flick: 0
   tap: 0
   drag: 0
+  dragBorder: 5
+  pinchBorder: 0.2
+  twistBorder: 0.5
 --- !u!114 &114287160150237526
 MonoBehaviour:
   m_ObjectHideFlags: 1

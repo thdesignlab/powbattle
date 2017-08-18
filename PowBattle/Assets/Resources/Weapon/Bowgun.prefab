@@ -50,6 +50,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4344527996486744}
   - component: {fileID: 114440810294018684}
+  - component: {fileID: 114854649819282518}
   m_Layer: 0
   m_Name: Bowgun
   m_TagString: Untagged
@@ -206,3 +207,19 @@ MonoBehaviour:
   shootDiff: 1
   addHeightRangeRate: 100
   shootAngle: 50
+--- !u!114 &114854649819282518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1745349947222828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e47dd4cad6ed74dbb65663857d33bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 026ef70d794900544b4db173854ce6d8, type: 3}
+  editVolume: 0
+  isPlayOnAwake: 0
+  isLoop: 0

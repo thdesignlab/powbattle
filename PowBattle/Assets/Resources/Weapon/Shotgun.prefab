@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4626305134218608}
   - component: {fileID: 114202571034218344}
+  - component: {fileID: 114504973028307014}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -60,3 +61,19 @@ MonoBehaviour:
   rapidInterval: 0
   shootDiff: 1.5
   addHeightRangeRate: 0
+--- !u!114 &114504973028307014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1036260209594930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e47dd4cad6ed74dbb65663857d33bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: a28c14a034d826e49afd3b21a9015449, type: 3}
+  editVolume: 0
+  isPlayOnAwake: 0
+  isLoop: 0

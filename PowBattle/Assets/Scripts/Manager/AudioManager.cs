@@ -4,35 +4,53 @@ using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
-    //private Transform myTran;
-    private AudioSource[] _audioSources;
-    private AudioSource[] audioSources { get { return _audioSources != null ? _audioSources : _audioSources = transform.GetComponentsInChildren<AudioSource>(); } }
+    [SerializeField]
+    protected List<AudioClip> clips;
+    [SerializeField]
+    protected float editVolume;
+    [SerializeField]
+    protected bool isPlayOnAwake;
+    [SerializeField]
+    protected bool isLoop;
+    protected AudioSource audioSource;
 
-    //void Start()
-    //{
-    //    myTran = transform;
-    //    audioSources = myTran.GetComponentsInChildren<AudioSource>();
-    //    foreach (AudioSource audioSource in audioSources)
-    //    {
-    //        Debug.Log(name+" >> "+ audioSource.clip);
-    //    }
-    //}
-
-    public void Play(int no = 0, bool isSendRPC = true)
+    protected virtual void Awake()
     {
-        if (!IsExistsAudio(no)) return;
-        audioSources[no].Play();
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
+        Init();
     }
 
-    public void Stop(int no = 0, bool isSendRPC = true)
+    protected virtual void Init()
     {
-        if (!IsExistsAudio(no)) return;
-        audioSources[no].Stop();
+        audioSource.playOnAwake = false;
+        audioSource.loop = isLoop;
+        audioSource.volume += editVolume;
     }
 
-    private bool IsExistsAudio(int no)
+    protected void OnEnable()
     {
-        if (audioSources != null && (0 < audioSources.Length && no + 1 <= audioSources.Length)) return true;
-        return false;
+        if (isPlayOnAwake) Play();
+    }
+
+    public virtual void Play(int no = 0, bool isNoRepeat = false)
+    {
+        if (audioSource == null || clips.Count <= 0) return;
+        if (isNoRepeat)
+        {
+            no = no % clips.Count;
+        }
+        else
+        {
+            if (clips.Count <= no) return;
+        }
+        audioSource.clip = clips[no];
+        audioSource.Play();
+    }
+
+    public void Stop()
+    {
+        if (audioSource == null) return;
+        audioSource.Stop();
     }
 }

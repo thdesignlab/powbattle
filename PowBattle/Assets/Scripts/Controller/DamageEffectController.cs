@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class DamageEffectController : BaseMoveController
 {
     protected Transform ownerTran;
+    protected Transform targetTran;
     protected string ownerTag;
     protected DamageController dmgCtrl;
     private ObjectController _objCtrl;
@@ -13,6 +14,8 @@ public class DamageEffectController : BaseMoveController
     {
         get { return (_objCtrl) ? _objCtrl : GetComponent<ObjectController>(); }
     }
+    protected AudioManager audioMgr;
+    protected ApproachAudioManager appAudioMgr;
 
     [SerializeField]
     protected int damage;
@@ -30,6 +33,8 @@ public class DamageEffectController : BaseMoveController
         base.Awake();
 
         dmgCtrl = GetComponent<DamageController>();
+        audioMgr = GetComponent<AudioManager>();
+        appAudioMgr = audioMgr as ApproachAudioManager;
     }
 
     public void SetOwner(Transform t)
@@ -40,6 +45,12 @@ public class DamageEffectController : BaseMoveController
             ownerTag = ownerTran.tag;
             objCtrl.SetOwner(ownerTran);
         }
+    }
+
+    public void SetTarget(Transform t)
+    {
+        targetTran = t;
+        if (appAudioMgr != null) appAudioMgr.SetTarget(targetTran);
     }
 
     public void SetDamageRate(int rate)
@@ -91,5 +102,12 @@ public class DamageEffectController : BaseMoveController
     protected virtual void BreakProcess()
     {
         objCtrl.DestroyObject();
+    }
+
+    //SE
+    protected virtual void PlaySE(int no = 0)
+    {
+        if (audioMgr == null) return;
+        audioMgr.Play(no);
     }
 }
