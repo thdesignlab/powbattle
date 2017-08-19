@@ -106,4 +106,10 @@ public class StoryManager : SingletonMonoBehaviour<StoryManager>
         GameObject stageObj = GameObject.Find(STAGE_NAME + no.ToString());
         return (stageObj == null) ? null : stageObj.transform;
     }
+
+    //ホームへ戻る
+    public void GoToHome()
+    {
+        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_MAIN);
+    }
 }

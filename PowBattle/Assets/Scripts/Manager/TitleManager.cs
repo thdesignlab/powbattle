@@ -9,7 +9,6 @@ using System.Text.RegularExpressions;
 
 public class TitleManager : MonoBehaviour
 {
-    private bool isSplashFinished = false;
     private bool isGameStart = false;
 
 
@@ -18,21 +17,8 @@ public class TitleManager : MonoBehaviour
 
     private float processTime = 0;
 
-
-    private string moveScene = "";
-
-
-    protected void Awake()
-    {
-        //フレームレート
-        Application.targetFrameRate = 30;
-    }
-
     IEnumerator Start()
     {
-        titleCanvas = GameObject.Find("TitleCanvas").transform;
-
-        if (isSplashFinished) yield break;
 
 #if UNITY_EDITOR
 #elif UNITY_IOS || UNITY_ANDROID
@@ -44,11 +30,13 @@ public class TitleManager : MonoBehaviour
         }
 #else
 #endif
-        //yield return new WaitForSeconds(1.0f);
-        //ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
-        //ScreenManager.Instance.SceneLoad(Common.CO.SCENE_STORY);
-
-        isSplashFinished = true;
+        AppManager.Instance.isSplashFinished = true;
+        //フレームレート
+        Application.targetFrameRate = 30;
+        //BGM
+        GetComponent<AudioSource>().volume = BgmManager.Instance.volume;
+        //UI
+        titleCanvas = GameObject.Find("TitleCanvas").transform;
 
         //TapToStart点灯
         Text messageText = null;
@@ -103,22 +91,9 @@ public class TitleManager : MonoBehaviour
 
     public void StartGame()
     {
-
+        if (!AppManager.Instance.isSplashFinished) return;
         isGameStart = true;
     }
-
-    //void Update()
-    //{
-    //    if (!isSplashFinished) return;
-    //    Debug.Log("update");
-
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
-    //    }
-
-    //}
-
 
     // ##### モードセレクト #####
 

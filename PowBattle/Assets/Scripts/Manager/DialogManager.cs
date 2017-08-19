@@ -28,6 +28,10 @@ public class DialogManager : MonoBehaviour
     const string BUTTON_OK_TEXT = "OK";
     const string BUTTON_CANCEL_TEXT = "Cancel";
 
+    //ボタンSE
+    const string SE_SELECT = "Select";
+    const string SE_CANCEL = "Cancel";
+
 
     //ダイアログオプション
     private static bool isVertical = false;
@@ -104,21 +108,27 @@ public class DialogManager : MonoBehaviour
     }
 
     //ボタン作成
-    private static void SetBtn(string resourceName, string text, UnityAction action = null)
+    private static void SetBtn(string text, UnityAction action = null, bool isPositive = true)
     {
         if (dialog == null) return;
+        string resourceName = (isPositive) ? RESOURCE_POSITIVE_BUTTON : RESOURCE_NEGATIVE_BUTTON;
         GameObject btnObj = Instantiate(Common.Func.GetUIResource(resourceName));
         btnObj.transform.SetParent(btnAreaTran, false);
-        btnObj.GetComponent<Button>().onClick.AddListener(() => OnClickButton(action));
+        UnityAction callback = () =>
+        {
+            SystemSeManager.Instance.PlayYesNoSe(isPositive);
+            OnClickButton(action);
+        };
+
+        btnObj.GetComponent<Button>().onClick.AddListener(callback);
         Text btnText = btnObj.transform.GetComponentInChildren<Text>();
         if (btnText != null) btnText.text = text;
     }
     private static void SetBtn(Dictionary<string, UnityAction> btnInfo, bool isPositive = true)
     {
-        string resourceName = (isPositive) ? RESOURCE_POSITIVE_BUTTON : RESOURCE_NEGATIVE_BUTTON;
         foreach (string text in btnInfo.Keys)
         {
-            SetBtn(resourceName, text, btnInfo[text]);
+            SetBtn(text, btnInfo[text], isPositive);
         }
     }
 

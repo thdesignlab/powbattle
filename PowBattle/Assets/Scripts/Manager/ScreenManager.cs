@@ -41,10 +41,13 @@ public class ScreenManager : SingletonMonoBehaviour<ScreenManager>
         //フェード
         fadeImg = commonCanvas.Find("Fade").GetComponent<Image>();
         fadeImg.raycastTarget = false;
+        fadeImg.color = new Color(fadeImg.color.r, fadeImg.color.g, fadeImg.color.b, 0);
+
         //メッセージ
         Transform msgTran = commonCanvas.Find("Message");
         msgImg = msgTran.Find("Image").GetComponent<Image>();
         msgTxt = msgTran.Find("Text").GetComponent<Text>();
+        CloseMessage();
     }
 
     public void SceneLoad(string sceneName, string message = MESSAGE_LOADING)
@@ -65,18 +68,12 @@ public class ScreenManager : SingletonMonoBehaviour<ScreenManager>
         Coroutine fadeOut = StartCoroutine(Fade(imgs, false));
         yield return fadeOut;
 
-        //BGM停止
-        SoundManager.Instance.StopBgm(sceneName);
-
         //シーンロード
         SceneManager.LoadScene(sceneName);
 
         //フェードイン
         Coroutine fadeIn = StartCoroutine(Fade(imgs, true));
         yield return fadeIn;
-
-        //BGM再生
-        SoundManager.Instance.PlayBgm(sceneName);
 
         //メッセージ非表示
         if (message != "") CloseMessage();
@@ -87,39 +84,20 @@ public class ScreenManager : SingletonMonoBehaviour<ScreenManager>
     {
         if (imgs.Length == 0 || fadeTime <= 0) yield break;
 
-        Color alphaZero = new Color(0, 0, 0, 0);
-        Color alphaOne = new Color(0, 0, 0, 1);
-        if (!isBlackOut)
-        {
-            alphaOne = new Color(1, 1, 1, 0);
-            alphaZero = new Color(1, 1, 1, 1);
-        }
-
+        Color imvisibleColor = (isBlackOut) ? new Color(0, 0, 0, 0) : new Color(1, 1, 1, 1);
+        Color visibleColor = (isBlackOut) ? new Color(0, 0, 0, 1) : new Color(1, 1, 1, 0);
         float procTime = 0;
         for (;;)
         {
             procTime += Time.deltaTime;
             float procRate = procTime / fadeTime;
-            if (procRate > 1) procRate = 1;
             Color startColor;
             Color endColor;
+            startColor = (isFadeIn) ? visibleColor : imvisibleColor;
+            endColor = (isFadeIn) ? imvisibleColor : visibleColor;
             foreach (Image img in imgs)
             {
-                //if (!IsFadeImage(img)) continue;
                 img.raycastTarget = isBlackOut;
-
-                if (isFadeIn)
-                {
-                    //フェードイン
-                    startColor = alphaOne;
-                    endColor = alphaZero;
-                }
-                else
-                {
-                    //フェードアウト
-                    startColor = alphaZero;
-                    endColor = alphaOne;
-                }
                 img.color = Color.Lerp(startColor, endColor, procRate);
                 if (procRate >= 1) img.raycastTarget = !isBlackOut;
             }

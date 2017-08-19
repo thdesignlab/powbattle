@@ -22,6 +22,9 @@ TagManager:
   - BreakableObstacle
   - Stage
   - Story
+  - SelectButton
+  - PositiveButton
+  - NegativeButton
   layers:
   - Default
   - TransparentFX

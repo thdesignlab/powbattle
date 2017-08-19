@@ -8,7 +8,7 @@ public class BattleAudioManager : AudioManager
     protected override void Init()
     {
         base.Init();
-        audioSource.outputAudioMixerGroup = Common.Var.audioMixer.FindMatchingGroups("Battle")[0];
+        audioSource.outputAudioMixerGroup = Common.Var.audioMixer.FindMatchingGroups(Common.CO.AUDIO_MIXER_BATTLE)[0];
         audioSource.spatialBlend = 1.0f;
     }
 }

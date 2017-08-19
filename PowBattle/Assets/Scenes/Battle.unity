@@ -1129,6 +1129,46 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1457887896629878, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
+      propertyPath: m_TagString
+      value: SelectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1221152337332544, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
+      propertyPath: m_TagString
+      value: SelectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830183759259242, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
+      propertyPath: m_TagString
+      value: SelectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555690296209800, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
+      propertyPath: m_TagString
+      value: SelectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1641740197423856, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
+      propertyPath: m_TagString
+      value: SelectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1794244477177542, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
+      propertyPath: m_TagString
+      value: SelectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107429230347990, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
+      propertyPath: m_TagString
+      value: SelectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812645067775498, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
+      propertyPath: m_TagString
+      value: NegativeButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1746110936888762, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
+      propertyPath: m_TagString
+      value: SelectButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1514189782934092, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
+      propertyPath: m_TagString
+      value: SelectButton
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
   m_IsPrefabParent: 0

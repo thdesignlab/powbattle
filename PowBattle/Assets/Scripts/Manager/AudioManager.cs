@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
     {
         audioSource.playOnAwake = false;
         audioSource.loop = isLoop;
-        audioSource.volume += editVolume;
+        audioSource.volume = 0.5f + editVolume;
     }
 
     protected void OnEnable()
@@ -35,22 +35,29 @@ public class AudioManager : MonoBehaviour
 
     public virtual void Play(int no = 0, bool isNoRepeat = false)
     {
-        if (audioSource == null || clips.Count <= 0) return;
+        AudioClip playClip = GetAudioClip(no, isNoRepeat);
+        if (playClip == null) return;
+        audioSource.clip = playClip;
+        audioSource.Play();
+    }
+
+    public virtual void Stop()
+    {
+        if (audioSource == null) return;
+        audioSource.Stop();
+    }
+
+    protected AudioClip GetAudioClip(int no = 0, bool isNoRepeat = false)
+    {
+        if (audioSource == null || clips.Count <= 0) return null;
         if (isNoRepeat)
         {
             no = no % clips.Count;
         }
         else
         {
-            if (clips.Count <= no) return;
+            if (clips.Count <= no) return null;
         }
-        audioSource.clip = clips[no];
-        audioSource.Play();
-    }
-
-    public void Stop()
-    {
-        if (audioSource == null) return;
-        audioSource.Stop();
+        return clips[no];
     }
 }

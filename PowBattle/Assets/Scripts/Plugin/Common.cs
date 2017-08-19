@@ -109,6 +109,22 @@ namespace Common
         public const string MOTION_TAG_ATTACK = "Attack";
         public const string MOTION_TAG_DEAD = "Dead";
 
+        //AudioMixerGroup
+        public const string AUDIO_MIXER_BGM = "BGM";
+        public const string AUDIO_MIXER_BATTLE = "Battle";
+        public const string AUDIO_MIXER_Voice = "Voice";
+        public const string AUDIO_MIXER_SE = "SE";
+
+        //★BGM
+        public static Dictionary<string, string> sceneBgmDic = new Dictionary<string, string>()
+        {
+            { "Title", "op" },
+            { "Main", "bgm_custom" },
+            { "Story", "bgm_custom" },
+            { "Battle", "AncientMachinery" },
+            { "BattleCastel", "Removelimiter" },
+        };
+
     }
 
     public static class Var
@@ -394,35 +410,54 @@ namespace Common
             return (SceneManager.GetActiveScene().name.IndexOf(CO.SCENE_BATTLE) == 0);
         }
 
-        //リソースロード
-        private static Dictionary<string, GameObject> resourceCacheDic = new Dictionary<string, GameObject>();
-        public static GameObject GetResource(string name)
+        //リソースロード(GameObject)
+        private static Dictionary<string, GameObject> resourceObjCacheDic = new Dictionary<string, GameObject>();
+        public static GameObject GetGameObjectResource(string name)
         {
-            if (resourceCacheDic.ContainsKey(name)) return resourceCacheDic[name];
+            //キャッシュ検索
+            if (resourceObjCacheDic.ContainsKey(name)) return resourceObjCacheDic[name];
 
-            GameObject obj = Resources.Load<GameObject>(name);
-            resourceCacheDic.Add(name, obj);
-            return obj;
+            //リソース取得
+            GameObject ret = Resources.Load<GameObject>(name);
+            resourceObjCacheDic.Add(name, ret);
+            return ret;
         }
         public static GameObject GetEffectResource(string name)
         {
-            return GetResource(CO.RESOURCE_EFFECT_DIR + name);
+            return GetGameObjectResource(CO.RESOURCE_EFFECT_DIR + name);
         }
         public static GameObject GetUIResource(string name)
         {
-            return GetResource(CO.RESOURCE_UI_DIR + name);
+            return GetGameObjectResource(CO.RESOURCE_UI_DIR + name);
         }
         public static GameObject GetMessageImageResource(string name)
         {
-            return GetResource(CO.RESOURCE_MESSAGE_DIR + name);
+            return GetGameObjectResource(CO.RESOURCE_MESSAGE_DIR + name);
         }
         public static GameObject GetUnitResource(string name)
         {
-            return GetResource(CO.RESOURCE_UNIT_DIR + name);
+            return GetGameObjectResource(CO.RESOURCE_UNIT_DIR + name);
         }
         public static GameObject GetPlayerResource(string name)
         {
-            return GetResource(CO.RESOURCE_PLAYER_DIR + name);
+            return GetGameObjectResource(CO.RESOURCE_PLAYER_DIR + name);
+        }
+
+        //リソースロード(AudioClip)
+        private static Dictionary<string, AudioClip> resourceAudioCacheDic = new Dictionary<string, AudioClip>();
+        public static AudioClip GetAudioClipResource(string name)
+        {
+            //キャッシュ検索
+            if (resourceAudioCacheDic.ContainsKey(name)) return resourceAudioCacheDic[name];
+
+            //リソース取得
+            AudioClip ret = Resources.Load<AudioClip>(name);
+            resourceAudioCacheDic.Add(name, ret);
+            return ret;
+        }
+        public static AudioClip GetAudioResource(string name)
+        {
+            return GetAudioClipResource(CO.RESOURCE_SOUND_DIR + name);
         }
     }
 

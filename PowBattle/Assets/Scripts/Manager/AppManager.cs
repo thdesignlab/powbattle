@@ -10,21 +10,23 @@ using TouchScript.Gestures.TransformGestures;
 
 public class AppManager : SingletonMonoBehaviour<AppManager>
 {
-    public static int gameMode = 0;
+    [HideInInspector]
+    public bool isSplashFinished = false;
 
     [SerializeField]
     private GameObject touchCousor;
 
-    protected override void Awake()
+    IEnumerator Start()
     {
-        base.Awake();
+        for (;;)
+        {
+            if (isSplashFinished) break;
+            yield return null;
+        }
 
         //ステータスバー
         Common.Func.SetStatusbar();
-    }
 
-    protected void Start()
-    {
         //タッチ可視化
         if (touchCousor != null && MyDebug.Instance.isDebugMode) DontDestroyOnLoad(touchCousor);
     }
