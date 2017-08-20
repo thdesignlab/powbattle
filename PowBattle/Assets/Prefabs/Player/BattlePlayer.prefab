@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 114616854238282152}
   - component: {fileID: 114343097572999496}
   - component: {fileID: 114363352687972638}
-  - component: {fileID: 114834519688499198}
+  - component: {fileID: 114733155543808918}
   m_Layer: 0
   m_Name: BattlePlayer
   m_TagString: Player
@@ -59,7 +59,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1792669404848742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 15, z: -20}
+  m_LocalPosition: {x: 0, y: 15, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4381531803664814}
@@ -72,13 +72,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1504262740136642}
-  m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4104881922191106}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!20 &20715832676756572
 Camera:
   m_ObjectHideFlags: 1
@@ -87,7 +87,7 @@ Camera:
   m_GameObject: {fileID: 1504262740136642}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -307,7 +307,7 @@ MonoBehaviour:
     m_TypeName: TouchScript.Gestures.Gesture+GestureEvent, Assembly-CSharp-firstpass,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   ignoreChildren: 0
---- !u!114 &114834519688499198
+--- !u!114 &114733155543808918
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -331,6 +331,7 @@ MonoBehaviour:
   zLimit: 50
   yLimitMin: 5
   yLimitMax: 50
+  moveTime: 0.5
 --- !u!114 &114842907539610902
 MonoBehaviour:
   m_ObjectHideFlags: 1

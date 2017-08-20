@@ -152,7 +152,7 @@ MonoBehaviour:
   zLimit: 25
   yLimitMin: 3
   yLimitMax: 25
-  moveTime: 0.2
+  moveTime: 0.3
 --- !u!114 &114149293267998572
 MonoBehaviour:
   m_ObjectHideFlags: 1

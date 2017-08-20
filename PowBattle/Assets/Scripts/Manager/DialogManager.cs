@@ -68,6 +68,9 @@ public class DialogManager : MonoBehaviour
         dialog = Instantiate(Common.Func.GetUIResource(RESOURCE_DIALOG));
         dialogTran = dialog.transform;
         ExecDialogLowPosition();
+        Transform dialogArea = dialogTran.Find(DIALOG_AREA);
+        ScreenManager.Instance.StartCoroutine(ScreenManager.Instance.VerticalFade(dialogArea, true));
+
 
         //メッセージセット
         SetMessage(message);
@@ -93,11 +96,13 @@ public class DialogManager : MonoBehaviour
     public static void CloseDialog()
     {
         if (dialog == null) return;
-        Destroy(dialog);
+        Transform dialogArea = dialog.transform.Find(DIALOG_AREA);
+        ScreenManager.Instance.StartCoroutine(ScreenManager.Instance.VerticalFade(dialogArea, false, () => Destroy(dialog)));
 
         //オプション初期化
         InitOption();
     }
+
 
     //メッセージセット
     private static void SetMessage(string message)
@@ -179,6 +184,6 @@ public class DialogManager : MonoBehaviour
         rectTran.pivot = new Vector2(0.5f, 0.0f);
         rectTran.anchorMin = new Vector2(0.0f, 0.0f);
         rectTran.anchorMax = new Vector2(1.0f, 0.0f);
-        rectTran.localPosition += new Vector3(rectTran.localPosition.x, dialogLowPosition, rectTran.localPosition.z);
+        rectTran.localPosition += new Vector3(rectTran.localPosition.x, rectTran.rect.height / 2 + dialogLowPosition, rectTran.localPosition.z);
     }
 }

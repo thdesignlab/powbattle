@@ -120,9 +120,10 @@ public class PlayerController : GestureManager
     {
         if (time < 0) time = moveTime;
 
-        float h = yLimitMin;
-        float z = h / Common.Func.Tan(camTran.localRotation.eulerAngles.x);
-        Vector3 centerTargetPos = target.position - myTran.forward * z + myTran.up * h;
+        float y = yLimitMin;
+        float z = y / Common.Func.Tan(camTran.localRotation.eulerAngles.x);
+        float x = z * Common.Func.Sin(camTran.localRotation.eulerAngles.y);
+        Vector3 centerTargetPos = target.position - myTran.forward * z - myTran.right * x + myTran.up * y;
         if (moveCenterCoroutine != null) StopCoroutine(moveCenterCoroutine);
         moveCenterCoroutine = StartCoroutine(MoveCenter(centerTargetPos, time, callback));
     }

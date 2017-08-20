@@ -84,17 +84,17 @@ public class ScreenManager : SingletonMonoBehaviour<ScreenManager>
     {
         if (imgs.Length == 0 || fadeTime <= 0) yield break;
 
-        Color imvisibleColor = (isBlackOut) ? new Color(0, 0, 0, 0) : new Color(1, 1, 1, 1);
+        Color invisibleColor = (isBlackOut) ? new Color(0, 0, 0, 0) : new Color(1, 1, 1, 1);
         Color visibleColor = (isBlackOut) ? new Color(0, 0, 0, 1) : new Color(1, 1, 1, 0);
         float procTime = 0;
         for (;;)
         {
-            procTime += Time.deltaTime;
+            procTime += Time.unscaledDeltaTime;
             float procRate = procTime / fadeTime;
             Color startColor;
             Color endColor;
-            startColor = (isFadeIn) ? visibleColor : imvisibleColor;
-            endColor = (isFadeIn) ? imvisibleColor : visibleColor;
+            startColor = (isFadeIn) ? visibleColor : invisibleColor;
+            endColor = (isFadeIn) ? invisibleColor : visibleColor;
             foreach (Image img in imgs)
             {
                 img.raycastTarget = isBlackOut;
@@ -104,6 +104,25 @@ public class ScreenManager : SingletonMonoBehaviour<ScreenManager>
             if (procRate >= 1) break;
             yield return null;
         }
+    }
+
+    public IEnumerator VerticalFade(Transform t, bool isFadeIn, UnityAction callback = null)
+    {
+        Vector3 baseScale = t.localScale;
+        Vector3 fadeScale = new Vector3(baseScale.x, 0, baseScale.z);
+        Vector3 startScale = (isFadeIn) ? fadeScale : baseScale;
+        Vector3 endScale = (isFadeIn) ? baseScale : fadeScale;
+        float rate = 0;
+        float fadeTime = 0.1f;
+        for (;;)
+        {
+            if (t == null) break;
+            rate += Time.unscaledDeltaTime / fadeTime;
+            t.localScale = Vector3.Lerp(startScale, endScale, rate);
+            if (rate >= 1) break;
+            yield return null;
+        }
+        if (callback != null) callback.Invoke();
     }
 
     //public void FadeUI(GameObject fadeOutObj, GameObject fadeInObj, bool isChild = true)
