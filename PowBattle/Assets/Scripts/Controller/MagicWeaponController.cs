@@ -6,13 +6,7 @@ using UnityEngine.AI;
 public class MagicWeaponController : WeaponController
 {
     [SerializeField]
-    protected GameObject bullet;
-    [SerializeField]
     protected GameObject magicCircle;
-    [SerializeField]
-    protected int rapidCount;
-    [SerializeField]
-    protected float rapidInterval;
     [SerializeField]
     protected float shootDiff;
     [SerializeField]
@@ -31,16 +25,11 @@ public class MagicWeaponController : WeaponController
         base.Awake();
         if (magicCircle == null) magicCircle = Common.Func.GetEffectResource("MagicCircle");
     }
-
-    protected override void AttackProcess()
-    {
-        StartCoroutine(RapidShoot());
-    }
-
-    protected IEnumerator RapidShoot()
+    
+    protected override IEnumerator RapidShoot()
     {
         SwitchMagicCircle(true);
-        float wait = attackWait;
+        float wait = motionWait;
         for (;;)
         {
             SetShootTarget();
@@ -54,7 +43,7 @@ public class MagicWeaponController : WeaponController
             SetShootTarget(true);
             Vector3 shootPos = GetShootPosition();
             AttackMotion(i);
-            Shoot(shootPos, targetPos);
+            MagicShoot(shootPos, targetPos);
             yield return new WaitForSeconds(rapidInterval);
         }
 
@@ -96,34 +85,16 @@ public class MagicWeaponController : WeaponController
     protected Vector3 GetShootPosition()
     {
         Vector3 diffpos = Vector3.zero;
-        //diffpos += targetTran.up * shootPoint.y;
-        //diffpos += targetTran.right * shootPoint.x;
-        //diffpos += targetTran.forward * shootPoint.z;
         diffpos += targetRot * shootPoint;
         Vector3 shootPos = targetPos + diffpos;
         return shootPos;
     }
 
-    //protected Vector3 GetTargetPosition()
-    //{
-    //    if (shootDiff <= 0) return targetTran.position;
-
-    //    Vector3 diffpos = Vector3.zero;
-    //    float rate = Vector3.Distance(myTran.position, targetTran.position) / range;
-    //    diffpos += Vector3.up * Random.Range(-shootDiff, shootDiff);
-    //    diffpos += Vector3.right * Random.Range(-shootDiff, shootDiff);
-    //    diffpos += Vector3.forward * Random.Range(-shootDiff, shootDiff);
-    //    diffpos *= (rate < 0.2f) ? 0.2f : rate;
-    //    return targetTran.position + diffpos;
-    //}
-
-    protected virtual GameObject Shoot(Vector3 shootPos, Vector3 targetPos)
+    protected GameObject MagicShoot(Vector3 shootPos, Vector3 targetPos)
     {
         GameObject obj = Instantiate(bullet, shootPos, Quaternion.identity);
         if (isLookAt && shootPos != targetPos) obj.transform.LookAt(targetPos);
-        DamageEffectController effectCtrl = obj.GetComponent<DamageEffectController>();
-        effectCtrl.SetOwner(ownerTran);
-        effectCtrl.SetDamageRate(attackRate);
+        SetDamageEffect(obj);
         return obj;
     }
 

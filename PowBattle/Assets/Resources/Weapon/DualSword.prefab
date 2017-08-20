@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4245309213099708}
-  - component: {fileID: 114278388533395092}
+  - component: {fileID: 114360813153114662}
   - component: {fileID: 114249083449077730}
   m_Layer: 0
   m_Name: DualSword
@@ -59,7 +59,7 @@ MonoBehaviour:
   editVolume: 0
   isPlayOnAwake: 0
   isLoop: 0
---- !u!114 &114278388533395092
+--- !u!114 &114360813153114662
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -67,15 +67,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1927420743177176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5af9efbca7088f44b93d1a81776231c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 939a1f40843a01b4899e5cb8b203d8b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 3
-  reload: 3
-  attackWait: 0.1
-  moveDelay: 2.5
   bullet: {fileID: 1808023538277036, guid: 7ed4e87abcc95514d859153e3b39e836, type: 2}
   rapidCount: 3
   rapidInterval: 0.5
-  shootDiff: 0
-  addHeightRangeRate: 0
+  range: 3
+  reload: 3
+  motionWait: 0.1
+  moveDelay: 1.5

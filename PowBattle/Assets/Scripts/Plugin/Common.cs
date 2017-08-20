@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.SceneManagement;
@@ -458,6 +459,35 @@ namespace Common
         public static AudioClip GetAudioResource(string name)
         {
             return GetAudioClipResource(CO.RESOURCE_SOUND_DIR + name);
+        }
+
+        //ターゲット到達までの移動予測
+        public static Vector3 GetUnitMoveDiff(Vector3 myPos, float mySpeed, Transform targetTran, float minDistance = 5.0f, float maxDistance = -1)
+        {
+            Vector3 diff = Vector3.zero;
+            if (targetTran == null) return diff;
+            NavMeshAgent targetAgent = targetTran.GetComponent<NavMeshAgent>();
+            if (targetAgent == null) return diff;
+            diff = GetMoveDiff(myPos, mySpeed, targetTran.position, targetAgent.velocity, minDistance, maxDistance);
+            return diff;
+        }
+        public static Vector3 GetMoveDiff(Vector3 myPos, float mySpeed, Vector3 targetPos, Vector3 targetMovePerSecond, float minDistance = 5.0f, float maxDistance = -1)
+        {
+            Vector3 diff = Vector3.zero;
+            if (mySpeed <= 0 || targetMovePerSecond == Vector3.zero) return diff;
+
+            //ターゲットとの距離
+            float distance = Vector3.Distance(myPos, targetPos);
+            if (minDistance > 0 && minDistance >= distance) return diff;
+            if (maxDistance > 0 && maxDistance <= distance) return diff;
+
+            //ターゲットまでの時間(s)
+            float time = distance / mySpeed;
+
+            //ターゲットの移動予想距離
+            diff = targetMovePerSecond * time;
+
+            return diff;
         }
     }
 

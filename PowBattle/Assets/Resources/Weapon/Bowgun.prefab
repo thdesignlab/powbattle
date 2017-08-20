@@ -197,15 +197,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 123f2fa4a79b8c84aa4da031b739df74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 12
-  reload: 4
-  attackWait: 0.2
-  moveDelay: 2
   bullet: {fileID: 1964319338860388, guid: 69220d0cb1946674e8ec2463cb3d3516, type: 2}
   rapidCount: 1
   rapidInterval: 0
+  range: 12
+  reload: 4
+  motionWait: 0.1
+  moveDelay: 2
   shootDiff: 1
-  addHeightRangeRate: 100
+  addHeightRangeRate: 50
   shootAngle: 50
 --- !u!114 &114854649819282518
 MonoBehaviour:

@@ -26,4 +26,9 @@ public class BulletController : DamageEffectController
         if (isPenetrate && hitTag != Common.CO.TAG_OBSTACLE) return false;
         return true;
     }
+
+    public float GetSpeed()
+    {
+        return speed;
+    }
 }

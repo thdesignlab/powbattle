@@ -51,15 +51,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222f2ab27f809a14e91a6532ba0bc6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 15
-  reload: 10
-  attackWait: 3
-  moveDelay: 4
   bullet: {fileID: 1406308116368392, guid: 17bebbcdedec01c4bac690226519d969, type: 2}
-  magicCircle: {fileID: 1489970011207296, guid: 20778b29e12d53e4087efcb4314cbcb6,
-    type: 2}
   rapidCount: 1
   rapidInterval: 0
+  range: 15
+  reload: 10
+  motionWait: 3
+  moveDelay: 3
+  magicCircle: {fileID: 1489970011207296, guid: 20778b29e12d53e4087efcb4314cbcb6,
+    type: 2}
   shootDiff: 1
   shootPoint: {x: 0, y: -1, z: 0}
   isLookAt: 0

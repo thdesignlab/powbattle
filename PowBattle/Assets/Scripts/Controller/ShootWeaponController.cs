@@ -6,55 +6,25 @@ using UnityEngine.AI;
 public class ShootWeaponController : WeaponController
 {
     [SerializeField]
-    protected GameObject bullet;
-    [SerializeField]
-    protected int rapidCount;
-    [SerializeField]
-    protected float rapidInterval;
-    [SerializeField]
     protected float shootDiff;
     [SerializeField]
     protected float addHeightRangeRate;
 
     protected BulletController bulletCtrl;
-    protected List<Transform> muzzleList = new List<Transform>();
+    protected float bulletSpeed;
+    protected NavMeshAgent targetAgent;
 
     protected override void Awake()
     {
         base.Awake();
         bulletCtrl = bullet.GetComponent<BulletController>();
-        SetMuzzle();
+        bulletSpeed = (bulletCtrl != null) ? bulletCtrl.GetSpeed() : 0;
     }
-
-    protected override void AttackProcess()
-    {
-        StartCoroutine(RapidShoot());
-    }
-
-    protected virtual IEnumerator RapidShoot()
-    {
-        if (muzzleList.Count == 0) yield break;
-
-        for (int i = 1; i <= rapidCount; i++)
-        {
-            LockOn();
-            AttackMotion(i);
-            yield return new WaitForSeconds(attackWait);
-
-            PlaySE(i - 1);
-            for (int j = 0; j < muzzleList.Count; j++)
-            {
-                Shoot(j);
-            }
-            yield return new WaitForSeconds(rapidInterval);
-        }
-        AttackMotion(0);
-    }
-
-    protected virtual void LockOn()
+    protected override void LockOn()
     {
         if (targetTran == null) return;
         Vector3 pos = targetTran.position;
+        pos += Common.Func.GetUnitMoveDiff(myTran.position, bulletSpeed, targetTran);
         pos += GetShootDiff(pos);
         myTran.LookAt(pos);
     }
@@ -69,31 +39,6 @@ public class ShootWeaponController : WeaponController
         diffpos += Vector3.forward * Random.Range(-shootDiff, shootDiff);
         diffpos *= (rate < 0.2f) ? 0.2f : rate;
         return diffpos;
-    }
-
-    protected virtual GameObject Shoot(int muzzleNo = 0)
-    {
-        GameObject obj = Instantiate(bullet, muzzleList[muzzleNo].position, muzzleList[muzzleNo].rotation);
-        DamageEffectController effectCtrl = obj.GetComponent<DamageEffectController>();
-        effectCtrl.SetOwner(ownerTran);
-        effectCtrl.SetTarget(targetTran);
-        effectCtrl.SetDamageRate(attackRate);
-        return obj;
-    }
-
-    protected void SetMuzzle()
-    {
-        foreach (Transform child in myTran)
-        {
-            if (child.tag == Common.CO.TAG_MUZZLE)
-            {
-                muzzleList.Add(child);
-            }
-        }
-        if (muzzleList.Count == 0)
-        {
-            muzzleList.Add(myTran);
-        }
     }
 
     public override float GetMinRange(Transform target = null)

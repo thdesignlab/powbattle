@@ -8,6 +8,7 @@ public class BallisticShootWeaponController : ShootWeaponController
     [SerializeField]
     protected float shootAngle;
     private float speed;
+    private float angle;
 
     protected override void LockOn()
     {
@@ -16,11 +17,15 @@ public class BallisticShootWeaponController : ShootWeaponController
         if (shootAngle <= 0 || 90 < shootAngle) shootAngle = 45;
         Vector3 pos = targetTran.position;
         pos += GetShootDiff(pos);
-        myTran.LookAt(new Vector3(pos.x, myTran.position.y, pos.z));
-        myTran.Rotate(Vector3.right, -shootAngle);
 
         //初速計算
         CalcShootSpeed(myTran.position, pos, shootAngle);
+
+        float horizontalSpeed = speed * Mathf.Abs(Common.Func.Cos(angle));
+        pos += Common.Func.GetUnitMoveDiff(myTran.position, horizontalSpeed, targetTran);
+
+        myTran.LookAt(new Vector3(pos.x, myTran.position.y, pos.z));
+        myTran.Rotate(Vector3.right, -angle);
     }
 
     protected override GameObject Shoot(int muzzleNo = 0)
@@ -41,14 +46,11 @@ public class BallisticShootWeaponController : ShootWeaponController
         return obj;
     }
 
-    private void CalcShootSpeed(Vector3 shootPos, Vector3 targetPos, float angle)
+    private void CalcShootSpeed(Vector3 shootPos, Vector3 targetPos, float defaultAngle)
     {
-        speed = ComputeVectorFromAngle(shootPos, targetPos, angle);
-        if (speed <= 0.0f) return;
-    }
+        speed = 0;
+        angle = defaultAngle;
 
-    private float ComputeVectorFromAngle(Vector3 shootPos, Vector3 targetPos, float angle)
-    {
         // xz平面の距離を計算。
         Vector2 pos0 = new Vector2(shootPos.x, shootPos.z);
         Vector2 pos1 = new Vector2(targetPos.x, targetPos.z);
@@ -58,9 +60,8 @@ public class BallisticShootWeaponController : ShootWeaponController
         float g = Physics.gravity.y;
         float y0 = shootPos.y;
         float y = targetPos.y;
-        float v0 = 0;
 
-        for (float a = angle; a < 90; a += 5)
+        for (float a = defaultAngle; a < 90; a += 5)
         {
             float rad = a * Mathf.Deg2Rad;
             float cos = Mathf.Cos(rad);
@@ -69,11 +70,10 @@ public class BallisticShootWeaponController : ShootWeaponController
 
             if (v0Square <= 0.0f) continue;
 
-            v0 = Mathf.Sqrt(v0Square);
+            speed = Mathf.Sqrt(v0Square);
+            angle = a;
             break;
         }
-        
-        return v0;
     }
 
     private Vector3 ConvertVectorToVector3(float i_v0, float i_angle, Vector3 shootPos, Vector3 targetPos)

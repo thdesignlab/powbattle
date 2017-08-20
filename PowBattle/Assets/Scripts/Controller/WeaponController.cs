@@ -12,13 +12,20 @@ public class WeaponController : MonoBehaviour
     protected AudioManager audioMgr;
     protected float maxRange;
     protected float minRange;
+    protected List<Transform> muzzleList = new List<Transform>();
 
+    [SerializeField]
+    protected GameObject bullet;
+    [SerializeField]
+    protected int rapidCount;
+    [SerializeField]
+    protected float rapidInterval;
     [SerializeField]
     protected float range;
     [SerializeField]
     protected float reload;
     [SerializeField]
-    protected float attackWait;
+    protected float motionWait;
     [SerializeField]
     protected float moveDelay;
 
@@ -29,6 +36,7 @@ public class WeaponController : MonoBehaviour
     {
         myTran = transform;
         audioMgr = myTran.GetComponentInChildren<AudioManager>();
+        SetMuzzle();
     }
 
     protected virtual void Update()
@@ -42,11 +50,71 @@ public class WeaponController : MonoBehaviour
     public bool Attack(Transform target, int rate = 0)
     {
         if (!isEnabledAttack()) return false;
-        targetTran = target;
+        SetTarget(target);
         attackRate = rate;
         AttackProcess();
         Reload();
         return true;
+    }
+
+    protected virtual void AttackProcess()
+    {
+        StartCoroutine(RapidShoot());
+    }
+
+    protected virtual IEnumerator RapidShoot()
+    {
+        if (muzzleList.Count == 0) yield break;
+
+        for (int i = 1; i <= rapidCount; i++)
+        {
+            LockOn();
+            AttackMotion(i);
+            yield return new WaitForSeconds(motionWait);
+
+            PlaySE(i - 1);
+            for (int j = 0; j < muzzleList.Count; j++)
+            {
+                Shoot(j);
+            }
+            yield return new WaitForSeconds(rapidInterval);
+        }
+        AttackMotion(0);
+    }
+
+    protected virtual void LockOn()
+    {
+        return;
+    }
+
+    protected virtual GameObject Shoot(int muzzleNo = 0)
+    {
+        GameObject obj = Instantiate(bullet, muzzleList[muzzleNo].position, muzzleList[muzzleNo].rotation);
+        SetDamageEffect(obj);
+        return obj;
+    }
+
+    protected virtual void SetDamageEffect(GameObject shootObj)
+    {
+        DamageEffectController effectCtrl = shootObj.GetComponent<DamageEffectController>();
+        effectCtrl.SetOwner(ownerTran);
+        effectCtrl.SetTarget(targetTran);
+        effectCtrl.SetDamageRate(attackRate);
+    }
+
+    protected void SetMuzzle()
+    {
+        foreach (Transform child in myTran)
+        {
+            if (child.tag == Common.CO.TAG_MUZZLE)
+            {
+                muzzleList.Add(child);
+            }
+        }
+        if (muzzleList.Count == 0)
+        {
+            muzzleList.Add(myTran);
+        }
     }
 
     protected virtual void AttackMotion(int count)
@@ -54,13 +122,7 @@ public class WeaponController : MonoBehaviour
         if (motionCtrl == null) return;
         motionCtrl.Attack(count);
     }
-
-    protected virtual void AttackProcess()
-    {
-        PlaySE();
-        return;
-    }
-
+    
     public virtual bool isEnabledAttack()
     {
         if (leftReload > 0) return false;
@@ -70,6 +132,11 @@ public class WeaponController : MonoBehaviour
     protected virtual void Reload()
     {
         leftReload = reload;
+    }
+
+    protected virtual void SetTarget(Transform t)
+    {
+        targetTran = t;
     }
 
     public virtual void SetOwner(Transform t)
