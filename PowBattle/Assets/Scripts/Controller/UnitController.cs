@@ -59,7 +59,7 @@ public class UnitController : BaseMoveController
 
     protected const string UNIT_PARTS_GROUND = "Ground";
     protected const string UNIT_PARTS_WEAPON_JOINT = "WeaponJoint";
-    protected const string UNIT_PARTS_TARGET_SIGHT = "TargetSIght";
+    protected const string UNIT_PARTS_TARGET_SIGHT = "TargetSight";
     protected const string UNIT_PARTS_STATUS_CANVAS = "StatusCanvas";
 
     protected bool isActive = false;
@@ -69,6 +69,7 @@ public class UnitController : BaseMoveController
         base.Awake();
 
         isActive = Common.Func.IsBattleScene();
+        JudgeArtillery();
     }
 
     protected virtual void Start()
@@ -168,6 +169,7 @@ public class UnitController : BaseMoveController
         Transform targetSight = transform.Find(UNIT_PARTS_TARGET_SIGHT);
         if (targetSight == null) return;
         laserPointerCtrl = targetSight.GetComponent<LaserPointerController>();
+
         if (laserPointerCtrl != null)
         {
             laserPointerCtrl.SetLayerMask(LayerMask.GetMask(new string[] { Common.CO.layerUnitArray[enemySide] }));
@@ -560,5 +562,16 @@ public class UnitController : BaseMoveController
         Transform ground = myTran.Find(UNIT_PARTS_GROUND);
         if (ground == null) ground = myTran;
         return ground;
+    }
+
+    //固定砲台判定
+    protected virtual void JudgeArtillery()
+    {
+        return;
+    }
+
+    public Transform GetTarget()
+    {
+        return targetTran;
     }
 }

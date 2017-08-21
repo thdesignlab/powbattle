@@ -111,6 +111,8 @@ public class CrossRangeUnitController : ActiveUnitController
     protected override void JugdeChangeTarget(Transform t)
     {
         if (t == null) return;
+        if (leftForceTargetTime > 0) return;
+
         if (targetTran == null)
         {
             SetTarget(t);

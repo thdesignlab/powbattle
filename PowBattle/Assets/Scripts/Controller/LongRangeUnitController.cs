@@ -7,10 +7,8 @@ using UnityEngine.UI;
 public class LongRangeUnitController : ActiveUnitController
 {
     [SerializeField]
-    protected bool isArtillery;
-    [SerializeField]
     protected bool isNotNeedLockOn;
-
+    protected bool isArtillery;
 
     //移動
     protected override void Move()
@@ -32,7 +30,7 @@ public class LongRangeUnitController : ActiveUnitController
         if (t == null) return;
 
         float distance = Vector3.Distance(myTran.position, t.position);
-        if (distance <= 5.0f) isArtillery = false;
+        if (distance <= 5.0f) SetArtillery(false);
 
         if (targetTran == null)
         {
@@ -46,5 +44,32 @@ public class LongRangeUnitController : ActiveUnitController
         {
             if (targetDistance > distance) SetTarget(t);
         }
+    }
+
+    protected override void SetLockOn(bool flg)
+    {
+        base.SetLockOn(flg);
+
+        if (isArtillery)
+        {
+            agent.isStopped = flg;
+            if (flg) agent.destination = targetTran.position;
+        }
+    }
+
+    //固定砲台判定
+    protected override void JudgeArtillery()
+    {
+        Ray ray = new Ray(myTran.position, Vector3.down);
+        RaycastHit hit;
+        if (Physics.Raycast(ray,out hit, 5.0f, LayerMask.GetMask(Common.CO.LAYER_OBSTACLE)))
+        {
+            if (hit.transform.tag == Common.CO.TAG_ARTILLERY_OBSTACLE) SetArtillery(true);
+        }
+    }
+
+    protected void SetArtillery(bool flg)
+    {
+        isArtillery = flg;
     }
 }

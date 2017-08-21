@@ -5,9 +5,6 @@ using UnityEngine.AI;
 
 public class DamageController : MonoBehaviour
 {
-    [SerializeField]
-    protected bool isSpawnDamageEffect;
-
     const float FORWARD_RATE = 0.8f;
     const float SIDE_RATE = 1.2f;
     const float BACK_RATE = 1.5f;
@@ -21,7 +18,7 @@ public class DamageController : MonoBehaviour
     public bool Damage(int damage, float impact, Transform attackTran, Transform hitTran, Transform ownerTran)
     {
         if (hitTran == null || attackTran == null) return false;
-
+        
         bool isHit = false;
         int hitDamage = 0;
         switch (hitTran.tag)
@@ -41,7 +38,7 @@ public class DamageController : MonoBehaviour
             case Common.CO.TAG_HQ:
             case Common.CO.TAG_ENEMY_HQ:
                 //HQ
-                hitDamage = hitTran.GetComponent<UnitController>().Hit(damage / 10, ownerTran);
+                hitDamage = hitTran.GetComponent<UnitController>().Hit(damage, ownerTran);
                 isHit = true;
                 break;
 
@@ -59,6 +56,7 @@ public class DamageController : MonoBehaviour
                 break;
 
             case Common.CO.TAG_OBSTACLE:
+            case Common.CO.TAG_ARTILLERY_OBSTACLE:
                 //障害物
                 isHit = true;
                 break;

@@ -34,11 +34,11 @@ public class ShootWeaponController : WeaponController
         Vector3 diffpos = Vector3.zero;
         if (shootDiff <= 0) return diffpos;
         float rate = Vector3.Distance(myTran.position, targetPos) / range;
+        if (rate < 0.2f) rate = 0.2f;
         diffpos += Vector3.up * Random.Range(-shootDiff, shootDiff);
         diffpos += Vector3.right * Random.Range(-shootDiff, shootDiff);
         diffpos += Vector3.forward * Random.Range(-shootDiff, shootDiff);
-        diffpos *= (rate < 0.2f) ? 0.2f : rate;
-        return diffpos;
+        return diffpos * rate;
     }
 
     public override float GetMinRange(Transform target = null)

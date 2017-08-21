@@ -66,6 +66,7 @@ namespace Common
         public const string TAG_MUZZLE = "Muzzle";
         public const string TAG_OBSTACLE = "Obstacle";
         public const string TAG_BREAK_OBSTACLE = "BreakableObstacle";
+        public const string TAG_ARTILLERY_OBSTACLE = "ArtilleryObstacle";
         public const string TAG_STORY = "Story";
         public const string TAG_STAGE = "Stage";
 
@@ -486,8 +487,50 @@ namespace Common
 
             //ターゲットの移動予想距離
             diff = targetMovePerSecond * time;
-
+            //Debug.Log("#####");
+            //Debug.Log("distance:"+ distance + " / mySpeed:" + mySpeed+ " = time:" + time);
+            //Debug.Log("targetMovePerSecond:"+ targetMovePerSecond);
+            //Debug.Log("targetPos:"+ targetPos+ " >> diff:" + diff);
             return diff;
+        }
+
+        //指定ポイントへ回転
+        public static bool LookTarget(Transform myTran, Vector3 targetPos, float rotateSpeed, Vector3 rotateVector = default(Vector3), float toleranceAngle = 0.0f)
+        {
+            if (myTran == null || rotateSpeed <= 0) return false;
+            if (rotateVector == default(Vector3)) rotateVector = Vector3.one;
+
+            //対象へのベクトル
+            float x = (targetPos.x - myTran.position.x) * rotateVector.x;
+            float y = (targetPos.y - myTran.position.y) * rotateVector.y;
+            float z = (targetPos.z - myTran.position.z) * rotateVector.z;
+            Vector3 targetVector = new Vector3(x, y, z).normalized;
+
+            if (targetVector == Vector3.zero) return true;
+
+            //対象までの角度
+            float angleDiff = Vector3.Angle(myTran.forward, targetVector);
+            //許容誤差
+            if (toleranceAngle > 0 && toleranceAngle >= Mathf.Abs(angleDiff)) return true;
+
+            // 回転角
+            float angleAdd = rotateSpeed * Time.deltaTime;
+
+            // ターゲットへ向けるクォータニオン
+            Quaternion rotTarget = Quaternion.LookRotation(targetVector);
+            if (angleDiff <= angleAdd)
+            {
+                // ターゲットが回転角以内なら完全にターゲットの方を向く
+                myTran.rotation = rotTarget;
+                return true;
+            }
+            else
+            {
+                // ターゲットが回転角の外なら、指定角度だけターゲットに向ける
+                float t = (angleAdd / angleDiff);
+                myTran.rotation = Quaternion.Slerp(myTran.rotation, rotTarget, t);
+            }
+            return false;
         }
     }
 

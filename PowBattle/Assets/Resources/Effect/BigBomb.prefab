@@ -85,13 +85,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4933597897682986}
-  - component: {fileID: 114962223400323506}
-  - component: {fileID: 135356773142262902}
   - component: {fileID: 114583227731751654}
-  - component: {fileID: 114363727379381442}
   m_Layer: 0
   m_Name: BigBomb
-  m_TagString: DamageEffect
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,7 +101,7 @@ Transform:
   m_GameObject: {fileID: 1053686136022688}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 4.5, y: 4.5, z: 4.5}
   m_Children: []
   m_Father: {fileID: 4941164967980288}
   m_RootOrder: 1
@@ -117,7 +114,7 @@ Transform:
   m_GameObject: {fileID: 1116609721436416}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.09, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 4.5, y: 4.5, z: 4.5}
   m_Children: []
   m_Father: {fileID: 4941164967980288}
   m_RootOrder: 2
@@ -160,23 +157,11 @@ Transform:
   m_GameObject: {fileID: 1615508468588762}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 4.5, y: 4.5, z: 4.5}
   m_Children: []
   m_Father: {fileID: 4941164967980288}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114363727379381442
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1859677266101140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5502e5949efe3874fbd391cf40906986, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSpawnDamageEffect: 0
 --- !u!114 &114583227731751654
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -189,37 +174,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectSpawn: {fileID: 0}
-  activeLimitTime: 1
+  activeLimitTime: 1.5
   activeLimitDistance: 0
   isNotAutoBreak: 0
-  isNotShootDown: 1
---- !u!114 &114962223400323506
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1859677266101140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dbaf4c2285f23f40854003bc0c7142c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 500
-  impact: 2000
-  isHitBreak: 0
-  isShootDown: 0
---- !u!135 &135356773142262902
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1859677266101140}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: 0}
+  isNotShootDown: 0
 --- !u!198 &198284572547433804
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -279,7 +237,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1843558772
+  randomSeed: -1494444519
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3541,7 +3499,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -281234914
+  randomSeed: -1944929008
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6695,7 +6653,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -169415889
+  randomSeed: 1317842645
   InitialModule:
     serializedVersion: 3
     enabled: 1

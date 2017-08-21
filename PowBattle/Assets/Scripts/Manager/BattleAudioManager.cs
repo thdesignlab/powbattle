@@ -10,5 +10,8 @@ public class BattleAudioManager : AudioManager
         base.Init();
         audioSource.outputAudioMixerGroup = Common.Var.audioMixer.FindMatchingGroups(Common.CO.AUDIO_MIXER_BATTLE)[0];
         audioSource.spatialBlend = 1.0f;
+        audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+        audioSource.minDistance = 5.0f;
+        audioSource.maxDistance = 50.0f;
     }
 }

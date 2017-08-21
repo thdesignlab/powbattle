@@ -193,7 +193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5502e5949efe3874fbd391cf40906986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSpawnDamageEffect: 0
 --- !u!114 &114668227511142474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -206,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectSpawn: {fileID: 0}
-  activeLimitTime: 1
+  activeLimitTime: 1.5
   activeLimitDistance: 0
   isNotAutoBreak: 0
   isNotShootDown: 1

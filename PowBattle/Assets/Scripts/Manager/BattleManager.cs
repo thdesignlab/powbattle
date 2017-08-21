@@ -39,7 +39,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     public List<List<Transform>> unitList = new List<List<Transform>> { new List<Transform>() { }, new List<Transform>() { } };
     [SerializeField]
     protected List<int> unitDeadDamageRate = new List<int>() { 0, 0 };
-    private const float SPAWN_UNIT_INTERVAL = 0.3f;
+    private const float SPAWN_UNIT_INTERVAL = 0.2f;
 
     //プレイヤー情報
     private GameObject player;

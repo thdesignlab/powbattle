@@ -8,17 +8,27 @@ using TouchScript.Gestures.TransformGestures;
 
 public class BattlePlayerController : PlayerController
 {
+    [SerializeField]
+    protected float rotateSpeed;
+
     protected Quaternion freeCamRotation;
     protected int camMode;
     protected Transform camTargetTran;
+    protected UnitController camTargetCtrl;
     protected Transform camPointTran;
-    protected Vector3 lookAtVector;
     protected Slider hpSlider;
+    protected Transform playerCanvas;
+    protected Transform lockOnSight;
 
     const string CAM_POINT = "CamPoint/";
     const string CAM_POINT_FIRST = "First";
     const string CAM_POINT_THIRD = "Third";
 
+    const string PLAYER_CANVAS = "PlayerCanvas";
+    const string LOCK_ON_SIGHT = "LockOnSight";
+
+    const float LOCK_ON_INTERVAL = 2.0f;
+    protected float leftLockOnInterval = 0;
 
     protected override void Init()
     {
@@ -26,6 +36,9 @@ public class BattlePlayerController : PlayerController
         camMode = Common.CO.CAM_MODE_FREE;
         freeCamRotation = camTran.localRotation;
         SetTapLayerMask(new string[] { Common.CO.LAYER_UNIT });
+        playerCanvas = myTran.Find(PLAYER_CANVAS);
+        if (playerCanvas != null) lockOnSight = playerCanvas.Find(LOCK_ON_SIGHT);
+        SetLockOnSight(false);
     }
 
     protected override void Drag(float deltaX, float deltaY)
@@ -41,7 +54,7 @@ public class BattlePlayerController : PlayerController
 
             case Common.CO.CAM_MODE_FIRST:
             case Common.CO.CAM_MODE_THIRD:
-                lookAtVector += (myTran.up * deltaY + myTran.right * deltaX) * dragRate;
+                //camLookAtVector += (myTran.up * deltaY + myTran.right * deltaX) * dragRate;
                 break;
         }
     }
@@ -66,6 +79,7 @@ public class BattlePlayerController : PlayerController
         if (Physics.Raycast(ray, out hit, myTran.position.y * 10, tapLayerMask))
         {
             camTargetTran = hit.transform;
+            camTargetCtrl = camTargetTran.GetComponent<UnitController>();
             MenuController.Instance.OpenCamMenu(camTargetTran);
         }
     }
@@ -77,25 +91,14 @@ public class BattlePlayerController : PlayerController
         {
             case Common.CO.CAM_MODE_FREE:
                 SetFreeCamPoint();
-                MenuController.Instance.CloseCamMenu();
                 break;
 
             case Common.CO.CAM_MODE_FIRST:
             case Common.CO.CAM_MODE_VR:
-                if (camTargetTran == null)
-                {
-                    SwitchCameraMode(Common.CO.CAM_MODE_FREE);
-                    return;
-                }
                 SetFirstCamPoint();
                 break;
 
             case Common.CO.CAM_MODE_THIRD:
-                if (camTargetTran == null)
-                {
-                    SwitchCameraMode(Common.CO.CAM_MODE_FREE);
-                    return;
-                }
                 SetThirdCamPoint();
                 break;
         }
@@ -105,26 +108,31 @@ public class BattlePlayerController : PlayerController
     //カメラポジション設定
     private void SetFreeCamPoint()
     {
+        MenuController.Instance.CloseCamMenu();
         myTran.position = new Vector3(myTran.position.x, yLimitMin, myTran.position.z);
         camTran.localRotation = freeCamRotation;
         camTargetTran = null;
+        camTargetCtrl = null;
+        SetLockOnSight(false);
     }
     private void SetFirstCamPoint()
     {
+        if (camTargetTran == null) SwitchCameraMode(Common.CO.CAM_MODE_FREE);
         camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_FIRST);
         if (camPointTran == null) camPointTran = camTargetTran;
         myTran.position = camPointTran.position;
         myTran.rotation = camPointTran.rotation;
         camTran.rotation = myTran.rotation;
-        lookAtVector = camTargetTran.position;
+        //lookAtVector = camTargetTran.position;
     }
     private void SetThirdCamPoint()
     {
+        if (camTargetTran == null) SwitchCameraMode(Common.CO.CAM_MODE_FREE);
         camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_THIRD);
         if (camPointTran == null) camPointTran = camTargetTran ;
         myTran.position = camPointTran.position;
         myTran.rotation = camPointTran.rotation;
-        lookAtVector = camTargetTran.position;
+        //lookAtVector = camTargetTran.position;
     }
 
     //カメラ方向セット
@@ -134,13 +142,21 @@ public class BattlePlayerController : PlayerController
         {
             case Common.CO.CAM_MODE_FIRST:
             case Common.CO.CAM_MODE_THIRD:
-                camTran.LookAt(lookAtVector + camTargetTran.forward * 10.0f);
+                //camTran.LookAt(lookAtVector + camTargetTran.forward * 10.0f);
                 break;
         }
     }
 
+    protected void SetLockOnSight(bool flg, Vector3 pos = default(Vector3))
+    {
+        if (lockOnSight == null) return;
+        lockOnSight.gameObject.SetActive(flg);
+        if (pos != default(Vector3)) lockOnSight.position = pos;
+    }
+
     protected virtual void Update()
     {
+        if (BattleManager.Instance.isBattleEnd) return;
         if (camMode == Common.CO.CAM_MODE_FREE) return;
 
         if (camTargetTran == null)
@@ -150,6 +166,26 @@ public class BattlePlayerController : PlayerController
         }
         myTran.position = camPointTran.position;
         myTran.rotation = camTargetTran.rotation;
-        LookAtForword();
+
+        Transform targetLockOnTran = camTargetCtrl.GetTarget();
+        if (targetLockOnTran != null)
+        {
+            Vector3 lockOnScreenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, targetLockOnTran.position);
+            SetLockOnSight(true, lockOnScreenPos);
+        }
+        else
+        {
+            SetLockOnSight(false);
+        }
+
+        if (!isDraging)
+        {
+            if (leftLockOnInterval > 0) leftLockOnInterval -= Time.deltaTime;
+            if (leftLockOnInterval <= 0)
+            {
+                Vector3 lockOnPos = (targetLockOnTran != null) ? targetLockOnTran.position : camTran.TransformDirection(camTargetTran.forward * 10.0f);
+                if (Common.Func.LookTarget(camTran, lockOnPos, rotateSpeed, Vector3.one, 5.0f)) leftLockOnInterval = LOCK_ON_INTERVAL;
+            }
+        }
     }
 }

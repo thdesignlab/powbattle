@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44300452, g: 0.4921977, b: 0.5719268, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1417,9 +1417,9 @@ MonoBehaviour:
   maxHP: 20000
   searchRange: 0
   isMain: 1
-  aleartDistance: 50
-  aleartUnitNum: 5
-  aleartInterval: 5
+  alertDistance: 0
+  alertUnitNum: 0
+  alertInterval: 0
 --- !u!114 &946834772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1717,9 +1717,9 @@ MonoBehaviour:
   maxHP: 8000
   searchRange: 0
   isMain: 0
-  aleartDistance: 20
-  aleartUnitNum: 3
-  aleartInterval: 5
+  alertDistance: 15
+  alertUnitNum: 3
+  alertInterval: 5
 --- !u!114 &1270995326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2309,9 +2309,9 @@ MonoBehaviour:
   maxHP: 6000
   searchRange: 0
   isMain: 0
-  aleartDistance: 20
-  aleartUnitNum: 3
-  aleartInterval: 5
+  alertDistance: 15
+  alertUnitNum: 3
+  alertInterval: 5
 --- !u!114 &1741014325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3383,9 +3383,9 @@ MonoBehaviour:
   maxHP: 10000
   searchRange: 0
   isMain: 1
-  aleartDistance: 50
-  aleartUnitNum: 5
-  aleartInterval: 5
+  alertDistance: 30
+  alertUnitNum: 5
+  alertInterval: 5
 --- !u!114 &2118351138
 MonoBehaviour:
   m_ObjectHideFlags: 0

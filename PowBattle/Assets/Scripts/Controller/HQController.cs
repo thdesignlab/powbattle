@@ -9,11 +9,11 @@ public class HQController : UnitController
     [SerializeField]
     protected bool isMain;
     [SerializeField]
-    protected float aleartDistance;
+    protected float alertDistance;
     [SerializeField]
-    protected int aleartUnitNum;
+    protected int alertUnitNum;
     [SerializeField]
-    protected float aleartInterval;
+    protected float alertInterval;
     protected float leftAleartInterval;
 
     protected override void Update()
@@ -37,14 +37,14 @@ public class HQController : UnitController
     {
         if (leftAleartInterval > 0 || enemyTran == null) return;
 
-        int leftAleartNum = aleartUnitNum;
+        int leftAleartNum = alertUnitNum;
         List<Transform> targets = BattleManager.Instance.GetUnitList(mySide);
         Dictionary<int, float> targetDistanceList = new Dictionary<int, float>();
         for (int i = 0; i < targets.Count; i++)
         {
             if (targets[i] == null) continue;
             float distance = Vector3.Distance(myTran.position, targets[i].position);
-            if (distance < aleartDistance)
+            if (distance < alertDistance)
             {
                 targetDistanceList.Add(i, distance);
             }
@@ -55,9 +55,9 @@ public class HQController : UnitController
         foreach (var v in sortList)
         {
             targets[v.Key].GetComponent<UnitController>().SetTarget(enemyTran, 10.0f);
-            if (++cnt >= aleartUnitNum) break;
+            if (++cnt >= alertUnitNum) break;
         }
-        leftAleartInterval = aleartInterval;
+        leftAleartInterval = alertInterval;
     }
 
     //本陣判定

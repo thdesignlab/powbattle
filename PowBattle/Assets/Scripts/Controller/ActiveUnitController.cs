@@ -6,14 +6,19 @@ using UnityEngine.UI;
 
 public class ActiveUnitController : UnitController
 {
-    protected NavMeshAgent agent;
+    private NavMeshAgent _agent;
+    protected NavMeshAgent agent
+    {
+        get { return (_agent) ? _agent : _agent = GetComponent<NavMeshAgent>(); }
+    }
 
     protected float coolTime = 0;
+    protected float leftRotateTime = 0;
+    protected const float LOCK_ON_ROTATE_INTERVAL = 1.5f;
 
     protected override void Awake()
     {
         base.Awake();
-        agent = GetComponent<NavMeshAgent>();
         agent.enabled = isActive;
     }
 
@@ -32,7 +37,11 @@ public class ActiveUnitController : UnitController
         if (coolTime > 0) coolTime -= Time.deltaTime;
 
         //敵の方を向く
-        if (isLockOn) LookTarget(targetTran, agent.angularSpeed, new Vector3(1, 0, 1));
+        if (leftRotateTime > 0) leftRotateTime -= Time.deltaTime;
+        if (isLockOn && leftRotateTime <= 0)
+        {
+            if (LookTarget(targetTran, agent.angularSpeed, new Vector3(1, 0, 1))) leftRotateTime = LOCK_ON_ROTATE_INTERVAL;
+        }
 
         //移動モーション
         MoveMotion();
@@ -144,7 +153,7 @@ public class ActiveUnitController : UnitController
         return true;
     }
 
-    protected void SetLockOn(bool flg)
+    protected virtual void SetLockOn(bool flg)
     {
         isLockOn = flg;
         if (flg)
@@ -155,7 +164,7 @@ public class ActiveUnitController : UnitController
         }
         else
         {
-            agent.stoppingDistance = 1.5f;
+            agent.stoppingDistance = 1.0f;
         }
     }
 
@@ -193,6 +202,7 @@ public class ActiveUnitController : UnitController
         if (coolTime > 0 || targetTran == null) return;
 
         agent.isStopped = false;
+        //if (agent.remainingDistance > 0 && agent.remainingDistance <= agent.stoppingDistance) return; 
         agent.destination = targetTran.position;
     }
 

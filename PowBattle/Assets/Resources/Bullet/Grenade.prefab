@@ -145,6 +145,7 @@ MonoBehaviour:
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 0
+  isNotShootDown: 0
 --- !u!114 &114488907791471848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,5 +182,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.35
   m_Center: {x: 0, y: 0, z: 0}

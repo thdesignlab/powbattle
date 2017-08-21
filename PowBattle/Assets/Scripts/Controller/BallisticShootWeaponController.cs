@@ -21,8 +21,8 @@ public class BallisticShootWeaponController : ShootWeaponController
         //初速計算
         CalcShootSpeed(myTran.position, pos, shootAngle);
 
-        float horizontalSpeed = speed * Mathf.Abs(Common.Func.Cos(angle));
-        pos += Common.Func.GetUnitMoveDiff(myTran.position, horizontalSpeed, targetTran);
+        //float horizontalSpeed = speed * Mathf.Abs(Common.Func.Cos(angle));
+        //pos += Common.Func.GetUnitMoveDiff(myTran.position, horizontalSpeed, targetTran);
 
         myTran.LookAt(new Vector3(pos.x, myTran.position.y, pos.z));
         myTran.Rotate(Vector3.right, -angle);

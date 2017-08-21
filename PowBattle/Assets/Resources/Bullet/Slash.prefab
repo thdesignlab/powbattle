@@ -40,9 +40,10 @@ GameObject:
   - component: {fileID: 114334056746218622}
   - component: {fileID: 114584951477814108}
   - component: {fileID: 135720224950888538}
+  - component: {fileID: 54060246985165216}
   m_Layer: 0
   m_Name: Slash
-  m_TagString: Effect
+  m_TagString: DamageEffect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,6 +75,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54060246985165216
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1808023538277036}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &114188343390705106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85,8 +101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eab71ea54d9f944f8e5fc432c0e8d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageEffect: {fileID: 1740011786601246, guid: a4c16f92a3b662d4aaadf8b5e3c54f44,
-    type: 2}
   damage: 150
   impact: 250
   isHitBreak: 0
@@ -108,7 +122,7 @@ MonoBehaviour:
   activeLimitTime: 0.1
   activeLimitDistance: 0
   isNotAutoBreak: 0
-  isNotShootDown: 0
+  isNotShootDown: 1
 --- !u!114 &114584951477814108
 MonoBehaviour:
   m_ObjectHideFlags: 1

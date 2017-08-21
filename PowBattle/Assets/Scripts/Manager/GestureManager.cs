@@ -24,9 +24,9 @@ public class GestureManager : MonoBehaviour
     [SerializeField]
     private float twistBorder = 0.5f;
 
-    private bool isDrag = false;
-    private bool isPinch = false;
-    private bool isTwist = false;
+    protected bool isDraging = false;
+    protected bool isPinching = false;
+    protected bool isTwisting = false;
 
     protected Vector2 point = Vector2.zero;
     protected Vector2 prePoint = Vector2.zero;
@@ -92,9 +92,9 @@ public class GestureManager : MonoBehaviour
         //MyDebug.Instance.AdminLog("PressHandle");
         PressGesture gesture = sender as PressGesture;
         point = gesture.ScreenPosition;
-        isDrag = false;
-        isPinch = false;
-        isTwist = false;
+        isDraging = false;
+        isPinching = false;
+        isTwisting = false;
         totalPinch = 0;
         totalTwist = 0;
     }
@@ -136,10 +136,10 @@ public class GestureManager : MonoBehaviour
         if (gesture.NumPointers == 1)
         {
             //Debug.Log(point + " >> " + gesture.ScreenPosition + "## " + gesture.DeltaPosition);
-            if (dragBorder <= Vector2.Distance(point, gesture.ScreenPosition) || isDrag)
+            if (dragBorder <= Vector2.Distance(point, gesture.ScreenPosition) || isDraging)
             {
                 //ドラッグ
-                isDrag = true;
+                isDraging = true;
                 Drag(gesture.DeltaPosition.x, gesture.DeltaPosition.y);
             }
         }
@@ -147,18 +147,18 @@ public class GestureManager : MonoBehaviour
         {
             totalPinch += gesture.DeltaScale - 1;
             totalTwist += gesture.DeltaRotation;
-            if ((pinchBorder <= Mathf.Abs(totalPinch) || isPinch) && !isTwist)
+            if ((pinchBorder <= Mathf.Abs(totalPinch) || isPinching) && !isTwisting)
             {
                 //Debug.Log("Pinch");
                 //ピンチイン・アウト
-                isPinch = true;
+                isPinching = true;
                 Pinch(gesture.DeltaScale - 1);
             }
-            else if ((twistBorder <= Mathf.Abs(totalTwist) || isTwist) && !isPinch)
+            else if ((twistBorder <= Mathf.Abs(totalTwist) || isTwisting) && !isPinching)
             {
                 //Debug.Log("Twist");
                 //回転
-                isTwist = true;
+                isTwisting = true;
                 Twist(gesture.DeltaRotation);
             }
             //Debug.Log(gesture.DeltaScale+" ## "+ gesture.DeltaRotation);

@@ -25,6 +25,7 @@ TagManager:
   - SelectButton
   - PositiveButton
   - NegativeButton
+  - ArtilleryObstacle
   layers:
   - Default
   - TransparentFX
