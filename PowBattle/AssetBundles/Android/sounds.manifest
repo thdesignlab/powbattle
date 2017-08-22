@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 2783261471
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 89e0c957f50d58d76e13b0d43122f778
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/AssetBundles/AB_Sounds/Effect/Cannon.mp3
+- Assets/AssetBundles/AB_Sounds/Effect/Gun.mp3
+- Assets/AssetBundles/AB_Sounds/Effect/Buff.mp3
+- Assets/AssetBundles/AB_Sounds/Effect/Spawn.mp3
+- Assets/AssetBundles/AB_Sounds/BGM/AncientMachinery.ogg
+- Assets/AssetBundles/AB_Sounds/Effect/Arrow.mp3
+- Assets/AssetBundles/AB_Sounds/Effect/Sword1.mp3
+- Assets/AssetBundles/AB_Sounds/Effect/Charge.mp3
+- Assets/AssetBundles/AB_Sounds/Effect/Sword3.mp3
+- Assets/AssetBundles/AB_Sounds/Effect/Ice.mp3
+- Assets/AssetBundles/AB_Sounds/Effect/Sword2.mp3
+- Assets/AssetBundles/AB_Sounds/BGM/bgm_custom.ogg
+- Assets/AssetBundles/AB_Sounds/Effect/KO.mp3
+- Assets/AssetBundles/AB_Sounds/Effect/Bowgun.mp3
+- Assets/AssetBundles/AB_Sounds/BGM/Removelimiter.ogg
+- Assets/AssetBundles/AB_Sounds/Effect/Bomb.mp3
+Dependencies: []

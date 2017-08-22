@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 1487072257
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 43d22c02b8c59746f0d34d86ed73ff7b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 21f0dc8ebad690f009368069428e0a1a
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/AssetBundleResources/Textures/UI/Hp_my_gage.png
+- Assets/AssetBundleResources/Textures/UI/Hp_enemy_frame.png
+- Assets/AssetBundleResources/Textures/UI/Hp_enemy_gage.png
+- Assets/AssetBundleResources/Textures/UI/Hp_gage_mask.png
+- Assets/AssetBundleResources/Textures/UI/Hp_my_frame.png
+- Assets/AssetBundleResources/Textures/Effect/Target.png
+Dependencies: []

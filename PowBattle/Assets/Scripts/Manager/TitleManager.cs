@@ -1,20 +1,15 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
-using UnityEngine.Events;
-using System.Text.RegularExpressions;
-
 
 public class TitleManager : MonoBehaviour
 {
+    [HideInInspector]
+    public bool isReadyGame = false;
+    private bool isFinishedSplash = false;
     private bool isGameStart = false;
 
-
-    //[SerializeField]
     private Transform titleCanvas;
-
     private float processTime = 0;
 
     IEnumerator Start()
@@ -30,7 +25,9 @@ public class TitleManager : MonoBehaviour
         }
 #else
 #endif
-        AppManager.Instance.isSplashFinished = true;
+
+        isFinishedSplash = true;
+
         //フレームレート
         Application.targetFrameRate = 30;
         //BGM
@@ -65,37 +62,29 @@ public class TitleManager : MonoBehaviour
             //if (Input.GetMouseButtonDown(0))
             if (isGameStart)
             {
-                messageText.color = new Color(messageText.color.r, messageText.color.g, messageText.color.b, 1);
+                messageText.color = new Color(messageText.color.r, messageText.color.g, messageText.color.b, 0);
                 //ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
-                ScreenManager.Instance.SceneLoad(Common.CO.SCENE_MAIN);
-                yield break;
+                break;
             }
             yield return null;
         }
-        //messageImage.color = new Color(messageImage.color.r, messageImage.color.g, messageImage.color.b, 1);
 
-        //初期設定読み込み
-        //DialogController.OpenMessage(DialogController.MESSAGE_LOADING, DialogController.MESSAGE_POSITION_RIGHT);
-        //InitApi();
-        //for (;;)
-        //{
-        //    if (isReadyGame)
-        //    {
-        //        TapToStart();
-        //        break;
-        //    }
-        //    yield return null;
-        //}
+
+        //APIロード
+        yield return null;
+
+        //アセットロード
+        yield return StartCoroutine(LoadAssetManager.Instance.LoadAssets());
+
+        AppManager.Instance.isReadyGame = true;
+
+        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_MAIN);
 
     }
 
     public void StartGame()
     {
-        if (!AppManager.Instance.isSplashFinished) return;
+        if (!isFinishedSplash) return;
         isGameStart = true;
     }
-
-    // ##### モードセレクト #####
-
-
 }

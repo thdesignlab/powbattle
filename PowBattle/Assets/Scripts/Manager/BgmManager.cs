@@ -12,10 +12,14 @@ public class BgmManager : SingletonMonoBehaviour<BgmManager>
     //BGM
     private BgmSettingManager nowBgm;
     private List<BgmSettingManager> bgmSettingMgrList = new List<BgmSettingManager>();
-    
-    protected override void Awake()
+
+    IEnumerator Start()
     {
-        base.Awake();
+        for (;;)
+        {
+            if (AppManager.Instance.isReadyGame) break;
+            yield return null;
+        }
 
         //AudioSource設定
         audioSource = GetComponent<AudioSource>();
@@ -36,7 +40,7 @@ public class BgmManager : SingletonMonoBehaviour<BgmManager>
     void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
     {
         //BGM再生
-        BgmManager.Instance.PlayBgm();
+        PlayBgm();
     }
     
     //BGM再生

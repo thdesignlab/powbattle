@@ -23,7 +23,7 @@ public class MagicWeaponController : WeaponController
     protected override void Awake()
     {
         base.Awake();
-        if (magicCircle == null) magicCircle = Common.Func.GetEffectResource("MagicCircle");
+        if (magicCircle == null) magicCircle = Common.Resource.GetEffectResource("MagicCircle");
     }
     
     protected override IEnumerator RapidShoot()

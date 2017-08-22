@@ -1,0 +1,38 @@
+ManifestFileVersion: 0
+CRC: 1024207449
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 782daab38b80864fda0a373aa9caf03d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: de044d5a68952ce94be87223b751d645
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 134
+  Script: {instanceID: 0}
+Assets:
+- Assets/AssetBundleResources/Materials/Fire.mat
+- Assets/AssetBundleResources/Materials/Stone.mat
+- Assets/AssetBundleResources/Materials/White.mat
+- Assets/AssetBundleResources/Materials/LaserPointer.mat
+- Assets/AssetBundleResources/Materials/FloorMaterial.physicMaterial
+- Assets/AssetBundleResources/Materials/Yellow.mat
+- Assets/AssetBundleResources/Materials/Black.mat
+- Assets/AssetBundleResources/Materials/Purple.mat
+- Assets/AssetBundleResources/Materials/Floor.mat
+- Assets/AssetBundleResources/Materials/ElementNothing.mat
+- Assets/AssetBundleResources/Materials/Body.mat
+- Assets/AssetBundleResources/Materials/Ice.mat
+- Assets/AssetBundleResources/Materials/Clear.mat
+- Assets/AssetBundleResources/Materials/Tree.mat
+- Assets/AssetBundleResources/Materials/Enemy.mat
+- Assets/AssetBundleResources/Materials/Target.mat
+Dependencies:
+- C:/Users/heart/Documents/Program/powbattle/PowBattle/AssetBundles/Android/textures

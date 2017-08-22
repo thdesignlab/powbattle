@@ -65,7 +65,7 @@ public class DialogManager : MonoBehaviour
         if (btnCnt >= 3) isVertical = true;
 
         //ダイアログ作成
-        dialog = Instantiate(Common.Func.GetUIResource(RESOURCE_DIALOG));
+        dialog = Instantiate(Common.Resource.GetUIResource(RESOURCE_DIALOG));
         dialogTran = dialog.transform;
         ExecDialogLowPosition();
         Transform dialogArea = dialogTran.Find(DIALOG_AREA);
@@ -117,7 +117,7 @@ public class DialogManager : MonoBehaviour
     {
         if (dialog == null) return;
         string resourceName = (isPositive) ? RESOURCE_POSITIVE_BUTTON : RESOURCE_NEGATIVE_BUTTON;
-        GameObject btnObj = Instantiate(Common.Func.GetUIResource(resourceName));
+        GameObject btnObj = Instantiate(Common.Resource.GetUIResource(resourceName));
         btnObj.transform.SetParent(btnAreaTran, false);
         UnityAction callback = () =>
         {

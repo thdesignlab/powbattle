@@ -1,0 +1,30 @@
+ManifestFileVersion: 0
+CRC: 3324425904
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: resources
+      Dependencies:
+        Dependency_0: materials
+        Dependency_1: sounds
+        Dependency_2: textures
+        Dependency_3: tt_item
+    Info_1:
+      Name: materials
+      Dependencies:
+        Dependency_0: textures
+    Info_2:
+      Name: prefabs
+      Dependencies:
+        Dependency_0: materials
+        Dependency_1: sounds
+        Dependency_2: textures
+    Info_3:
+      Name: sounds
+      Dependencies: {}
+    Info_4:
+      Name: textures
+      Dependencies: {}
+    Info_5:
+      Name: tt_item
+      Dependencies: {}

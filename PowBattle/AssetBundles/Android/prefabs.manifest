@@ -1,0 +1,137 @@
+ManifestFileVersion: 0
+CRC: 3751604375
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9f9b15484f83e117d2b82fadeaea0639
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 514b61a7608beba512953d52f1ffb738
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 54
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 81
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 92
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -405508275, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1c0793126f3cc10499f2dcc5cdbf3dbb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: cf57d61268dd48149aff7dbbee7586c6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0f1c1cf2a2c724941bc8cd2d4c24dca9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 80443a0364ec5694aa09b125f887d421, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1ba67d04e07d3491989322c6414feaf3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 06b4223403d54514abedd13498e7cd61, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0dd4c394fe06f4ea49e03aaa5e7a8190, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 075d4915efc83984a93e8a638a197332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 95771f55ca5c14144a252d5767714e39, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 71d0cc95b6cf7c14d850e4f5aa03755f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9acc330843ba7824c985b617a813237d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0baabd08780ed67489ed231741068ae9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c6be551879cd14d739b0188844ef2c60, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 141e75b9b7edb42df80a22a14f03ae4b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e276ccba4f7314d9988af19f9b3a611b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: bc7fd33c57d694994b0ab9f33fcdcbea, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 74ae431eff8434b0897d3f7f1cff4311, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: aea0034eb841de6478e6787ef6df006a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7a878a6ff128243dfb1d89ca0273f059, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 120
+  Script: {instanceID: 0}
+- Class: 124
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+- Class: 191
+  Script: {instanceID: 0}
+- Class: 208
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+Assets:
+- Assets/AssetBundles/AB_Prefabs/Player/StoryPlayer.prefab
+- Assets/AssetBundles/AB_Prefabs/BgmManager.prefab
+- Assets/AssetBundles/AB_Prefabs/Player/BattlePlayer.prefab
+- Assets/AssetBundles/AB_Prefabs/HQ/MineHQ.prefab
+- Assets/AssetBundles/AB_Prefabs/HQ/EnemyHQ.prefab
+- Assets/AssetBundles/AB_Prefabs/TargetSight.prefab
+- Assets/AssetBundles/AB_Prefabs/UI/StatusCanvas.prefab
+- Assets/AssetBundles/AB_Prefabs/GestureManager.prefab
+- Assets/AssetBundles/AB_Prefabs/Player/MainPlayer.prefab
+- Assets/AssetBundles/AB_Prefabs/UI/DebugCanvas.prefab
+- Assets/AssetBundles/AB_Prefabs/UI/BattleCanvas.prefab
+- Assets/AssetBundles/AB_Prefabs/LaserPointer.prefab
+- Assets/AssetBundles/AB_Prefabs/Stage/TestStage.prefab
+Dependencies:
+- C:/Users/heart/Documents/Program/powbattle/PowBattle/AssetBundles/Android/materials
+- C:/Users/heart/Documents/Program/powbattle/PowBattle/AssetBundles/Android/sounds
+- C:/Users/heart/Documents/Program/powbattle/PowBattle/AssetBundles/Android/textures

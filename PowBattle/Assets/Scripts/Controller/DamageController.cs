@@ -12,7 +12,7 @@ public class DamageController : MonoBehaviour
     private GameObject _damageEffect;
     protected GameObject damageEffect
     {
-        get { return (_damageEffect) ? _damageEffect : _damageEffect = Common.Func.GetEffectResource("DamageEffect"); }
+        get { return (_damageEffect) ? _damageEffect : _damageEffect = Common.Resource.GetEffectResource("DamageEffect"); }
     }
 
     public bool Damage(int damage, float impact, Transform attackTran, Transform hitTran, Transform ownerTran)

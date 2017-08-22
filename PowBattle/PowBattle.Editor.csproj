@@ -138,13 +138,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="PowBattle.csproj">
-      <Project>{3FEAB417-DB5F-233F-1153-E9C9873681BA}</Project>
-      <Name>PowBattle</Name>
-    </ProjectReference>
     <ProjectReference Include="PowBattle.Plugins.csproj">
       <Project>{1AFBBFB8-4479-F76C-43BE-A1719CC97854}</Project>
       <Name>PowBattle.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="PowBattle.csproj">
+      <Project>{3FEAB417-DB5F-233F-1153-E9C9873681BA}</Project>
+      <Name>PowBattle</Name>
     </ProjectReference>
     <ProjectReference Include="PowBattle.Editor.Plugins.csproj">
       <Project>{D3DA8A92-073F-7A44-1195-F2C4D53FCB22}</Project>
@@ -152,6 +152,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AssetBundleManager\Editor\AssetbundlesMenuItems.cs" />
+    <Compile Include="Assets\AssetBundleManager\Editor\BuildScript.cs" />
+    <Compile Include="Assets\AssetBundleManager\Editor\ExecuteInternalMono.cs" />
+    <Compile Include="Assets\AssetBundleManager\Editor\LaunchAssetBundleServer.cs" />
     <Compile Include="Assets\Editor\FontReplacer.cs" />
     <Compile Include="Assets\Editor\ShortCut.cs" />
   </ItemGroup>

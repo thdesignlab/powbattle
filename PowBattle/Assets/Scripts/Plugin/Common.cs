@@ -15,6 +15,9 @@ namespace Common
         public const string APP_NAME_IOS = "";
         public const string APP_NAME_ANDROID = "com.ThDesignLab";
 
+        //アセットバンドル
+        public const string APP_ASSET_BUNDLE_URL = "http://th-designlab.com/PowBattle/AssetBundles/";
+
         //HomePage
         public const string WEBVIEW_KEY = "?webview";
         public static string HP_URL = "http://lostworks.th-designlab.com/";
@@ -134,17 +137,17 @@ namespace Common
 
     }
 
+    //### 共通変数 ###
     public static class Var
     {
         //AudioMixer
         private static AudioMixer _audioMixer;
         public static AudioMixer audioMixer
         {
-            get { return (_audioMixer) ? _audioMixer : _audioMixer = Resources.Load<AudioMixer>(CO.RESOURCE_SOUND_DIR + "AudioMixer"); }
+            get { return (_audioMixer) ? _audioMixer : _audioMixer = Resource.GetAudioMixer(); }
         }
     }
-
-
+    
     //### 端末保持情報 ###
     public static class PP
     {
@@ -418,56 +421,6 @@ namespace Common
             return (sceneName.IndexOf(CO.SCENE_BATTLE) == 0);
         }
 
-        //リソースロード(GameObject)
-        private static Dictionary<string, GameObject> resourceObjCacheDic = new Dictionary<string, GameObject>();
-        public static GameObject GetGameObjectResource(string name)
-        {
-            //キャッシュ検索
-            if (resourceObjCacheDic.ContainsKey(name)) return resourceObjCacheDic[name];
-
-            //リソース取得
-            GameObject ret = Resources.Load<GameObject>(name);
-            resourceObjCacheDic.Add(name, ret);
-            return ret;
-        }
-        public static GameObject GetEffectResource(string name)
-        {
-            return GetGameObjectResource(CO.RESOURCE_EFFECT_DIR + name);
-        }
-        public static GameObject GetUIResource(string name)
-        {
-            return GetGameObjectResource(CO.RESOURCE_UI_DIR + name);
-        }
-        public static GameObject GetMessageImageResource(string name)
-        {
-            return GetGameObjectResource(CO.RESOURCE_MESSAGE_DIR + name);
-        }
-        public static GameObject GetUnitResource(string name)
-        {
-            return GetGameObjectResource(CO.RESOURCE_UNIT_DIR + name);
-        }
-        public static GameObject GetPlayerResource(string name)
-        {
-            return GetGameObjectResource(CO.RESOURCE_PLAYER_DIR + name);
-        }
-
-        //リソースロード(AudioClip)
-        private static Dictionary<string, AudioClip> resourceAudioCacheDic = new Dictionary<string, AudioClip>();
-        public static AudioClip GetAudioClipResource(string name)
-        {
-            //キャッシュ検索
-            if (resourceAudioCacheDic.ContainsKey(name)) return resourceAudioCacheDic[name];
-
-            //リソース取得
-            AudioClip ret = Resources.Load<AudioClip>(name);
-            resourceAudioCacheDic.Add(name, ret);
-            return ret;
-        }
-        public static AudioClip GetAudioResource(string name)
-        {
-            return GetAudioClipResource(CO.RESOURCE_SOUND_DIR + name);
-        }
-
         //ターゲット到達までの移動予測
         public static Vector3 GetUnitMoveDiff(Vector3 myPos, float mySpeed, Transform targetTran, float minDistance = 5.0f, float maxDistance = -1)
         {
@@ -540,6 +493,71 @@ namespace Common
         }
     }
 
+    //### リソース ###
+    public static class Resource
+    {
+        //リソースロード(GameObject)
+        private static Dictionary<string, GameObject> resourceObjCacheDic = new Dictionary<string, GameObject>();
+        public static GameObject GetGameObjectResource(string name)
+        {
+            //キャッシュ検索
+            if (resourceObjCacheDic.ContainsKey(name)) return resourceObjCacheDic[name];
+
+            //リソース取得
+            Object obj = LoadAssetManager.Instance.LoadResource(name);
+            GameObject ret = (GameObject)obj;
+            resourceObjCacheDic.Add(name, ret);
+            return ret;
+        }
+        public static GameObject GetEffectResource(string name)
+        {
+            return GetGameObjectResource(name);
+        }
+        public static GameObject GetUIResource(string name)
+        {
+            return GetGameObjectResource(name);
+        }
+        public static GameObject GetMessageImageResource(string name)
+        {
+            return GetGameObjectResource(name);
+        }
+        public static GameObject GetUnitResource(string name)
+        {
+            return GetGameObjectResource(name);
+        }
+        public static GameObject GetPlayerResource(string name)
+        {
+            return GetGameObjectResource(name);
+        }
+
+        //リソースロード(AudioMixer)
+        public static AudioMixer GetAudioMixer()
+        {
+            Object obj = LoadAssetManager.Instance.LoadResource("AudioMixer");
+            return (AudioMixer)obj;
+        }
+
+        //リソースロード(AudioClip)
+        private static Dictionary<string, AudioClip> resourceAudioCacheDic = new Dictionary<string, AudioClip>();
+        public static AudioClip GetAudioClipResource(string name)
+        {
+            //キャッシュ検索
+            if (resourceAudioCacheDic.ContainsKey(name)) return resourceAudioCacheDic[name];
+
+            //リソース取得
+            //AudioClip ret = Resources.Load<AudioClip>(name);
+            Object obj = LoadAssetManager.Instance.LoadResource(name);
+            AudioClip ret = (AudioClip)obj;
+            resourceAudioCacheDic.Add(name, ret);
+            return ret;
+        }
+        public static AudioClip GetAudioResource(string name)
+        {
+            return GetAudioClipResource(name);
+        }
+    }
+    
+    
     //### ユニット ###
     public static class Unit
     {

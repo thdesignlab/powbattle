@@ -23,12 +23,12 @@ public class UnitController : BaseMoveController
     protected GameObject _bufEffect;
     protected GameObject bufEffect
     {
-        get {　return (_bufEffect != null) ? _bufEffect : _bufEffect = Common.Func.GetEffectResource("BufEffect"); }
+        get {　return (_bufEffect != null) ? _bufEffect : _bufEffect = Common.Resource.GetEffectResource("BufEffect"); }
     }
     protected GameObject _debufEffect;
     protected GameObject debufEffect
     {
-        get { return (_debufEffect != null) ? _debufEffect : _debufEffect = Common.Func.GetEffectResource("DebufEffect"); }
+        get { return (_debufEffect != null) ? _debufEffect : _debufEffect = Common.Resource.GetEffectResource("DebufEffect"); }
     }
     [SerializeField]
     protected int maxHP;

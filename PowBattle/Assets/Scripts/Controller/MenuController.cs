@@ -9,9 +9,7 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
     private GameObject menuList;
     private GameObject camMenu;
     private Slider hpSlider;
-
-    private bool isAdmin = false;
-
+    
     protected override void Awake()
     {
         isDontDestroyOnLoad = false;
@@ -20,9 +18,6 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
 
     void Start()
     {
-        //デバッグボタンON/OFF
-        if (DebugController.Instance.isEnableDebugMenu) isAdmin = true;
-
         //UI取得
         Transform battleCanvasTran = transform;
         menuList = battleCanvasTran.Find("Menu/MenuList").gameObject;

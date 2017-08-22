@@ -4,7 +4,7 @@ using System.Collections;
 public class AppManager : SingletonMonoBehaviour<AppManager>
 {
     [HideInInspector]
-    public bool isSplashFinished = false;
+    public bool isReadyGame = false;
 
     [SerializeField]
     private GameObject touchCousor;
@@ -13,7 +13,7 @@ public class AppManager : SingletonMonoBehaviour<AppManager>
     {
         for (;;)
         {
-            if (isSplashFinished) break;
+            if (isReadyGame) break;
             yield return null;
         }
 

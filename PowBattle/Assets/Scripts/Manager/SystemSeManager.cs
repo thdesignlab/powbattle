@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SystemSeManager : SingletonMonoBehaviour<SystemSeManager>
 {
@@ -19,10 +20,13 @@ public class SystemSeManager : SingletonMonoBehaviour<SystemSeManager>
     const string BUTTON_SE_NEGATIVE = "Negative";
     const string BUTTON_SE_SELECT = "Select";
 
-
-    protected override void Awake()
+    IEnumerator Start()
     {
-        base.Awake();
+        for (;;)
+        {
+            if (AppManager.Instance.isReadyGame) break;
+            yield return null;
+        }
 
         //AudioSource設定
         audioSource = GetComponent<AudioSource>();
@@ -76,7 +80,7 @@ public class SystemSeManager : SingletonMonoBehaviour<SystemSeManager>
     }
     private void Play(string clipName)
     {
-        AudioClip clip = Common.Func.GetAudioResource(clipName);
+        AudioClip clip = Common.Resource.GetAudioResource(clipName);
         Play(clip);
     }
 

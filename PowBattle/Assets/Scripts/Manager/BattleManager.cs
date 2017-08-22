@@ -280,7 +280,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     //ユニット出現位置取得
     private void SetSpawnPoint()
     {
-        spawnEffect = Common.Func.GetEffectResource("SpawnEffect");
+        spawnEffect = Common.Resource.GetEffectResource("SpawnEffect");
         foreach (int side in Common.CO.sideArray)
         {
             //通常
@@ -334,7 +334,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         Vector3 pos = (playerSP != null) ? playerSP.transform.position : new Vector3(0, 15, 0);
         Quaternion rot = (playerSP != null) ? playerSP.transform.rotation : Quaternion.identity;
         player = GameObject.FindGameObjectWithTag(Common.CO.TAG_PLAYER);
-        if (player == null) player = Instantiate(Common.Func.GetPlayerResource("Player"));
+        if (player == null) player = Instantiate(Common.Resource.GetPlayerResource("Player"));
         player.transform.position = pos;
         player.transform.rotation = rot;
     }
@@ -463,7 +463,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         //生成
         Vector3 pos = PickAroundPosition(spawnPos);
         if (spawnEffect != null) Instantiate(spawnEffect, pos, spawnRot);
-        GameObject unitPref = Common.Func.GetUnitResource(Common.Unit.unitInfo[unitNo]);
+        GameObject unitPref = Common.Resource.GetUnitResource(Common.Unit.unitInfo[unitNo]);
         GameObject unit = Instantiate(unitPref, pos, spawnRot);
         unitList[side].Add(unit.transform);
 

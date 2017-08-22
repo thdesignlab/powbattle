@@ -6,7 +6,7 @@ public class DebugController : SingletonMonoBehaviour<DebugController>
 {
     public bool isDebugMode;
     [SerializeField]
-    public GameObject debugMenu;
+    public GameObject debugCanvas;
 
     [HideInInspector]
     public bool isEnableDebugMenu;
@@ -34,9 +34,10 @@ public class DebugController : SingletonMonoBehaviour<DebugController>
     protected override void Awake()
     {
         base.Awake();
-        if (debugMenu)
+        if (debugCanvas)
         {
-            Transform debugMenuTran = debugMenu.transform;
+            DontDestroyOnLoad(debugCanvas);
+            Transform debugMenuTran = debugCanvas.transform.Find("DebugMenuList");
             btnBattleRestart = debugMenuTran.Find("BattleRestart").gameObject;
             btnDrawTarget = debugMenuTran.Find("BattleDrawTarget").gameObject;
             SceneManager.activeSceneChanged += OnActiveSceneChanged;
@@ -61,9 +62,9 @@ public class DebugController : SingletonMonoBehaviour<DebugController>
     public void SetDebugMenu(bool flg)
     {
         isOpenMenu = flg;
-        if (debugMenu != null)
+        if (debugCanvas != null)
         {
-            debugMenu.SetActive(flg);
+            debugCanvas.SetActive(flg);
             isOpenLog = false;
         }
         else
@@ -188,7 +189,7 @@ public class DebugController : SingletonMonoBehaviour<DebugController>
     public void OnClickOpenLog()
     {
         if (!isEnableDebugMenu) return;
-        if (debugMenu != null) debugMenu.SetActive(false);
+        if (debugCanvas != null) debugCanvas.SetActive(false);
         isOpenLog = true;
     }
 
