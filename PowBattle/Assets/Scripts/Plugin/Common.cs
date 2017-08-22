@@ -117,6 +117,11 @@ namespace Common
         public const string AUDIO_MIXER_Voice = "Voice";
         public const string AUDIO_MIXER_SE = "SE";
 
+        //武器ターゲットタイプ
+        public const int WEAPON_TYPE_DEFAULT = 0;
+        public const int WEAPON_TYPE_NEAR = 1;
+        public const int WEAPON_TYPE_FAR = 2;
+
         //★BGM
         public static Dictionary<string, string> sceneBgmDic = new Dictionary<string, string>()
         {

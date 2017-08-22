@@ -68,13 +68,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 123f2fa4a79b8c84aa4da031b739df74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 15
-  reload: 8
-  attackWait: 0
-  moveDelay: 5
   bullet: {fileID: 1231082633142808, guid: 5cab82675ba589745ac84e54dd197be1, type: 2}
   rapidCount: 1
   rapidInterval: 0
+  range: 15
+  reload: 8
+  motionWait: 0
+  moveDelay: 5
+  weaponType: 2
   shootDiff: 3
-  addHeightRangeRate: 50
+  addHeightRangeRate: 20
   shootAngle: 60

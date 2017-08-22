@@ -12,7 +12,7 @@ public class DamageEffectController : BaseMoveController
     private ObjectController _objCtrl;
     protected ObjectController objCtrl
     {
-        get { return (_objCtrl) ? _objCtrl : GetComponent<ObjectController>(); }
+        get { return (_objCtrl) ? _objCtrl : _objCtrl = GetComponent<ObjectController>(); }
     }
     protected AudioManager audioMgr;
     protected ApproachAudioManager appAudioMgr;

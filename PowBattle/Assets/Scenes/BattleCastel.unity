@@ -544,7 +544,7 @@ MonoBehaviour:
   testRespawnInterval: 45
   testRespawnIntervalAdd: 0
   testRespawnUnits: 02000000020000000100000001000000010000000100000001000000
-  testEnemyRespawnUnits: 00000000000000000000000005000000010000000100000001000000
+  testEnemyRespawnUnits: 00000000000000000000000005000000020000000100000001000000
 --- !u!4 &419198005
 Transform:
   m_ObjectHideFlags: 0
@@ -2229,7 +2229,7 @@ Prefab:
     - target: {fileID: 224242674267966450, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 224841462317840580, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -2249,7 +2249,7 @@ Prefab:
     - target: {fileID: 224841462317840580, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 224342686450222190, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -2269,7 +2269,7 @@ Prefab:
     - target: {fileID: 224342686450222190, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}

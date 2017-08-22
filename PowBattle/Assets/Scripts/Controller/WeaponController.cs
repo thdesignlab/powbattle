@@ -28,6 +28,8 @@ public class WeaponController : MonoBehaviour
     protected float motionWait;
     [SerializeField]
     protected float moveDelay;
+    [SerializeField, Range(0, 2), TooltipAttribute("0:default, 1:near, 2:far")]
+    protected int weaponType;
 
     protected float leftReload = 0;
     protected int attackRate = 0;
@@ -176,9 +178,36 @@ public class WeaponController : MonoBehaviour
         return (GetMinRange(target) <= distance && distance <= GetMaxRange(target));
     }
 
+    //優先ターゲット判定
+    public bool IsPriorityTarget(Transform target, float distance = -1)
+    {
+        if (weaponType == Common.CO.WEAPON_TYPE_DEFAULT) return IsWithinRange(target, distance);
+
+        if (distance < 0) distance = Vector3.Distance(myTran.position, target.position);
+        float minRange = GetMinRange(target);
+        float maxRange = GetMaxRange(target);
+        bool isPriority = false;
+        switch (weaponType)
+        {
+            case Common.CO.WEAPON_TYPE_NEAR:
+                isPriority = (distance <= (maxRange + minRange) / 3 + minRange);
+                break;
+
+            case Common.CO.WEAPON_TYPE_FAR:
+                isPriority = (distance >= (maxRange + minRange) * 2 / 3 + minRange);
+                break;
+        }
+        return isPriority;
+    }
+
     protected void PlaySE(int no = 0)
     {
         if (audioMgr == null) return;
         audioMgr.Play(no, true);
+    }
+
+    public int GetWeaponType()
+    {
+        return weaponType;
     }
 }

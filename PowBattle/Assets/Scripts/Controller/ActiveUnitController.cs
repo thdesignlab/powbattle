@@ -100,8 +100,8 @@ public class ActiveUnitController : UnitController
             //到達可否判定
             if (!IsEnabledPath(target)) continue;
             
-            //射程内判定
-            if (weaponCtrl.IsWithinRange(target, distance))
+            //優先ターゲット判定
+            if (weaponCtrl.IsPriorityTarget(target, distance))
             {
                 //決定
                 tmpTarget = target;

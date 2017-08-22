@@ -51,7 +51,6 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     public bool isBattleStart = false;
     [HideInInspector]
     public bool isBattleEnd = false;
-    private bool isPause = false;
 
     //test用
     [HideInInspector]
@@ -68,7 +67,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     List<int> testRespawnUnits;
     [SerializeField]
     List<int> testEnemyRespawnUnits;
-    List<int> testExtraUnits = new List<int>() { 0, 1, 2, 2, 3, 3, 4, 4 };
+    List<int> testExtraUnits = new List<int>() { 0, 1, 2, 3, 4 };
 
 
     protected override void Awake()
@@ -572,14 +571,12 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 
     public void Pause()
     {
-        isPause = true;
         //DialogManager.OpenDialog("一時停止中", "再開", () => ResetPause(), false);
         Time.timeScale = 0;
     }
 
     public void ResetPause()
     {
-        isPause = false;
         Time.timeScale = 1;
     }
 

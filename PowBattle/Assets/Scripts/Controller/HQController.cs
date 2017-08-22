@@ -37,7 +37,6 @@ public class HQController : UnitController
     {
         if (leftAleartInterval > 0 || enemyTran == null) return;
 
-        int leftAleartNum = alertUnitNum;
         List<Transform> targets = BattleManager.Instance.GetUnitList(mySide);
         Dictionary<int, float> targetDistanceList = new Dictionary<int, float>();
         for (int i = 0; i < targets.Count; i++)

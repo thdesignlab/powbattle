@@ -21,8 +21,6 @@ public class ObjectController : MonoBehaviour {
     private float activeTime = 0;
     private float activeDistance = 0;
 
-    private bool isEffectCustom = false;
-
     protected bool isDestroyProc = false;
 
     void Start()

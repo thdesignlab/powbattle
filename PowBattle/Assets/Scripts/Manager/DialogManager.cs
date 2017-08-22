@@ -35,9 +35,9 @@ public class DialogManager : MonoBehaviour
 
     //ダイアログオプション
     private static bool isVertical = false;
-    private static Color msgColor = default(Color);
-    private static List<Color> btnTextColorList = new List<Color>();
-    private static List<GameObject> btnObjList = new List<GameObject>();
+    //private static Color msgColor = default(Color);
+    //private static List<Color> btnTextColorList = new List<Color>();
+    //private static List<GameObject> btnObjList = new List<GameObject>();
     private static float dialogLowPosition = 0;
 
 
@@ -149,34 +149,34 @@ public class DialogManager : MonoBehaviour
     private static void InitOption()
     {
         SetOptionIsVertical();
-        SetOptionMsgColor();
-        SetOptionBtnTextColor();
-        SetOptionBtnObj();
+        //SetOptionMsgColor();
+        //SetOptionBtnTextColor();
+        //SetOptionBtnObj();
         SetDialogLowPosition();
     }
     public static void SetOptionIsVertical(bool flg = false)
     {
         isVertical = flg;
     }
-    public static void SetOptionMsgColor(Color color = default(Color))
-    {
-        msgColor = default(Color);
-    }
-    public static void SetOptionBtnTextColor(List<Color> colors = null)
-    {
-        btnTextColorList = (colors != null) ? colors : new List<Color>();
-    }
-    public static void SetOptionBtnObj(List<GameObject> objs = null)
-    {
-        btnObjList = (objs != null) ? objs : new List<GameObject>();
-    }
+    //public static void SetOptionMsgColor(Color color = default(Color))
+    //{
+    //    msgColor = default(Color);
+    //}
+    //public static void SetOptionBtnTextColor(List<Color> colors = null)
+    //{
+    //    btnTextColorList = (colors != null) ? colors : new List<Color>();
+    //}
+    //public static void SetOptionBtnObj(List<GameObject> objs = null)
+    //{
+    //    btnObjList = (objs != null) ? objs : new List<GameObject>();
+    //}
+
+    //ダイアログ画面下表示
     public static void SetDialogLowPosition(float h = -1)
     {
         dialogLowPosition = h;
     }
-
-    //オプション反映
-    public static void ExecDialogLowPosition()
+    private static void ExecDialogLowPosition()
     {
         if (dialog == null || dialogLowPosition <= 0) return;
         Transform dialogArea = dialogTran.Find(DIALOG_AREA);

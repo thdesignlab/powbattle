@@ -166,26 +166,26 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1035687963353166}
-  m_LocalRotation: {x: -0.043577887, y: 0.043577887, z: 0.0019026523, w: 0.99809736}
+  m_LocalRotation: {x: -0.02180961, y: 0.021809703, z: 0.0004758875, w: 0.9995242}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4344527996486744}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: -5, y: 5, z: 0}
+  m_LocalEulerAnglesHint: {x: -2.5, y: 2.5, z: 0}
 --- !u!4 &4795049904430662
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1790150388338094}
-  m_LocalRotation: {x: -0.043577887, y: -0.043577887, z: -0.0019026523, w: 0.99809736}
+  m_LocalRotation: {x: -0.02180961, y: -0.02180961, z: -0.00047588546, w: 0.9995242}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9999999, y: 1, z: 0.9999999}
+  m_LocalScale: {x: 0, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 4344527996486744}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -5, y: -5, z: 0}
+  m_LocalEulerAnglesHint: {x: -2.5, y: -2.5, z: 0}
 --- !u!114 &114440810294018684
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,8 +204,9 @@ MonoBehaviour:
   reload: 4
   motionWait: 0.1
   moveDelay: 2
+  weaponType: 2
   shootDiff: 1
-  addHeightRangeRate: 50
+  addHeightRangeRate: 20
   shootAngle: 50
 --- !u!114 &114854649819282518
 MonoBehaviour:
