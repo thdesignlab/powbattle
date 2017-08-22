@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 3b5e19b29a3beaa4fb32eb7a601d11cc
-timeCreated: 1503343492
+guid: 4ce740880ec25c748a249ff89a30075a
+timeCreated: 1503410214
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -60,10 +60,8 @@ ModelImporter:
     100104: Box007
     100106: Box008
     100108: //RootNode
-    100110: Circle001
-    100112: Dummy001
-    100114: wing1
-    100116: wing2
+    100110: wing1
+    100112: wing2
     400000: Bip001
     400002: Bip001 Footsteps
     400004: Bip001 Head
@@ -119,10 +117,8 @@ ModelImporter:
     400104: Box007
     400106: Box008
     400108: //RootNode
-    400110: Circle001
-    400112: Dummy001
-    400114: wing1
-    400116: wing2
+    400110: wing1
+    400112: wing2
     2300000: Box008
     2300002: wing1
     2300004: wing2
