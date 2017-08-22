@@ -551,7 +551,8 @@ namespace Common
             { 4, "UnitTank" },
             { 5, "UnitWizard" },
             { 6, "UnitIceWizard" },
-        };
+            { 7, "UnitFallenAngel " },
+       };
     }
 
 }

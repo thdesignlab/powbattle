@@ -473,12 +473,15 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         //★ボディ色変え
         Color[] bodyColors = new Color[] { Color.white, Color.red };
         Transform unitBody = Common.Func.SearchChildTag(unit.transform, "UnitBody");
-        Renderer unitRenderer = unitBody.GetComponent<Renderer>();
-        if (unitRenderer != null)
+        if (unitBody != null)
         {
-            Material[] mats = unitBody.GetComponent<Renderer>().materials;
-            mats[0].color = bodyColors[side];
-            unitBody.GetComponent<Renderer>().materials = mats;
+            Renderer unitRenderer = unitBody.GetComponent<Renderer>();
+            if (unitRenderer != null)
+            {
+                Material[] mats = unitBody.GetComponent<Renderer>().materials;
+                mats[0].color = bodyColors[side];
+                unitBody.GetComponent<Renderer>().materials = mats;
+            }
         }
 
         return unit;
