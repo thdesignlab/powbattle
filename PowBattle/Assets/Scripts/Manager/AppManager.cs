@@ -1,12 +1,5 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
-using UnityEngine.Events;
-using System.Text.RegularExpressions;
-using TouchScript.Gestures;
-using TouchScript.Gestures.TransformGestures;
 
 public class AppManager : SingletonMonoBehaviour<AppManager>
 {
@@ -28,7 +21,7 @@ public class AppManager : SingletonMonoBehaviour<AppManager>
         Common.Func.SetStatusbar();
 
         //タッチ可視化
-        if (touchCousor != null && MyDebug.Instance.isDebugMode) DontDestroyOnLoad(touchCousor);
+        if (touchCousor != null && DebugController.Instance.isDebugMode) DontDestroyOnLoad(touchCousor);
     }
 
     void OnApplicationPause(bool pauseStatus)

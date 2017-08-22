@@ -2,14 +2,11 @@
 using System.Collections;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class MenuController : SingletonMonoBehaviour<MenuController>
 {
     private Transform battleCanvasTran;
     private GameObject menuList;
-    private GameObject debugMenuList;
-    private GameObject debugBtn;
     private GameObject camMenu;
     private Slider hpSlider;
 
@@ -24,20 +21,16 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
     void Start()
     {
         //デバッグボタンON/OFF
-        if (MyDebug.Instance.isDebugMode || UserManager.isAdmin) isAdmin = true;
+        if (DebugController.Instance.isEnableDebugMenu) isAdmin = true;
 
         //UI取得
         Transform battleCanvasTran = transform;
         menuList = battleCanvasTran.Find("Menu/MenuList").gameObject;
-        debugBtn = menuList.transform.Find("DebugBtn").gameObject;
-        debugMenuList = battleCanvasTran.Find("Menu/DebugMenuList").gameObject;
         camMenu = battleCanvasTran.Find("Menu/CamMenu").gameObject;
         hpSlider = camMenu.transform.Find("HP").GetComponent<Slider>();
 
         //初期表示
         menuList.SetActive(false);
-        debugMenuList.SetActive(false);
-        debugBtn.SetActive(isAdmin);
         camMenu.SetActive(false);
     }
 
@@ -60,7 +53,6 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
     private void CloseMenu()
     {
         menuList.SetActive(false);
-        debugMenuList.SetActive(false);
         BattleManager.Instance.ResetPause();
     }
 
@@ -155,37 +147,5 @@ public class MenuController : SingletonMonoBehaviour<MenuController>
     public void ChangeCamVr()
     {
 
-    }
-
-    //##### デバッグメニュー(管理者のみ実行可能) #####
-
-    //デバッグメニュー表示切り替え
-    public void OnClickDebugButton()
-    {
-        if (!isAdmin) return;
-        if (debugMenuList.activeSelf)
-        {
-            debugMenuList.SetActive(false);
-        }
-        else
-        {
-            debugMenuList.SetActive(true);
-        }
-    }
-
-    //リスタート
-    public void OnClickBattleRestart()
-    {
-        if (!isAdmin) return;
-        ScreenManager.Instance.SceneLoad(SceneManager.GetActiveScene().name);
-        CloseMenu();
-    }
-
-    //ターゲット可視化
-    public void OnClickDrawTarget()
-    {
-        if (!isAdmin) return;
-        BattleManager.Instance.isVisibleTarget = !BattleManager.Instance.isVisibleTarget;
-        CloseMenu();
     }
 }

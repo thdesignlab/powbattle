@@ -412,9 +412,10 @@ namespace Common
         }
 
         //バトルシーン判定
-        public static bool IsBattleScene()
+        public static bool IsBattleScene(string sceneName = "")
         {
-            return (SceneManager.GetActiveScene().name.IndexOf(CO.SCENE_BATTLE) == 0);
+            if (sceneName == "") sceneName = SceneManager.GetActiveScene().name;
+            return (sceneName.IndexOf(CO.SCENE_BATTLE) == 0);
         }
 
         //リソースロード(GameObject)
