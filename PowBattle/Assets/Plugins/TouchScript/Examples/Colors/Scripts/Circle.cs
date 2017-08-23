@@ -40,8 +40,7 @@ namespace TouchScript.Examples.Colors
                            transform.localScale.x*transform.localScale.x);
             var color = Color.Lerp(GetComponent<Renderer>().sharedMaterial.color, otherColor, .5f);
 
-            var obj = Instantiate(gameObject) as GameObject;
-            obj.transform.SetParent(transform.parent);
+            var obj = Instantiate(gameObject, transform.parent) as GameObject;
             obj.transform.localPosition = transform.localPosition;
             obj.transform.localRotation = transform.localRotation;
             obj.transform.localScale = new Vector3(scale, 1, scale);

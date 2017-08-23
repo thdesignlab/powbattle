@@ -52,14 +52,7 @@ public class CrossRangeUnitController : ActiveUnitController
         if (tmpTarget != null) SetTarget(tmpTarget);
 
         //敵以外をターゲット
-        if (targetTran == null || !isWithinRange)
-        {
-            //HQ
-            SearchHQ(true);
-
-            //破壊可能オブジェクト
-            if (!IsDiscoveryTarget(targetTran, searchRange)) SearchObstacle();
-        }
+        if (targetTran == null || !isWithinRange) SearchOther();
     }
 
     //再索敵判定

@@ -57,8 +57,7 @@ public class MagicWeaponController : WeaponController
 
         if (magicCircleObj == null)
         {
-            magicCircleObj = Instantiate(magicCircle, groundTran.position, groundTran.rotation);
-            magicCircleObj.transform.SetParent(ownerTran, true);
+            magicCircleObj = Instantiate(magicCircle, groundTran.position, groundTran.rotation, ownerTran);
         }
 
         magicCircleObj.SetActive(flg);

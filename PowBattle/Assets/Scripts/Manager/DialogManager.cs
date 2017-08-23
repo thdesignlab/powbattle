@@ -117,8 +117,7 @@ public class DialogManager : MonoBehaviour
     {
         if (dialog == null) return;
         string resourceName = (isPositive) ? RESOURCE_POSITIVE_BUTTON : RESOURCE_NEGATIVE_BUTTON;
-        GameObject btnObj = Instantiate(Common.Resource.GetUIResource(resourceName));
-        btnObj.transform.SetParent(btnAreaTran, false);
+        GameObject btnObj = Instantiate(Common.Resource.GetUIResource(resourceName), btnAreaTran);
         UnityAction callback = () =>
         {
             SystemSeManager.Instance.PlayYesNoSe(isPositive);

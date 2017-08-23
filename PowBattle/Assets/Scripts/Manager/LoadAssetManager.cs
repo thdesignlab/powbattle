@@ -62,7 +62,7 @@ public class LoadAssetManager : SingletonMonoBehaviour<LoadAssetManager>
         {
             LoadingManager.Instance.Open();
             LoadingManager.Instance.SetDownloadBar(rate);
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.5f);
         }
 
         foreach (string name in assetBundleNameList)
@@ -92,7 +92,7 @@ public class LoadAssetManager : SingletonMonoBehaviour<LoadAssetManager>
 
         if (loadingBar)
         {
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.5f);
             LoadingManager.Instance.Close();
         }
     }

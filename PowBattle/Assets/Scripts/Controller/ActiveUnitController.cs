@@ -121,14 +121,15 @@ public class ActiveUnitController : UnitController
         if (tmpTarget != null) SetTarget(tmpTarget);
 
         //敵以外をターゲット
-        if (targetTran == null || !isWithinRange)
-        {
-            //HQ
-            SearchHQ(true);
+        if (targetTran == null || !isWithinRange) SearchOther();
+    }
+    protected virtual void SearchOther()
+    {
+        //HQ
+        SearchHQ(true);
 
-            //破壊可能オブジェクト
-            if (!IsDiscoveryTarget(targetTran, searchRange)) SearchObstacle();
-        }
+        //破壊可能オブジェクト
+        if (!IsDiscoveryTarget(targetTran, searchRange)) SearchObstacle();
     }
 
     //再索敵判定

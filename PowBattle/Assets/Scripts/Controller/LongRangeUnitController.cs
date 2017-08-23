@@ -9,12 +9,24 @@ public class LongRangeUnitController : ActiveUnitController
     [SerializeField]
     protected bool isNotNeedLockOn;
     protected bool isArtillery;
+    protected bool isArtilleryUnit = false;
 
     //移動
     protected override void Move()
     {
         if (isArtillery) return;
         base.Move();
+    }
+
+    protected override void SearchOther()
+    {
+        if (isArtillery) return;
+
+        //HQ
+        SearchHQ(true);
+
+        //破壊可能オブジェクト
+        if (!IsDiscoveryTarget(targetTran, searchRange)) SearchObstacle();
     }
 
     //目視チェック
@@ -50,10 +62,14 @@ public class LongRangeUnitController : ActiveUnitController
     {
         base.SetLockOn(flg);
 
-        if (isArtillery)
+        if (isArtillery || isArtilleryUnit)
         {
             agent.isStopped = flg;
-            if (flg) agent.destination = targetTran.position;
+            if (flg)
+            {
+                agent.destination = targetTran.position;
+                isArtillery = true;
+            }
         }
     }
 
@@ -64,7 +80,11 @@ public class LongRangeUnitController : ActiveUnitController
         RaycastHit hit;
         if (Physics.Raycast(ray,out hit, 5.0f, LayerMask.GetMask(Common.CO.LAYER_OBSTACLE)))
         {
-            if (hit.transform.tag == Common.CO.TAG_ARTILLERY_OBSTACLE) SetArtillery(true);
+            if (hit.transform.tag == Common.CO.TAG_ARTILLERY_OBSTACLE)
+            {
+                SetArtillery(true);
+                isArtilleryUnit = true;
+            }
         }
     }
 

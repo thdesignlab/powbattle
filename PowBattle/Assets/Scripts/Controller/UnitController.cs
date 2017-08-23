@@ -188,12 +188,10 @@ public class UnitController : BaseMoveController
         if (joint == null) joint = myTran;
 
         //武器生成＆装備
-        GameObject w = Instantiate(weapon, joint.position, joint.rotation);
-        weaponTran = w.transform;
-        weaponTran.SetParent(joint, true);
+        GameObject w = Instantiate(weapon, joint.position, joint.rotation, joint);
         weaponCtrl = w.GetComponent<WeaponController>();
         weaponCtrl.SetOwner(myTran);
-        if (searchRange <= 0) searchRange = weaponCtrl.GetReload() * 1.5f;
+        if (searchRange <= 0) searchRange = weaponCtrl.GetMaxRange() * 1.5f;
         weaponCtrl.SetMotionCtrl(motionCtrl);
     }
 
@@ -545,8 +543,7 @@ public class UnitController : BaseMoveController
     IEnumerator StatusEffect(int type, int rate, GameObject effect)
     {
         if (effect == null) yield break;
-        GameObject effectObj = Instantiate(effect, myTran.position + Vector3.up * 2.0f, myTran.rotation);
-        effectObj.transform.SetParent(myTran, true);
+        GameObject effectObj = Instantiate(effect, myTran.position + Vector3.up * 2.0f, myTran.rotation, myTran);
         float wait = 0.5f;
         for (;;)
         {

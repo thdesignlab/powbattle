@@ -19,15 +19,17 @@ public class BattlePlayerController : PlayerController
     protected Slider hpSlider;
     protected Transform playerCanvas;
     protected Transform lockOnSight;
+    protected Vector3 camDiffPos = Vector3.zero;
+    protected Vector3 thirdCamDiff = new Vector3(0, 2.5f, -5.0f);
 
     const string CAM_POINT = "CamPoint/";
-    const string CAM_POINT_FIRST = "First";
-    const string CAM_POINT_THIRD = "Third";
+    //const string CAM_POINT_FIRST = "First";
+    //const string CAM_POINT_THIRD = "Third";
 
     const string PLAYER_CANVAS = "PlayerCanvas";
     const string LOCK_ON_SIGHT = "LockOnSight";
 
-    const float LOCK_ON_INTERVAL = 2.0f;
+    const float LOCK_ON_INTERVAL = 1.0f;
     protected float leftLockOnInterval = 0;
 
     protected override void Init()
@@ -118,20 +120,24 @@ public class BattlePlayerController : PlayerController
     private void SetFirstCamPoint()
     {
         if (camTargetTran == null) SwitchCameraMode(Common.CO.CAM_MODE_FREE);
-        camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_FIRST);
+        //camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_FIRST);
+        camPointTran = camTargetTran.Find(CAM_POINT);
         if (camPointTran == null) camPointTran = camTargetTran;
-        myTran.position = camPointTran.position;
-        myTran.rotation = camPointTran.rotation;
-        camTran.rotation = myTran.rotation;
+        camDiffPos = Vector3.zero;
+        myTran.position = camPointTran.position + camDiffPos;
+        //myTran.rotation = camPointTran.rotation;
+        //camTran.rotation = myTran.rotation;
         //lookAtVector = camTargetTran.position;
     }
     private void SetThirdCamPoint()
     {
         if (camTargetTran == null) SwitchCameraMode(Common.CO.CAM_MODE_FREE);
-        camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_THIRD);
+        //camPointTran = camTargetTran.Find(CAM_POINT + CAM_POINT_THIRD);
+        camPointTran = camTargetTran.Find(CAM_POINT);
         if (camPointTran == null) camPointTran = camTargetTran ;
-        myTran.position = camPointTran.position;
-        myTran.rotation = camPointTran.rotation;
+        camDiffPos = thirdCamDiff;
+        //myTran.position = camPointTran.position + camDiffPos;
+        //myTran.rotation = camPointTran.rotation;
         //lookAtVector = camTargetTran.position;
     }
 
@@ -164,7 +170,7 @@ public class BattlePlayerController : PlayerController
             SwitchCameraMode(Common.CO.CAM_MODE_FREE);
             return;
         }
-        myTran.position = camPointTran.position;
+        myTran.position = camPointTran.position + camPointTran.TransformDirection(camDiffPos);
         myTran.rotation = camTargetTran.rotation;
 
         Transform targetLockOnTran = camTargetCtrl.GetTarget();
@@ -184,7 +190,7 @@ public class BattlePlayerController : PlayerController
             if (leftLockOnInterval <= 0)
             {
                 Vector3 lockOnPos = (targetLockOnTran != null) ? targetLockOnTran.position : camTran.TransformDirection(camTargetTran.forward * 10.0f);
-                if (Common.Func.LookTarget(camTran, lockOnPos, rotateSpeed, Vector3.one, 5.0f)) leftLockOnInterval = LOCK_ON_INTERVAL;
+                if (Common.Func.LookTarget(camTran, lockOnPos, rotateSpeed, Vector3.one, 3.0f)) leftLockOnInterval = LOCK_ON_INTERVAL;
             }
         }
     }
