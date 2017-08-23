@@ -10,13 +10,13 @@ public class CrossRangeUnitController : ActiveUnitController
     protected override void Search()
     {
         //再索敵チェック
+        if (!IsResearch()) return;
 
         //敵を探す
         List<Transform> targets = BattleManager.Instance.GetUnitList(enemySide);
 
         Transform tmpTarget = null;
         float tmpDistance = 0;
-        bool isWithinRange = false;
         foreach (Transform target in targets)
         {
             if (target == null) continue;
@@ -36,7 +36,6 @@ public class CrossRangeUnitController : ActiveUnitController
             {
                 //決定
                 tmpTarget = target;
-                isWithinRange = true;
                 break;
             }
             else
@@ -52,7 +51,7 @@ public class CrossRangeUnitController : ActiveUnitController
         if (tmpTarget != null) SetTarget(tmpTarget);
 
         //敵以外をターゲット
-        if (targetTran == null || !isWithinRange) SearchOther();
+        if (targetTran == null || targetDistance > searchRange) SearchOther();
     }
 
     //再索敵判定

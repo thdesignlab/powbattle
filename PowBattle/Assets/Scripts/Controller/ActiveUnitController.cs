@@ -85,7 +85,6 @@ public class ActiveUnitController : UnitController
 
         Transform tmpTarget = null;
         float tmpDistance = 0;
-        bool isWithinRange = false;
         foreach (Transform target in targets)
         {
             if (target == null) continue;
@@ -105,7 +104,6 @@ public class ActiveUnitController : UnitController
             {
                 //決定
                 tmpTarget = target;
-                isWithinRange = true;
                 break;
             }
             else
@@ -121,7 +119,7 @@ public class ActiveUnitController : UnitController
         if (tmpTarget != null) SetTarget(tmpTarget);
 
         //敵以外をターゲット
-        if (targetTran == null || !isWithinRange) SearchOther();
+        if (targetTran == null || targetDistance > searchRange) SearchOther();
     }
     protected virtual void SearchOther()
     {

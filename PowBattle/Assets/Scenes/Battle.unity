@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44300425, g: 0.49219704, b: 0.57192606, a: 1}
+  m_IndirectSpecularColor: {r: 0.44300452, g: 0.4921977, b: 0.5719268, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -428,8 +428,8 @@ MonoBehaviour:
   testRespawnCount: 100
   testRespawnInterval: 60
   testRespawnIntervalAdd: 0
-  testRespawnUnits: 0100000001000000010000000100000001000000010000000100000001000000
-  testEnemyRespawnUnits: 0100000001000000010000000100000001000000010000000100000001000000
+  testRespawnUnits: 0a00000000000000000000000000000000000000000000000000000000000000
+  testEnemyRespawnUnits: 000000000a000000000000000000000000000000000000000000000000000000
 --- !u!4 &419198005
 Transform:
   m_ObjectHideFlags: 0
@@ -1823,7 +1823,7 @@ Prefab:
     - target: {fileID: 224347061309996524, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1848,7 +1848,7 @@ Prefab:
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 60
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1873,7 +1873,7 @@ Prefab:
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 60
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1893,7 +1893,7 @@ Prefab:
     - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -30
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1913,7 +1913,7 @@ Prefab:
     - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -220
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}
