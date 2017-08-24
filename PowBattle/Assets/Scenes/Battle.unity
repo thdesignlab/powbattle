@@ -339,7 +339,7 @@ MonoBehaviour:
   maxHP: 30000
   searchRange: 0
   side: 0
-  camouflageRange: 10
+  camouflageRange: 0
   breakAction:
     m_PersistentCalls:
       m_Calls: []
@@ -356,8 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -428,8 +427,8 @@ MonoBehaviour:
   testRespawnCount: 100
   testRespawnInterval: 60
   testRespawnIntervalAdd: 0
-  testRespawnUnits: 0a00000000000000000000000000000000000000000000000000000000000000
-  testEnemyRespawnUnits: 000000000a000000000000000000000000000000000000000000000000000000
+  testRespawnUnits: 00000000000000000000000000000000000000000000000000000000000000000a000000
+  testEnemyRespawnUnits: 0a0000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!4 &419198005
 Transform:
   m_ObjectHideFlags: 0
@@ -753,8 +752,8 @@ MonoBehaviour:
   weapon: {fileID: 0}
   maxHP: 30000
   searchRange: 0
-  side: 1
-  camouflageRange: 3
+  side: 0
+  camouflageRange: 0
   breakAction:
     m_PersistentCalls:
       m_Calls: []
@@ -771,8 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -938,8 +936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -958,8 +955,8 @@ MonoBehaviour:
   weapon: {fileID: 0}
   maxHP: 15000
   searchRange: 0
-  side: 1
-  camouflageRange: 10
+  side: 0
+  camouflageRange: 0
   breakAction:
     m_PersistentCalls:
       m_Calls: []
@@ -1069,7 +1066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 1036260209594930, guid: 7dabc85c8b1e4304cbc810f0a03316f9, type: 2}
-  maxHP: 20000
+  maxHP: 30000
   searchRange: 0
   isMain: 1
   alertDistance: 0
@@ -1239,8 +1236,8 @@ MonoBehaviour:
   weapon: {fileID: 0}
   maxHP: 10000
   searchRange: 0
-  side: 1
-  camouflageRange: 10
+  side: 0
+  camouflageRange: 0
   breakAction:
     m_PersistentCalls:
       m_Calls: []
@@ -1257,8 +1254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -1516,8 +1512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -1537,7 +1532,7 @@ MonoBehaviour:
   maxHP: 15000
   searchRange: 0
   side: 0
-  camouflageRange: 5
+  camouflageRange: 0
   breakAction:
     m_PersistentCalls:
       m_Calls: []
@@ -1763,7 +1758,7 @@ Prefab:
     - target: {fileID: 224242674267966450, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224841462317840580, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1783,7 +1778,7 @@ Prefab:
     - target: {fileID: 224841462317840580, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224342686450222190, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1803,7 +1798,7 @@ Prefab:
     - target: {fileID: 224342686450222190, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224347061309996524, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1838,12 +1833,12 @@ Prefab:
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 236.82417
+      value: 225.202
       objectReference: {fileID: 0}
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 473.64835
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1863,12 +1858,12 @@ Prefab:
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 710.47253
+      value: 675.60596
       objectReference: {fileID: 0}
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 473.64835
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1888,7 +1883,7 @@ Prefab:
     - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 473.64835
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1908,7 +1903,7 @@ Prefab:
     - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 473.64835
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -2004,7 +1999,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   maxHP: 15000
   searchRange: 0
-  side: -1
+  side: 0
   camouflageRange: 0
   breakAction:
     m_PersistentCalls:
@@ -2022,8 +2017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -2148,7 +2142,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   maxHP: 15000
   searchRange: 0
-  side: 1
+  side: 0
   camouflageRange: 0
   breakAction:
     m_PersistentCalls:
@@ -2166,8 +2160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -2413,8 +2406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -2526,8 +2518,8 @@ MonoBehaviour:
   weapon: {fileID: 0}
   maxHP: 15000
   searchRange: 0
-  side: 1
-  camouflageRange: 5
+  side: 0
+  camouflageRange: 0
   breakAction:
     m_PersistentCalls:
       m_Calls: []
@@ -2544,8 +2536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -2637,8 +2628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -2657,7 +2647,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   maxHP: 15000
   searchRange: 0
-  side: 1
+  side: 0
   camouflageRange: 0
   breakAction:
     m_PersistentCalls:
@@ -2839,8 +2829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -2953,8 +2942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -2973,7 +2961,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   maxHP: 15000
   searchRange: 0
-  side: -1
+  side: 0
   camouflageRange: 0
   breakAction:
     m_PersistentCalls:
@@ -3066,7 +3054,7 @@ MonoBehaviour:
   weapon: {fileID: 0}
   maxHP: 25000
   searchRange: 0
-  side: 1
+  side: 0
   camouflageRange: 0
   breakAction:
     m_PersistentCalls:
@@ -3084,8 +3072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1
@@ -3209,8 +3196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7d5fa9776b145418bf5944b735f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectSpawn: {fileID: 1317161406594234, guid: 603ce01ac1009c84bac88bf3c19b802a,
-    type: 2}
+  effectSpawn: {fileID: 0}
   activeLimitTime: 0
   activeLimitDistance: 0
   isNotAutoBreak: 1

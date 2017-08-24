@@ -51,21 +51,20 @@ public class StoryManager : SingletonMonoBehaviour<StoryManager>
     public void SelectStage(int no, Transform stageTran = null)
     {
         //★選択可能かチェック
-
+        string sceneName = Common.Func.GetBattleSceneName(selectedStory, no);
 
 
         selectedStage = no;
 
         //確認ダイアログ
         string message = "バトルスタート";
-        UnityAction ok = () => StartBattle();
-        //DialogManager.OpenDialog(message, ok, null);
-        DialogManager.SetDialogLowPosition(100);
+        UnityAction ok = () => StartBattle(sceneName);
+        DialogManager.SetDialogLowPosition(150);
 
         //カメラ位置
         SetCameraPosition(selectedStage, () => DialogManager.OpenDialog(message, ok, null));
     }
-
+    
     //カメラ位置移動
     public void SetCameraPosition(int stageNo = -1, UnityAction callback = null)
     {
@@ -84,9 +83,10 @@ public class StoryManager : SingletonMonoBehaviour<StoryManager>
     }
 
     //バトルスタート
-    public void StartBattle()
+    public void StartBattle(string sceneName)
     {
-        ScreenManager.Instance.SceneLoad(Common.CO.SCENE_BATTLE);
+        Debug.Log("sceneName >> "+ sceneName);
+        ScreenManager.Instance.SceneLoad(sceneName);
     }
 
     //ステージNo取得

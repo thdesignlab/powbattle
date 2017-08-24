@@ -491,6 +491,27 @@ namespace Common
             }
             return false;
         }
+
+        //バトルシーン
+        public static string GetBattleSceneName(int story, int stage)
+        {
+            return CO.SCENE_BATTLE + "_" + story + "_" + stage;
+        }
+        public static bool CheckBattleSceneNo(string sceneName, out int story, out int stage)
+        {
+            bool flg = false;
+            Regex r = new Regex(CO.SCENE_BATTLE + "_([0-9]*)_([0-9]*)", RegexOptions.IgnoreCase);
+            Match m = r.Match(sceneName);
+            story = -1;
+            stage = -1;
+            if (m.Groups.Count >= 3)
+            {
+                story = int.Parse(m.Groups[1].ToString());
+                stage = int.Parse(m.Groups[2].ToString());
+                flg = true;
+            }
+            return flg;
+        }
     }
 
     //### リソース ###
@@ -570,7 +591,8 @@ namespace Common
             { 4, "UnitTank" },
             { 5, "UnitWizard" },
             { 6, "UnitIceWizard" },
-            { 7, "UnitFallenAngel " },
+            { 7, "UnitFallenAngel" },
+            { 8, "UnitWarrior" },
        };
     }
 

@@ -1436,7 +1436,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1131509924127790}
-  m_LocalRotation: {x: 0.7010662, y: 0.71055114, z: 0.0592357, w: -0.01070358}
+  m_LocalRotation: {x: 0.70106614, y: 0.7105511, z: 0.059235692, w: -0.0107035795}
   m_LocalPosition: {x: -0.044519108, y: 0.017301608, z: -0.01272776}
   m_LocalScale: {x: 0.99999994, y: 1.0000001, z: 1.0000001}
   m_Children: []
@@ -2322,7 +2322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 1927420743177176, guid: 1e39eedb3aadb89428f7fe51c7d92910, type: 2}
   maxHP: 8000
-  searchRange: 10
+  searchRange: 15
 --- !u!114 &114400845392358866
 MonoBehaviour:
   m_ObjectHideFlags: 1

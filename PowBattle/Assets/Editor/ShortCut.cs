@@ -34,7 +34,7 @@ public class Shortcut
         }
     }
 
-    private static bool OpenScene(int sceneIndex)
+    public static bool OpenScene(string sceneName, string path = "")
     {
         bool isSuccess = false;
         try
@@ -43,19 +43,23 @@ public class Shortcut
             if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
                 //CancelˆÈŠO
-                EditorSceneManager.OpenScene("Assets/Scenes/" + sceneList[sceneIndex - 1] + ".unity");
+                EditorSceneManager.OpenScene(path + sceneName + ".unity");
                 isSuccess = true;
             }
         }
         catch
         {
-            Debug.Log("[Err]OpenScene >> "+ sceneIndex.ToString());
+            Debug.Log("[Err]OpenScene >> " + path + sceneName);
         }
         return isSuccess;
     }
+    private static bool OpenScene(int sceneIndex)
+    {
+        return OpenScene("Assets/Scenes/" + sceneList[sceneIndex - 1]);
+    }
 
     [MenuItem("Tools/OpenScene/Title &1")]
-    public static void OpenScene1() { OpenScene(1);}
+    public static void OpenScene1() { OpenScene(1); }
     [MenuItem("Tools/OpenScene/Battle &2")]
     public static void OpenScene2() { OpenScene(2); }
     [MenuItem("Tools/OpenScene/Custom &3")]

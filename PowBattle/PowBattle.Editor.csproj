@@ -157,6 +157,8 @@
     <Compile Include="Assets\AssetBundleManager\Editor\ExecuteInternalMono.cs" />
     <Compile Include="Assets\AssetBundleManager\Editor\LaunchAssetBundleServer.cs" />
     <Compile Include="Assets\Editor\FontReplacer.cs" />
+    <Compile Include="Assets\Editor\MoveScene.cs" />
+    <Compile Include="Assets\Editor\ScenePostprocessor.cs" />
     <Compile Include="Assets\Editor\ShortCut.cs" />
   </ItemGroup>
   <ItemGroup>
