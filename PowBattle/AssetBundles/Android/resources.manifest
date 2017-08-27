@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2738748351
+CRC: 2840975360
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4ba87265a61c08d4ab5fde12ea1bf03d
+    Hash: bd35c790439247aff436b3f77bcec7c4
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8bc7f9813c8c4a05e4d9efb899e91860
+    Hash: 8e87c9387c0bfb8c272b512f74db9a2f
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -26,6 +26,8 @@ ClassTypes:
 - Class: 48
   Script: {instanceID: 0}
 - Class: 54
+  Script: {instanceID: 0}
+- Class: 82
   Script: {instanceID: 0}
 - Class: 83
   Script: {instanceID: 0}
@@ -132,24 +134,27 @@ Assets:
 - Assets/AssetBundles/AB_Resources/Effect/Bomb.prefab
 - Assets/AssetBundles/AB_Resources/Weapon/Cannon.prefab
 - Assets/AssetBundles/AB_Resources/Effect/MagicCircle.prefab
+- Assets/AssetBundles/AB_Resources/Weapon/HeavySword.prefab
 - Assets/AssetBundles/AB_Resources/Effect/MagicCircleFire.prefab
 - Assets/AssetBundles/AB_Resources/Effect/DebufEffect.prefab
 - Assets/AssetBundles/AB_Resources/UI/PositiveButton.prefab
 - Assets/AssetBundles/AB_Resources/Effect/DamageEffect.prefab
-- Assets/AssetBundles/AB_Resources/Unit/UnitFallenAngel .prefab
+- Assets/AssetBundles/AB_Resources/Unit/UnitFallenAngel.prefab
 - Assets/AssetBundles/AB_Resources/Unit/UnitWizard.prefab
 - Assets/AssetBundles/AB_Resources/Unit/UnitArcher.prefab
+- Assets/AssetBundles/AB_Resources/Bullet/HeavySlash.prefab
 - Assets/AssetBundles/AB_Resources/Sound/AudioMixer.mixer
 - Assets/AssetBundles/AB_Resources/Weapon/Scythe.prefab
 - Assets/AssetBundles/AB_Resources/Unit/UnitKnight2.prefab
 - Assets/AssetBundles/AB_Resources/Bullet/Bullet.prefab
 - Assets/AssetBundles/AB_Resources/Bullet/Grenade.prefab
 - Assets/AssetBundles/AB_Resources/Weapon/Bowgun.prefab
+- Assets/AssetBundles/AB_Resources/Unit/UnitWarrior.prefab
 - Assets/AssetBundles/AB_Resources/Bullet/ImpactBullet.prefab
 - Assets/AssetBundles/AB_Resources/UI/NegativeButton.prefab
+- Assets/AssetBundles/AB_Resources/UI/StatusCanvas.prefab
 - Assets/AssetBundles/AB_Resources/Effect/MagicCircleIce.prefab
 - Assets/AssetBundles/AB_Resources/Unit/UnitIceWizard.prefab
-- Assets/AssetBundles/AB_Resources/Weapon/ArtillerysCannon.prefab
 - Assets/AssetBundles/AB_Resources/Effect/BigBomb.prefab
 - Assets/AssetBundles/AB_Resources/Bullet/SwordSlash.prefab
 - Assets/AssetBundles/AB_Resources/Effect/SpawnEffect.prefab
@@ -157,16 +162,15 @@ Assets:
 - Assets/AssetBundles/AB_Resources/Weapon/Gun.prefab
 - Assets/AssetBundles/AB_Resources/Weapon/ShootingStar.prefab
 - Assets/AssetBundles/AB_Resources/Effect/DeadEffect.prefab
-- Assets/AssetBundles/AB_Resources/Sound/Negative.mp3
+- Assets/AssetBundles/AB_Resources/Sound/SeNegative.mp3
 - Assets/AssetBundles/AB_Resources/Effect/BufEffect.prefab
 - Assets/AssetBundles/AB_Resources/UI/DialogCanvas.prefab
-- Assets/AssetBundles/AB_Resources/Weapon/ArtillerysBowgun.prefab
 - Assets/AssetBundles/AB_Resources/Weapon/DualSword.prefab
 - Assets/AssetBundles/AB_Resources/Bullet/Arrow.prefab
-- Assets/AssetBundles/AB_Resources/Sound/Select.mp3
+- Assets/AssetBundles/AB_Resources/Sound/SeSelect.mp3
 - Assets/AssetBundles/AB_Resources/Bullet/Star.prefab
 - Assets/AssetBundles/AB_Resources/Weapon/Shotgun.prefab
-- Assets/AssetBundles/AB_Resources/Sound/Positive.mp3
+- Assets/AssetBundles/AB_Resources/Sound/SePositive.mp3
 - Assets/AssetBundles/AB_Resources/Bullet/Icicle.prefab
 - Assets/AssetBundles/AB_Resources/Unit/UnitTank.prefab
 - Assets/AssetBundles/AB_Resources/Unit/UnitGunner.prefab

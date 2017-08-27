@@ -125,13 +125,13 @@ public class LaserPointerController : MonoBehaviour
     {
         targetTran = target;
         isActive = true;
-        //if (laser != null) laser.gameObject.SetActive(true);
+        if (laser != null) laser.gameObject.SetActive(true);
     }
 
     public void SetOff()
     {
         isActive = false;
-        //if (laser != null) laser.gameObject.SetActive(false);
+        if (laser != null) laser.gameObject.SetActive(false);
         if (pointTran != null) Destroy(pointTran);
     }
 

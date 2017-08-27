@@ -59,7 +59,8 @@ public class BgmManager : SingletonMonoBehaviour<BgmManager>
     //BGM再生処理
     private void Play(BgmSettingManager bgm)
     {
-        if (audioSource == null || nowBgm == bgm) return;
+        if (audioSource == null) return;
+        if (nowBgm == bgm && audioSource.isPlaying) return;
 
         if (bgm == null)
         {

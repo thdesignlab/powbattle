@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2904956316
+CRC: 2535114131
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3216813d152ca7ff19e97e40da6cf0c9
+    Hash: 058c18ed899ea74228b5224c7195fc95
   TypeTreeHash:
     serializedVersion: 2
     Hash: f8f2e66d918c2eeebae4adbdae9daa20
@@ -50,39 +50,50 @@ ClassTypes:
 - Class: 208
   Script: {instanceID: 0}
 Assets:
+- Assets/AssetBundles/AB_TT_Item/Field_item/Rock2/Rock2_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/Item/Chara_shadow/Materials/shadow_item.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara4/Materials/chara4_hear.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara3/Materials/face1.png
 - Assets/AssetBundles/AB_TT_Item/wepeefect/Meteor/Meteor_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/Character/Chara4/Materials/Sickle.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara3/Materials/chara3_hear.png
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/Materials/Largesword.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara4/Materials/chara4_hear.mat
 - Assets/AssetBundles/AB_TT_Item/wepeefect/Arrow/arrow_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/Character/Chara3/Materials/wep3.png
+- Assets/AssetBundles/AB_TT_Item/Field/Stage2/Materials/Field_tex2.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara4/Materials/chara_body4.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/Materials/wep1.png
 - Assets/AssetBundles/AB_TT_Item/Mypage/position/Materials/mypage_pos.png
 - Assets/AssetBundles/AB_TT_Item/Mypage/position/mypage_pos_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/Character/Chara2/Chara2_set_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/Character/Chara4/Chara4_set_pre.prefab
+- Assets/AssetBundles/AB_TT_Item/Field_item/Rock2/Materials/item1_tex.mat
+- Assets/AssetBundles/AB_TT_Item/Field_item/Rock2/Materials/item2_tex.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/Materials/chara1_hear.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara3/Materials/chara3_hear.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/chara1_anim_attack3.FBX
 - Assets/AssetBundles/AB_TT_Item/Item/Chara_shadow/Shadow_item.FBX
 - Assets/AssetBundles/AB_TT_Item/Character/Chara2/Materials/chara_body2.mat
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/chara5_anim_base.controller
 - Assets/AssetBundles/AB_TT_Item/Effect/damage_efe1/Materials/damage_efe1.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara3/Materials/chara_body3.png
 - Assets/AssetBundles/AB_TT_Item/Field_item/Rock1/Materials/13 - Default.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/chara1_anim_run.FBX
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/Chara5_set_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/Character/Chara4/Materials/face4.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara4/chara4_anim_attack1.FBX
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/Materials/chara_body2.mat
 - Assets/AssetBundles/AB_TT_Item/Item/Chara_shadow/Materials/shadow_item.mat
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/Materials/chara_body5.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara3/chara3_anim_wait.FBX
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/chara1_anim_down.FBX
 - Assets/AssetBundles/AB_TT_Item/Character/Chara2/Materials/face2.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara2/Materials/face2.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara2/Materials/chara2_hear.mat
 - Assets/AssetBundles/AB_TT_Item/Bomb/Chara_bomb/Materials/efe0.mat
+- Assets/AssetBundles/AB_TT_Item/Field/Stage2/stage2.FBX
+- Assets/AssetBundles/AB_TT_Item/Field_item/Rock2/Rock2.FBX
 - Assets/AssetBundles/AB_TT_Item/Effect/damage_efe1/damage_efe1.png
 - Assets/AssetBundles/AB_TT_Item/Bomb/Chara_bomb/01.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/chara1_anim_bace.FBX
@@ -95,8 +106,10 @@ Assets:
 - Assets/AssetBundles/AB_TT_Item/Bomb/Chara_bomb/chara_bomb_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/Materials/face1.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/Materials/chara1_hear.png
+- Assets/AssetBundles/AB_TT_Item/Field/Stage2/Materials/Field_tex2.png
 - Assets/AssetBundles/AB_TT_Item/Effect/Chara_pop/Chara_pop.FBX
 - Assets/AssetBundles/AB_TT_Item/Bomb/Chara_bomb/efe0.png
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/Materials/face5.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara2/Materials/Thunder_efe.png
 - Assets/AssetBundles/AB_TT_Item/Field/Stage1/Materials/Field1.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/Chara1_set_pre.prefab
@@ -108,6 +121,7 @@ Assets:
 - Assets/AssetBundles/AB_TT_Item/Character/Chara2/Materials/Thunder_efe.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara4/chara4_anim_bace.controller
 - Assets/AssetBundles/AB_TT_Item/Character/Chara2/Materials/chara_body2.png
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/Materials/chara5_hear.png
 - Assets/AssetBundles/AB_TT_Item/Field_item/Rock1/Rock1_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/wepeefect/ice/ice_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/wepeefect/Meteor/Materials/Meteor.mat
@@ -123,16 +137,19 @@ Assets:
 - Assets/AssetBundles/AB_TT_Item/Character/Chara4/Materials/chara_body4.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara3/chara3_anim_attack1.FBX
 - Assets/AssetBundles/AB_TT_Item/Character/Chara4/chara4_anim_wait.FBX
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/chara5_anim_base.FBX
 - Assets/AssetBundles/AB_TT_Item/Mypage/position/mypage_pos.FBX
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/chara1_anim_attack1.FBX
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/Materials/chara_body1.png
 - Assets/AssetBundles/AB_TT_Item/wepeefect/ice/Materials/ice.mat
 - Assets/AssetBundles/AB_TT_Item/wepeefect/Meteor/Materials/Meteor_efe2.png
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/Materials/chara_body5.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara3/Materials/wep3.mat
 - Assets/AssetBundles/AB_TT_Item/wepeefect/Meteor/Materials/Meteor_efe.mat
 - Assets/AssetBundles/AB_TT_Item/wepeefect/Meteor/Meteor.FBX
 - Assets/AssetBundles/AB_TT_Item/Bomb/Chara_bomb/as.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara3/chara3_anim_base.controller
+- Assets/AssetBundles/AB_TT_Item/Field_item/Rock2/Materials/13 - Default.mat
 - Assets/AssetBundles/AB_TT_Item/wepeefect/Arrow/Materials/New Material.mat
 - Assets/AssetBundles/AB_TT_Item/wepeefect/Arrow/kirakira1.png
 - Assets/AssetBundles/AB_TT_Item/wepeefect/Meteor/Materials/Meteor.png
@@ -140,10 +157,12 @@ Assets:
 - Assets/AssetBundles/AB_TT_Item/Character/Chara2/Materials/chara2_hear.png
 - Assets/AssetBundles/AB_TT_Item/Field/Stage1/stage1_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/Effect/Chara_pop/Materials/efe_line1.png
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/Materials/Largesword.png
 - Assets/AssetBundles/AB_TT_Item/wepeefect/Arrow/gurade1.png
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/chara1_anim_bace.controller
 - Assets/AssetBundles/AB_TT_Item/Character/Chara4/Materials/Sickle.mat
 - Assets/AssetBundles/AB_TT_Item/wepeefect/ice/Materials/ice.png
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/Materials/face5.mat
 - Assets/AssetBundles/AB_TT_Item/Effect/damage_efe1/damage_efe1_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/Effect/Chara_pop/Chara_pop_pre.prefab
 - Assets/AssetBundles/AB_TT_Item/Field_item/Rock1/Rock1.FBX
@@ -153,6 +172,7 @@ Assets:
 - Assets/AssetBundles/AB_TT_Item/Character/Chara3/Materials/face1.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/chara1_anim_attack2.FBX
 - Assets/AssetBundles/AB_TT_Item/wepeefect/ice/ice.FBX
+- Assets/AssetBundles/AB_TT_Item/Character/Chara5/Materials/chara5_hear.mat
 - Assets/AssetBundles/AB_TT_Item/wepeefect/Arrow/Materials/kirakira1.mat
 - Assets/AssetBundles/AB_TT_Item/Bomb/Chara_bomb/Materials/as.mat
 - Assets/AssetBundles/AB_TT_Item/Character/Chara1/chara1_anim_wait.FBX

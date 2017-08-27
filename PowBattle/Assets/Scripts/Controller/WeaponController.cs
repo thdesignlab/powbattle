@@ -190,11 +190,11 @@ public class WeaponController : MonoBehaviour
         switch (weaponType)
         {
             case Common.CO.WEAPON_TYPE_NEAR:
-                isPriority = (distance <= (maxRange + minRange) / 3 + minRange);
+                isPriority = (distance <= (maxRange - minRange) / 3 + minRange);
                 break;
 
             case Common.CO.WEAPON_TYPE_FAR:
-                isPriority = (distance >= (maxRange + minRange) * 2 / 3 + minRange);
+                isPriority = (distance >= (maxRange - minRange) * 2 / 3 + minRange);
                 break;
         }
         return isPriority;

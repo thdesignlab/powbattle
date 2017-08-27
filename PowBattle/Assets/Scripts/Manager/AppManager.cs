@@ -5,6 +5,8 @@ public class AppManager : SingletonMonoBehaviour<AppManager>
 {
     [HideInInspector]
     public bool isReadyGame = false;
+    [HideInInspector]
+    public bool isFinishedSplash = false;
 
     [SerializeField]
     private GameObject touchCousor;

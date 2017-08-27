@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1487072257
+CRC: 229410604
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -14,10 +14,10 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/AssetBundleResources/Textures/UI/Hp_my_gage.png
-- Assets/AssetBundleResources/Textures/UI/Hp_enemy_frame.png
-- Assets/AssetBundleResources/Textures/UI/Hp_enemy_gage.png
-- Assets/AssetBundleResources/Textures/UI/Hp_gage_mask.png
-- Assets/AssetBundleResources/Textures/UI/Hp_my_frame.png
-- Assets/AssetBundleResources/Textures/Effect/Target.png
+- Assets/AssetBundles/AB_Textures/UI/Hp_my_gage.png
+- Assets/AssetBundles/AB_Textures/UI/Hp_enemy_frame.png
+- Assets/AssetBundles/AB_Textures/UI/Hp_enemy_gage.png
+- Assets/AssetBundles/AB_Textures/UI/Hp_gage_mask.png
+- Assets/AssetBundles/AB_Textures/UI/Hp_my_frame.png
+- Assets/AssetBundles/AB_Textures/Effect/Target.png
 Dependencies: []

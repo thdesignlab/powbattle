@@ -61,6 +61,6 @@ MonoBehaviour:
   weaponType: 0
   magicCircle: {fileID: 1140668815022580, guid: e49dcf32260d69744b2f2252001cbbce,
     type: 2}
-  shootDiff: 0
+  shootDiff: 1
   shootPoint: {x: 3, y: 8, z: 0}
   isLookAt: 1

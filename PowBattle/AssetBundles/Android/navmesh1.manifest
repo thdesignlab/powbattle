@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 2569178518
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 83077955aa4c558956d7374ce8b90e91
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 8332d45c5f7b1208ba905ad590b0438c
+HashAppended: 0
+ClassTypes:
+- Class: 238
+  Script: {instanceID: 0}
+Assets:
+- Assets/AssetBundles/AB_Scenes/Battle1/Battle_1_3/NavMesh.asset
+- Assets/AssetBundles/AB_Scenes/Battle1/Battle_1_1/NavMesh.asset
+- Assets/AssetBundles/AB_Scenes/Battle1/Battle_1_2/NavMesh.asset
+Dependencies: []

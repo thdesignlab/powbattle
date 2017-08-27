@@ -20,7 +20,10 @@ public class LoadAssetManager : SingletonMonoBehaviour<LoadAssetManager>
 
     public IEnumerator LoadAssets()
 	{
-		yield return StartCoroutine(Initialize() );
+        //★バージョンチェック
+        Caching.ClearCache();
+
+        yield return StartCoroutine(Initialize() );
 
         // Load asset.
         List<string> assetBundleNameList = new List<string>() {

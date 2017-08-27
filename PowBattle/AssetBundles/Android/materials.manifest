@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1024207449
+CRC: 3010999134
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 782daab38b80864fda0a373aa9caf03d
+    Hash: 4b87bf194dbcce80aefa21aec15f7b4f
   TypeTreeHash:
     serializedVersion: 2
-    Hash: de044d5a68952ce94be87223b751d645
+    Hash: 76c0d68f969ab618da36ade5811e53b6
 HashAppended: 0
 ClassTypes:
 - Class: 21
@@ -17,22 +17,29 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 134
   Script: {instanceID: 0}
+- Class: 687078895
+  Script: {instanceID: 0}
 Assets:
-- Assets/AssetBundleResources/Materials/Fire.mat
-- Assets/AssetBundleResources/Materials/Stone.mat
-- Assets/AssetBundleResources/Materials/White.mat
-- Assets/AssetBundleResources/Materials/LaserPointer.mat
-- Assets/AssetBundleResources/Materials/FloorMaterial.physicMaterial
-- Assets/AssetBundleResources/Materials/Yellow.mat
-- Assets/AssetBundleResources/Materials/Black.mat
-- Assets/AssetBundleResources/Materials/Purple.mat
-- Assets/AssetBundleResources/Materials/Floor.mat
-- Assets/AssetBundleResources/Materials/ElementNothing.mat
-- Assets/AssetBundleResources/Materials/Body.mat
-- Assets/AssetBundleResources/Materials/Ice.mat
-- Assets/AssetBundleResources/Materials/Clear.mat
-- Assets/AssetBundleResources/Materials/Tree.mat
-- Assets/AssetBundleResources/Materials/Enemy.mat
-- Assets/AssetBundleResources/Materials/Target.mat
+- Assets/AssetBundles/AB_Materials/Fire.mat
+- Assets/AssetBundles/AB_Materials/Stone.mat
+- Assets/AssetBundles/AB_Materials/White.mat
+- Assets/AssetBundles/AB_Materials/LaserPointer.mat
+- Assets/AssetBundles/AB_Materials/FloorMaterial.physicMaterial
+- Assets/AssetBundles/AB_Materials/Yellow.mat
+- Assets/AssetBundles/AB_Materials/New Sprite Atlas.spriteatlas
+- Assets/AssetBundles/AB_Materials/HPFill.mat
+- Assets/AssetBundles/AB_Materials/Black.mat
+- Assets/AssetBundles/AB_Materials/InstanceUnlit.shader
+- Assets/AssetBundles/AB_Materials/UIInstanceUnlit.shader
+- Assets/AssetBundles/AB_Materials/Purple.mat
+- Assets/AssetBundles/AB_Materials/HPBackground.mat
+- Assets/AssetBundles/AB_Materials/Floor.mat
+- Assets/AssetBundles/AB_Materials/ElementNothing.mat
+- Assets/AssetBundles/AB_Materials/Body.mat
+- Assets/AssetBundles/AB_Materials/Ice.mat
+- Assets/AssetBundles/AB_Materials/Clear.mat
+- Assets/AssetBundles/AB_Materials/Tree.mat
+- Assets/AssetBundles/AB_Materials/Enemy.mat
+- Assets/AssetBundles/AB_Materials/Target.mat
 Dependencies:
 - C:/Users/heart/Documents/Program/powbattle/PowBattle/AssetBundles/Android/textures

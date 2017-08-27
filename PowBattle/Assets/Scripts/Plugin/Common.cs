@@ -16,7 +16,7 @@ namespace Common
         public const string APP_NAME_ANDROID = "com.ThDesignLab";
 
         //アセットバンドル
-        public const string APP_ASSET_BUNDLE_URL = "http://th-designlab.com/PowBattle/AssetBundles/";
+        public const string APP_ASSET_BUNDLE_URL = "http://th-designlab.com/AssetBundles/PowBattle/";
 
         //HomePage
         public const string WEBVIEW_KEY = "?webview";

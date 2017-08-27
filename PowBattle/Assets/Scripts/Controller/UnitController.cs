@@ -60,6 +60,7 @@ public class UnitController : BaseMoveController
     protected const string UNIT_PARTS_GROUND = "Ground";
     protected const string UNIT_PARTS_WEAPON_JOINT = "WeaponJoint";
     protected const string UNIT_PARTS_TARGET_SIGHT = "TargetSight";
+    protected const string UNIT_PARTS_STATUS_POINT = "StatusPoint";
     protected const string UNIT_PARTS_STATUS_CANVAS = "StatusCanvas";
 
     protected bool isActive = false;
@@ -77,30 +78,15 @@ public class UnitController : BaseMoveController
         if (isActive)
         {
             nowHP = maxHP;
-            mySide = GetMySide();
-            enemySide = BattleManager.Instance.GetEnemySide(mySide);
-            if (mySide != Common.CO.SIDE_UNKNOWN)
-            {
-                targetTag = Common.CO.tagUnitArray[enemySide];
-                targetHQTag = Common.CO.tagHQArray[enemySide];
-                targetLayer = Common.Func.GetSightLayerMask(enemySide);
-            }
-            else
-            {
-                enemySide = Common.CO.SIDE_UNKNOWN;
-            }
-            //isAttackRange = false;
             isLockOn = false;
             targetDistance = 0;
             leftForceTargetTime = 0;
         }
-        SetHpGage(isActive);
+        else
+        {
+            SetHpGage(isActive);
+        }
         Init();
-    }
-
-    protected virtual int GetMySide()
-    {
-        return Common.Func.GetMySide(myTran.tag);
     }
 
     //初期処理
@@ -115,6 +101,25 @@ public class UnitController : BaseMoveController
         else
         {
             if (myRigidbody != null) myRigidbody.isKinematic = true;
+        }
+    }
+
+    public void SetSide(int side)
+    {
+        mySide = side;
+        enemySide = BattleManager.Instance.GetEnemySide(mySide);
+        if (mySide != Common.CO.SIDE_UNKNOWN)
+        {
+            targetTag = Common.CO.tagUnitArray[enemySide];
+            targetHQTag = Common.CO.tagHQArray[enemySide];
+            targetLayer = Common.Func.GetSightLayerMask(enemySide);
+            tag = Common.CO.tagUnitArray[side];
+            Common.Func.SetLayer(gameObject, Common.CO.layerUnitArray[side], false);
+            SetHpGage();
+        }
+        else
+        {
+            SetHpGage(false);
         }
     }
 
@@ -395,17 +400,28 @@ public class UnitController : BaseMoveController
     //HPゲージ設定
     public void SetHpGage(bool flg = true)
     {
-        Transform statusCanvas = myTran.Find(UNIT_PARTS_STATUS_CANVAS);
-        if (statusCanvas == null) return;
-        if (!flg)
+        Transform statusPoint = myTran.Find(UNIT_PARTS_STATUS_POINT);
+        if (statusPoint == null) return;
+        Transform statusCanvas = Instantiate(Common.Resource.GetUIResource(UNIT_PARTS_STATUS_CANVAS), statusPoint).transform;
+        if (flg && mySide == Common.CO.SIDE_MINE)
         {
-            statusCanvas.gameObject.SetActive(false);
-            return;
+            hpGage = statusCanvas.Find("HP").GetComponent<Slider>();
+            statusCanvas.Find("EnemyHP").gameObject.SetActive(false);
         }
-        string myGageName = (mySide == Common.CO.SIDE_MINE) ? "HP" : "EnemyHP";
-        string enemyGageName = (mySide == Common.CO.SIDE_MINE) ? "EnemyHP" : "HP";
-        hpGage = statusCanvas.Find(myGageName).GetComponent<Slider>();
-        statusCanvas.Find(enemyGageName).gameObject.SetActive(false);
+        else
+        { 
+            statusCanvas.gameObject.SetActive(false);
+        }
+        //string myGageName = (mySide == Common.CO.SIDE_MINE) ? "HP" : "EnemyHP";
+        //string enemyGageName = (mySide == Common.CO.SIDE_MINE) ? "EnemyHP" : "HP";
+        //hpGage = statusCanvas.Find(myGageName).GetComponent<Slider>();
+        //statusCanvas.Find(enemyGageName).gameObject.SetActive(false);
+    }
+
+    public virtual void SetExtraBuff()
+    {
+        AttackEffect(50, 15);
+        DefenceEffect(50, 15);
     }
 
     //###シールド展開###

@@ -4,9 +4,6 @@ using UnityEngine.UI;
 
 public class TitleManager : MonoBehaviour
 {
-    [HideInInspector]
-    public bool isReadyGame = false;
-    private bool isFinishedSplash = false;
     private bool isGameStart = false;
 
     private Transform titleCanvas;
@@ -26,7 +23,7 @@ public class TitleManager : MonoBehaviour
 #else
 #endif
 
-        isFinishedSplash = true;
+        AppManager.Instance.isFinishedSplash = true;
 
         //フレームレート
         Application.targetFrameRate = 30;
@@ -84,7 +81,8 @@ public class TitleManager : MonoBehaviour
 
     public void StartGame()
     {
-        if (!isFinishedSplash) return;
+        if (!AppManager.Instance.isFinishedSplash) return;
+        SystemSeManager.Instance.PlaySelectSe();
         isGameStart = true;
     }
 }

@@ -58,6 +58,7 @@ MonoBehaviour:
   reload: 10
   motionWait: 3
   moveDelay: 3
+  weaponType: 0
   magicCircle: {fileID: 1489970011207296, guid: 20778b29e12d53e4087efcb4314cbcb6,
     type: 2}
   shootDiff: 1

@@ -99,6 +99,8 @@ public class MoveScene : EditorWindow
         float indexX = 1;
         float btnW = 50;
         float btnH = 25;
+        float lblW = 100;
+        float lblH = 15;
         float space = 10;
         float x = space;
         float y = space;
@@ -114,10 +116,10 @@ public class MoveScene : EditorWindow
 
         if (sceneList.Count > 0)
         {
-            btnW = 100;
+            btnW = 80;
             btnH = 25;
-            GUI.Label(new Rect(x, y, btnW, btnH), "Scene");
-            y += space + btnH;
+            GUI.Label(new Rect(x, y, lblW, lblH), "Scene");
+            y += space + lblH;
             foreach (string sceneName in sceneList)
             {
                 if (GUI.Button(new Rect(x, y, btnW, btnH), sceneName))
@@ -132,8 +134,8 @@ public class MoveScene : EditorWindow
                 else
                 {
                     x = space;
-                    y += space + btnH;
                     indexX = 1;
+                    y += space + btnH;
                 }
             }
         }
@@ -141,9 +143,8 @@ public class MoveScene : EditorWindow
         if (battleSceneList.Count > 0)
         {
             x = space;
-            y += space + btnH;
-            GUI.Label(new Rect(x, y, btnW, btnH), "Battle");
-            y += space + btnH;
+            GUI.Label(new Rect(x, y, lblW, lblH), "Battle");
+            y += space + lblH;
             btnW = 50;
             foreach (int story in battleSceneList.Keys)
             {
@@ -152,7 +153,7 @@ public class MoveScene : EditorWindow
                     string battleName = story + "-" + stage;
                     if (GUI.Button(new Rect(x, y, btnW, btnH), battleName))
                     {
-                        OpenScene(Common.Func.GetBattleSceneName(story, stage), BATTLE_SCENE_FOLDER + "/");
+                        OpenScene(Common.Func.GetBattleSceneName(story, stage), BATTLE_SCENE_FOLDER + "/Battle" + story + "/");
                     }
                     x += space + btnW;
                 }

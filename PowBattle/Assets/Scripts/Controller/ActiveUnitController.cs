@@ -187,9 +187,9 @@ public class ActiveUnitController : UnitController
         if (agent == null) return false;
         if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
         {
-            agent.enabled = false;
+            //agent.enabled = false;
             SetTarget(null);
-            agent.enabled = true;
+            //agent.enabled = true;
             return false;
         }
         return true;

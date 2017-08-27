@@ -57,6 +57,7 @@ public class PlayerController : GestureManager
     {
         Vector3 deltaMove = myTran.forward * deltaY + myTran.right * deltaX;
         deltaMove *= dragRate;
+        deltaMove *= 1+ (myTran.position.y - yLimitMin) / (yLimitMax - yLimitMin);
         if (!isEnabledMove(deltaMove)) return;
         myTran.position += deltaMove;
     }

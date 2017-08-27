@@ -162,6 +162,8 @@
     <Compile Include="Assets\Editor\ShortCut.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\AssetBundles\AB_Materials\InstanceUnlit.shader" />
+    <None Include="Assets\AssetBundles\AB_Materials\UIInstanceUnlit.shader" />
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
     <None Include="Assets\Plugins\TouchScript\Examples\_misc\Shaders\BorderDiffuse.shader" />
     <None Include="Assets\Plugins\TouchScript\Examples\_misc\Shaders\UnlitColor.shader" />

@@ -403,7 +403,7 @@ MonoBehaviour:
   dragBorder: 5
   pinchBorder: 0.1
   twistBorder: 1
-  dragRate: -0.03
+  dragRate: -0.01
   pinchRate: 10
   twistRate: 0.7
   xLimit: 50

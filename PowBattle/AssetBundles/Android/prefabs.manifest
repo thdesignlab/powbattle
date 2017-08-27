@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3751604375
+CRC: 2225467947
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9f9b15484f83e117d2b82fadeaea0639
+    Hash: 0e3b11313b929c3e47294a3cf319dad0
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 514b61a7608beba512953d52f1ffb738
+    Hash: d631b390de0e65335b2433c7015a671b
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -72,8 +72,6 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 075d4915efc83984a93e8a638a197332, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 95771f55ca5c14144a252d5767714e39, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 71d0cc95b6cf7c14d850e4f5aa03755f, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 9acc330843ba7824c985b617a813237d, type: 3}
@@ -91,8 +89,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: bc7fd33c57d694994b0ab9f33fcdcbea, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 74ae431eff8434b0897d3f7f1cff4311, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: aea0034eb841de6478e6787ef6df006a, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 7a878a6ff128243dfb1d89ca0273f059, type: 3}
 - Class: 115
@@ -119,15 +115,15 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/AssetBundles/AB_Prefabs/Player/StoryPlayer.prefab
+- Assets/AssetBundles/AB_Prefabs/UI/DebugCanvas.prefab
 - Assets/AssetBundles/AB_Prefabs/BgmManager.prefab
 - Assets/AssetBundles/AB_Prefabs/Player/BattlePlayer.prefab
 - Assets/AssetBundles/AB_Prefabs/HQ/MineHQ.prefab
 - Assets/AssetBundles/AB_Prefabs/HQ/EnemyHQ.prefab
 - Assets/AssetBundles/AB_Prefabs/TargetSight.prefab
-- Assets/AssetBundles/AB_Prefabs/UI/StatusCanvas.prefab
+- Assets/AssetBundles/AB_Prefabs/UI/LoadingCanvas.prefab
 - Assets/AssetBundles/AB_Prefabs/GestureManager.prefab
 - Assets/AssetBundles/AB_Prefabs/Player/MainPlayer.prefab
-- Assets/AssetBundles/AB_Prefabs/UI/DebugCanvas.prefab
 - Assets/AssetBundles/AB_Prefabs/UI/BattleCanvas.prefab
 - Assets/AssetBundles/AB_Prefabs/LaserPointer.prefab
 - Assets/AssetBundles/AB_Prefabs/Stage/TestStage.prefab

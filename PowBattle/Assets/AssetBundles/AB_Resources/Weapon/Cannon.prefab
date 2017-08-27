@@ -157,6 +157,6 @@ MonoBehaviour:
   motionWait: 0
   moveDelay: 5
   weaponType: 2
-  shootDiff: 3
+  shootDiff: 1
   addHeightRangeRate: 20
   shootAngle: 60

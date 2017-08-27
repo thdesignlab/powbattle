@@ -48,10 +48,7 @@ public class BattlePlayerController : PlayerController
         switch (camMode)
         {
             case Common.CO.CAM_MODE_FREE:
-                Vector3 deltaMove = myTran.forward * deltaY + myTran.right * deltaX;
-                deltaMove *= dragRate;
-                if (!isEnabledMove(deltaMove)) return;
-                myTran.position += deltaMove;
+                base.Drag(deltaX, deltaY);
                 break;
 
             case Common.CO.CAM_MODE_FIRST:

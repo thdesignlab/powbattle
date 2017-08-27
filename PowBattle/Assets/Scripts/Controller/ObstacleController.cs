@@ -16,7 +16,7 @@ public class ObstacleController : UnitController
     //初期処理
     protected override void Init()
     {
-        return;
+        SetSide(side);
     }
 
     //発見判定
@@ -31,13 +31,13 @@ public class ObstacleController : UnitController
 
     public float GetCamouflageRange()
     {
-        return side;
+        return camouflageRange;
     }
 
-    protected override int GetMySide()
-    {
-        return GetSide();
-    }
+    //protected override int GetMySide()
+    //{
+    //    return GetSide();
+    //}
 
     public int GetSide()
     {

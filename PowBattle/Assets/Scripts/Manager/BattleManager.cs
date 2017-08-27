@@ -146,8 +146,6 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         unitCntRate[Common.CO.SIDE_MINE] = Common.Func.GetPer(unitCnt[Common.CO.SIDE_MINE], totalUnitCnt, 50);
         unitCntRate[Common.CO.SIDE_ENEMY] = 100 - unitCntRate[Common.CO.SIDE_MINE];
 
-        //戦況ゲージ
-        //battleGage.value = unitCntRate[Common.CO.SIDE_MINE] / 100.0f;
     }
 
     //バトル終了
@@ -173,7 +171,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     }
     IEnumerator ReturnMainScene()
     {
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(10.0f);
         ScreenManager.Instance.SceneLoad(Common.CO.SCENE_MAIN);
     }
 
@@ -420,15 +418,7 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
 
         foreach (int unit in units)
         {
-            GameObject unitObj = SpawnUnit(unit, spawnPos, spawnRot, side);
-
-            //援軍バフ
-            if (isExtra)
-            {
-                UnitController unitCtrl = unitObj.GetComponent<UnitController>();
-                unitCtrl.AttackEffect(50, 15);
-                unitCtrl.DefenceEffect(50, 15);
-            }
+            SpawnUnit(unit, spawnPos, spawnRot, side, isExtra);
             yield return new WaitForSeconds(SPAWN_UNIT_INTERVAL);
         }
     }
@@ -453,12 +443,12 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
     }
 
     //ユニット生成処理
-    private GameObject SpawnUnit(int unitNo, Vector3 spawnPos, int side)
+    private GameObject SpawnUnit(int unitNo, Vector3 spawnPos, int side, bool isExtra = false)
     {
-        return SpawnUnit(unitNo, spawnPos, Quaternion.identity, side);
+        return SpawnUnit(unitNo, spawnPos, Quaternion.identity, side, isExtra);
     }
 
-    private GameObject SpawnUnit(int unitNo, Vector3 spawnPos, Quaternion spawnRot, int side)
+    private GameObject SpawnUnit(int unitNo, Vector3 spawnPos, Quaternion spawnRot, int side, bool isExtra = false)
     {
         //生成
         Vector3 pos = PickAroundPosition(spawnPos);
@@ -468,8 +458,10 @@ public class BattleManager : SingletonMonoBehaviour<BattleManager>
         unitList[side].Add(unit.transform);
 
         //情報変更
-        unit.tag = Common.CO.tagUnitArray[side];
-        Common.Func.SetLayer(unit, Common.CO.layerUnitArray[side], false);
+        UnitController unitCtrl = unit.GetComponent<UnitController>();
+        unitCtrl.SetSide(side);
+        if (isExtra) unitCtrl.SetExtraBuff();
+
         //★ボディ色変え
         Color[] bodyColors = new Color[] { Color.white, Color.red };
         Transform unitBody = Common.Func.SearchChildTag(unit.transform, "UnitBody");

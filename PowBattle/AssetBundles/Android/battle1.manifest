@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 89141910
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8ef420de090653c7c0125f062dd1b35c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+HashAppended: 0
+ClassTypes: []
+Assets:
+- Assets/AssetBundles/AB_Scenes/Battle1/Battle_1_1.unity
+- Assets/AssetBundles/AB_Scenes/Battle1/Battle_1_2.unity
+- Assets/AssetBundles/AB_Scenes/Battle1/Battle_1_3.unity
+Dependencies:
+- C:/Users/heart/Documents/Program/powbattle/PowBattle/AssetBundles/Android/resources
+- C:/Users/heart/Documents/Program/powbattle/PowBattle/AssetBundles/Android/materials
+- C:/Users/heart/Documents/Program/powbattle/PowBattle/AssetBundles/Android/prefabs
+- C:/Users/heart/Documents/Program/powbattle/PowBattle/AssetBundles/Android/tt_item
+- C:/Users/heart/Documents/Program/powbattle/PowBattle/AssetBundles/Android/navmesh1

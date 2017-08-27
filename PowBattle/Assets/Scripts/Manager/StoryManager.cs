@@ -44,6 +44,7 @@ public class StoryManager : SingletonMonoBehaviour<StoryManager>
     //ステージ選択
     public void SelectStage(Transform stageTran)
     {
+        SystemSeManager.Instance.PlaySelectSe();
         int no = GetStageNo(stageTran.name);
         if (no <= 0) return;
         SelectStage(no, stageTran);

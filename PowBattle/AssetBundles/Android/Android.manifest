@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3324425904
+CRC: 1104411062
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -27,4 +27,15 @@ AssetBundleManifest:
       Dependencies: {}
     Info_5:
       Name: tt_item
+      Dependencies: {}
+    Info_6:
+      Name: battle1
+      Dependencies:
+        Dependency_0: resources
+        Dependency_1: materials
+        Dependency_2: prefabs
+        Dependency_3: tt_item
+        Dependency_4: navmesh1
+    Info_7:
+      Name: navmesh1
       Dependencies: {}

@@ -16,9 +16,9 @@ public class SystemSeManager : SingletonMonoBehaviour<SystemSeManager>
     const string BUTTON_TAG_SELECT = "SelectButton";
 
     //SE
-    const string BUTTON_SE_POSITIVE = "Positive";
-    const string BUTTON_SE_NEGATIVE = "Negative";
-    const string BUTTON_SE_SELECT = "Select";
+    const string BUTTON_SE_POSITIVE = "SePositive";
+    const string BUTTON_SE_NEGATIVE = "SeNegative";
+    const string BUTTON_SE_SELECT = "SeSelect";
 
     IEnumerator Start()
     {

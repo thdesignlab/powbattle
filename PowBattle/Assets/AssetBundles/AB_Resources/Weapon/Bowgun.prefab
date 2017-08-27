@@ -286,7 +286,7 @@ MonoBehaviour:
   motionWait: 0.1
   moveDelay: 2
   weaponType: 2
-  shootDiff: 1
+  shootDiff: 0.5
   addHeightRangeRate: 20
   shootAngle: 50
 --- !u!114 &114854649819282518

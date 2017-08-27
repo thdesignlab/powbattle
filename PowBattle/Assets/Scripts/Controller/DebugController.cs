@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class DebugController : SingletonMonoBehaviour<DebugController>
@@ -16,7 +17,7 @@ public class DebugController : SingletonMonoBehaviour<DebugController>
     private GameObject btnDrawTarget;
 
     //デバッグメニュー
-    private float debugBtnSize = Screen.width / 9;
+    private float debugBtnSize = Screen.width / 6;
     private float btnDownTime = 0;
     private float btnReleaseTime = 0;
     private const float NEED_BUTTON_DOWN_TIME = 1;
@@ -27,10 +28,14 @@ public class DebugController : SingletonMonoBehaviour<DebugController>
     private string preCondition = "";
     private float preLogTime = 0;
 
+    //FPS
+    private Queue frameTime = new Queue();
+
     //FLG
     private bool isOpenMenu = false;
     private bool isOpenLog = false;
-
+    private bool isDispFps = false;
+    
     protected override void Awake()
     {
         base.Awake();
@@ -122,6 +127,16 @@ public class DebugController : SingletonMonoBehaviour<DebugController>
         //デバッグボタン
         Rect debugBtnRect = new Rect(0, 0, debugBtnSize, debugBtnSize);
 
+        //FPS
+        if (isDispFps)
+        {
+            float fps = GetFps(Time.deltaTime);
+            float w = Screen.width / 2.0f;
+            float h = debugBtnSize;
+            GUI.skin.label.fontSize = 20;
+            GUI.Label(new Rect(0, h, w, h), "FPS:" + fps);
+        }
+
         //デバッグメニュー表示ボタン
         if (!isOpenMenu)
         {
@@ -193,6 +208,27 @@ public class DebugController : SingletonMonoBehaviour<DebugController>
         isOpenLog = true;
     }
 
+    //FPS表示
+    public void OnClickOpenFps()
+    {
+        if (!isEnableDebugMenu) return;
+        if (debugCanvas != null) debugCanvas.SetActive(false);
+        frameTime = new Queue();
+        isDispFps = !isDispFps;
+        isOpenMenu = false;
+    }
+    private float GetFps(float deltaTime)
+    {
+        if (frameTime.Count >= 60) frameTime.Dequeue();
+        frameTime.Enqueue(deltaTime);
+
+        float sumTime = 0;
+        foreach (float time in frameTime)
+        {
+            sumTime += time;
+        }
+        return ((int)(frameTime.Count * 10 / sumTime)) / 10.0f;
+    }
 
     //### バトル ###
 
