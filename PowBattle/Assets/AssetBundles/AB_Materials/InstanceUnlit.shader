@@ -1,4 +1,6 @@
-﻿Shader "Instanced/Unlit"
+﻿// Upgrade NOTE: upgraded instancing buffer 'Props' to new syntax.
+
+Shader "Instanced/Unlit"
 {
     Properties
     {
@@ -38,9 +40,10 @@
             sampler2D _MainTex;
             float4 _MainTex_ST;
 
-            UNITY_INSTANCING_CBUFFER_START(Props)
+            UNITY_INSTANCING_BUFFER_START(Props)
             UNITY_DEFINE_INSTANCED_PROP(fixed4, _Color) // Make _Color an instanced property (i.e. an array)
-            UNITY_INSTANCING_CBUFFER_END
+#define _Color_arr Props
+            UNITY_INSTANCING_BUFFER_END(Props)
             
             v2f vert (appdata v)
             {

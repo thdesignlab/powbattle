@@ -880,7 +880,7 @@ Prefab:
     - target: {fileID: 224242674267966450, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 224841462317840580, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -900,7 +900,7 @@ Prefab:
     - target: {fileID: 224841462317840580, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 224342686450222190, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -920,7 +920,7 @@ Prefab:
     - target: {fileID: 224342686450222190, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 224347061309996524, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -940,7 +940,7 @@ Prefab:
     - target: {fileID: 224347061309996524, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -955,17 +955,17 @@ Prefab:
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 352.84555
+      value: 225.202
       objectReference: {fileID: 0}
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 705.6911
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224691734398933700, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -980,17 +980,17 @@ Prefab:
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1058.5366
+      value: 675.60596
       objectReference: {fileID: 0}
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 705.6911
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224286449617235916, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1005,12 +1005,12 @@ Prefab:
     - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 705.6911
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224432394257701462, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
@@ -1025,12 +1025,12 @@ Prefab:
     - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 705.6911
+      value: 450.404
       objectReference: {fileID: 0}
     - target: {fileID: 224263510758077684, guid: 71daa11d9982f2042b444d807ed264e2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -220
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71daa11d9982f2042b444d807ed264e2, type: 2}

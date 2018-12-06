@@ -84,7 +84,7 @@ public class UnitController : BaseMoveController
         }
         else
         {
-            SetHpGage(isActive);
+            //SetHpGage(isActive);
         }
         Init();
     }
